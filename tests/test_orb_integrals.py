@@ -4,6 +4,7 @@ from astrodynx.twobody.orb_integrals import (
     semimajor_axis,
     semiparameter,
     equation_of_orbit,
+    orb_period,
 )
 
 import jax.numpy as jnp
@@ -231,3 +232,38 @@ class TestEquationOfOrbit:
         # denominator is zero: 1 + (-1)*1 = 0
         result = equation_of_orbit(p, e, f)
         assert jnp.isinf(result) or jnp.isnan(result)
+
+
+class TestOrbPeriod:
+    def test_example_case(self) -> None:
+        a = 1.0
+        mu = 1.0
+        expected = 2 * jnp.pi * jnp.sqrt(a**3 / mu)
+        result = orb_period(a, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_different_values(self) -> None:
+        a = 2.0
+        mu = 4.0
+        expected = 2 * jnp.pi * jnp.sqrt(a**3 / mu)
+        result = orb_period(a, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_zero_semimajor_axis(self) -> None:
+        a = 0.0
+        mu = 1.0
+        expected = 0.0
+        result = orb_period(a, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_negative_semimajor_axis(self) -> None:
+        a = -1.0
+        mu = 1.0
+        result = orb_period(a, mu)
+        assert jnp.isnan(result)
+
+    def test_negative_mu(self) -> None:
+        a = 1.0
+        mu = -1.0
+        result = orb_period(a, mu)
+        assert jnp.isnan(result)

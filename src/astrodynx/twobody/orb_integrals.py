@@ -216,3 +216,43 @@ def equation_of_orbit(p: DTypeLike, e: DTypeLike, f: DTypeLike) -> DTypeLike:
     0.7071067811865476
     """
     return p / (1 + e * jnp.cos(f))
+
+
+def orb_period(a: DTypeLike, mu: DTypeLike) -> DTypeLike:
+    r"""
+    Returns the period of elliptic motion.
+
+    Parameters
+    ----------
+    a : DTypeLike
+        Semimajor axis of the object's orbit.
+    mu : DTypeLike
+        Gravitational parameter of the central body.
+
+    Returns
+    -------
+    out : DTypeLike
+        Period of the object's orbit.
+
+    Notes
+    -----
+    The period is calculated using the formula:
+    $$
+    P = 2\pi \sqrt{\frac{a^3}{\mu}}
+    $$
+    where $P$ is the period, $a$ is the semimajor axis, and $\mu$ is the gravitational parameter.
+
+    References
+    ----------
+    Battin, 1999, pp.119.
+
+    Examples
+    --------
+    >>> import jax.numpy as jnp
+    >>> from astrodynx.towbody.orb_integrals import orb_period
+    >>> a = 1.0
+    >>> mu = 1.0
+    >>> orb_period(a, mu)
+    6.283185307179586
+    """
+    return 2 * jnp.pi * jnp.sqrt(a**3 / mu)
