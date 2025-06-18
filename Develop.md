@@ -6,7 +6,6 @@ Fork the repo and clone it to your local machine. Then add the original reposito
 git clone <your-fork-url>
 cd astrodynx
 git remote add upstream https://github.com/adxorg/astrodynx.git -t main
-git update-ref -d refs/remotes/upstream/gh-pages
 ```
 
 ## Setup development environment
