@@ -1,3 +1,9 @@
+## v0.4.1 (2025-06-18)
+
+### Refactor
+
+- **test_kepler_equation.py**: add return type
+
 ## v0.4.0 (2025-06-18)
 
 ### Feat
