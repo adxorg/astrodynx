@@ -1,3 +1,9 @@
+## v0.5.0 (2025-06-18)
+
+### Feat
+
+- **twobody**: add orbit period function
+
 ## v0.4.1 (2025-06-18)
 
 ### Refactor
