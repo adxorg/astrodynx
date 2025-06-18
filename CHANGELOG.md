@@ -1,3 +1,11 @@
+## v0.4.0 (2025-06-18)
+
+### Feat
+
+- **twobody**: add mean_anomaly_ecliptic func
+
+## v0.3.1 (2025-06-18)
+
 ## v0.3.0 (2025-06-17)
 
 ### Feat
