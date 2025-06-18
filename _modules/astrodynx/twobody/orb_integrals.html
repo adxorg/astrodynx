@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>astrodynx.twobody.orb_integrals &#8212; AstroDynX  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/astrodynx/twobody/orb_integrals';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">AstroDynX  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API Reference</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/adxorg/astrodynx" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/adxorg/astrodynx/issues/new?title=Issue%20on%20page%20%2F_modules/astrodynx/twobody/orb_integrals.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for astrodynx.twobody.orb_integrals</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">DTypeLike</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">Array</span>
+
+
+<div class="viewcode-block" id="ang_momentum_vec">
+<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.ang_momentum_vec">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ang_momentum_vec</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the angular momentum vector of a two-body system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r : (3,) ArrayLike</span>
+<span class="sd">        Position vector of the object.</span>
+<span class="sd">    v : (3,) ArrayLike</span>
+<span class="sd">        Velocity vector of the object.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : (3,) Array</span>
+<span class="sd">        Angular momentum vector of the object.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The angular momentum vector is calculated using the cross product of the position and velocity vectors:</span>
+<span class="sd">    $$</span>
+<span class="sd">    \mathbf{h} = \mathbf{r} \times \mathbf{v}</span>
+<span class="sd">    $$</span>
+<span class="sd">    where $\mathbf{h}$ is the angular momentum vector, $\mathbf{r}$ is the position vector, $\mathbf{v}$ is the velocity vector.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Battin, 1999, pp.115.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import jax.numpy as jnp</span>
+<span class="sd">    &gt;&gt;&gt; from astrodynx.towbody.orb_integrals import ang_momentum</span>
+<span class="sd">    &gt;&gt;&gt; r = jnp.array([1.0, 0.0, 0.0])</span>
+<span class="sd">    &gt;&gt;&gt; v = jnp.array([0.0, 1.0, 0.0])</span>
+<span class="sd">    &gt;&gt;&gt; ang_momentum(r, v)</span>
+<span class="sd">    Array([0., 0., 1.])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="eccentricity_vec">
+<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.eccentricity_vec">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">eccentricity_vec</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the eccentricity vector of a two-body system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r : (3,) ArrayLike</span>
+<span class="sd">        Position vector of the object.</span>
+<span class="sd">    v : (3,) ArrayLike</span>
+<span class="sd">        Velocity vector of the object.</span>
+<span class="sd">    mu : DTypeLike</span>
+<span class="sd">        Gravitational parameter of the central body.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : (3,) Array</span>
+<span class="sd">        Eccentricity vector of the object.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The eccentricity vector is calculated using the formula:</span>
+<span class="sd">    $$</span>
+<span class="sd">    \mathbf{e} = \frac{\mathbf{v} \times \mathbf{h}}{\mu} - \frac{\mathbf{r}}{r}</span>
+<span class="sd">    $$</span>
+<span class="sd">    where $\mathbf{e}$ is the eccentricity vector, $\mathbf{v}$ is the velocity vector, $\mathbf{h}$ is the angular momentum vector, $\mu$ is the gravitational parameter, and $\mathbf{r}$ is the position vector.</span>
+
+<span class="sd">    The result is a 3D vector representing the eccentricity of the object&#39;s orbit in the two-body system.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Battin, 1999, pp.115.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import jax.numpy as jnp</span>
+<span class="sd">    &gt;&gt;&gt; from astrodynx.towbody.orb_integrals import eccentricity_vec, ang_momentum_vec</span>
+<span class="sd">    &gt;&gt;&gt; r = jnp.array([1.0, 0.0, 0.0])</span>
+<span class="sd">    &gt;&gt;&gt; v = jnp.array([0.0, 1.0, 0.0])</span>
+<span class="sd">    &gt;&gt;&gt; mu = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; h = ang_momentum_vec(r, v)</span>
+<span class="sd">    &gt;&gt;&gt; eccentricity_vec(r, v, mu)</span>
+<span class="sd">    Array([-1.,  0.,  0.])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">ang_momentum_vec</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="semiparameter">
+<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.semiparameter">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">semiparameter</span><span class="p">(</span><span class="n">h</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DTypeLike</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the semiparameter of a two-body system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    h : DTypeLike</span>
+<span class="sd">        Magnitude of the angular momentum vector of the object.</span>
+<span class="sd">    mu : DTypeLike</span>
+<span class="sd">        Gravitational parameter of the central body.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : DTypeLike</span>
+<span class="sd">        Semiparameter of the object&#39;s orbit.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The semiparameter is calculated using the formula:</span>
+<span class="sd">    $$</span>
+<span class="sd">    p = \frac{h^2}{\mu}</span>
+<span class="sd">    $$</span>
+<span class="sd">    where $p$ is the semiparameter, $h$ is the magnitude of the angular momentum vector, and $\mu$ is the gravitational parameter.</span>
+<span class="sd">    The result is a scalar value representing the semiparameter of the object&#39;s orbit in the two-body system.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Battin, 1999, pp.116.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import jax.numpy as jnp</span>
+<span class="sd">    &gt;&gt;&gt; from astrodynx.towbody.orb_integrals import semiparameter</span>
+<span class="sd">    &gt;&gt;&gt; h = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; mu = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; semiparameter(h, mu)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">h</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">mu</span></div>
+
+
+
+<div class="viewcode-block" id="semimajor_axis">
+<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.semimajor_axis">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">semimajor_axis</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DTypeLike</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the semimajor axis of a two-body system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r : DTypeLike</span>
+<span class="sd">        Magnitude of the position vector of the object.</span>
+<span class="sd">    v : DTypeLike</span>
+<span class="sd">        Magnitude of the velocity vector of the object.</span>
+<span class="sd">    mu : DTypeLike</span>
+<span class="sd">        Gravitational parameter of the central body.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : DTypeLike</span>
+<span class="sd">        Semimajor axis of the object&#39;s orbit.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The semimajor axis is calculated using the formula:</span>
+<span class="sd">    $$</span>
+<span class="sd">    a = \left(\frac{2}{r} - \frac{v^2}{\mu}\right)^{-1}</span>
+<span class="sd">    $$</span>
+<span class="sd">    where $a$ is the semimajor axis, $r$ is the magnitude of the position vector, $v$ is the magnitude of the velocity vector, and $\mu$ is the gravitational parameter.</span>
+<span class="sd">    The result is a scalar value representing the semimajor axis of the object&#39;s orbit in the two-body system.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Battin, 1999, pp.116.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import jax.numpy as jnp</span>
+<span class="sd">    &gt;&gt;&gt; from astrodynx.towbody.orb_integrals import semimajor_axis</span>
+<span class="sd">    &gt;&gt;&gt; r = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; v = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; mu = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; semimajor_axis(r, v, mu)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="n">r</span> <span class="o">-</span> <span class="p">(</span><span class="n">v</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="equation_of_orbit">
+<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.equation_of_orbit">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">equation_of_orbit</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DTypeLike</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the equation of the orbit for a two-body system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    p : DTypeLike</span>
+<span class="sd">        Semiparameter of the object&#39;s orbit.</span>
+<span class="sd">    e : DTypeLike</span>
+<span class="sd">        Eccentricity of the object&#39;s orbit.</span>
+<span class="sd">    f : DTypeLike</span>
+<span class="sd">        True anomaly of the object&#39;s orbit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : DTypeLike</span>
+<span class="sd">        radius.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The equation of the orbit is calculated using the formula:</span>
+<span class="sd">    $$</span>
+<span class="sd">    r = \frac{p}{1 + e \cos(f)}</span>
+<span class="sd">    $$</span>
+<span class="sd">    where $r$ is the distance from the central body, $p$ is the semiparameter, $e$ is the eccentricity, and $f$ is the true anomaly.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Battin, 1999, pp.116.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import jax.numpy as jnp</span>
+<span class="sd">    &gt;&gt;&gt; from astrodynx.towbody.orb_integrals import equation_of_orbit</span>
+<span class="sd">    &gt;&gt;&gt; p = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; e = 0.5</span>
+<span class="sd">    &gt;&gt;&gt; f = jnp.pi / 4  # 45 degrees in radians</span>
+<span class="sd">    &gt;&gt;&gt; equation_of_orbit(p, e, f)</span>
+<span class="sd">    0.7071067811865476</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">p</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">e</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">f</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="orb_period">
+<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.orb_period">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">orb_period</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DTypeLike</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the period of elliptic motion.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : DTypeLike</span>
+<span class="sd">        Semimajor axis of the object&#39;s orbit.</span>
+<span class="sd">    mu : DTypeLike</span>
+<span class="sd">        Gravitational parameter of the central body.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : DTypeLike</span>
+<span class="sd">        Period of the object&#39;s orbit.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The period is calculated using the formula:</span>
+<span class="sd">    $$</span>
+<span class="sd">    P = 2\pi \sqrt{\frac{a^3}{\mu}}</span>
+<span class="sd">    $$</span>
+<span class="sd">    where $P$ is the period, $a$ is the semimajor axis, and $\mu$ is the gravitational parameter.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Battin, 1999, pp.119.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import jax.numpy as jnp</span>
+<span class="sd">    &gt;&gt;&gt; from astrodynx.towbody.orb_integrals import orb_period</span>
+<span class="sd">    &gt;&gt;&gt; a = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; mu = 1.0</span>
+<span class="sd">    &gt;&gt;&gt; orb_period(a, mu)</span>
+<span class="sd">    6.283185307179586</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By AstroDynX contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
