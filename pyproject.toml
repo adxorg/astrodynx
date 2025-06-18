@@ -69,6 +69,7 @@ version_files = [
 tag_format = "v$version"
 update_changelog_on_bump = true
 changelog_file = "CHANGELOG.md"
+pre_commit = true
 
 
 [tool.mypy]
