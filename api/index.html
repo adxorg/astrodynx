@@ -49,7 +49,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/index';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Changelog" href="../changelog.html" />
+    <link rel="next" title="Two-body Module API" href="twobody.html" />
     <link rel="prev" title="Welcome to AstroDynX’s documentation!" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -156,7 +156,10 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">API Reference</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">API Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="twobody.html">Two-body Module API</a></li>
+</ul>
+</details></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
@@ -332,9 +335,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -350,28 +351,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-astrodynx">Main Package</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-astrodynx.twobody.orb_integrals">Two-body Integrals</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.ang_momentum_vec"><code class="docutils literal notranslate"><span class="pre">ang_momentum_vec()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.eccentricity_vec"><code class="docutils literal notranslate"><span class="pre">eccentricity_vec()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.equation_of_orbit"><code class="docutils literal notranslate"><span class="pre">equation_of_orbit()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.orb_period"><code class="docutils literal notranslate"><span class="pre">orb_period()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.semimajor_axis"><code class="docutils literal notranslate"><span class="pre">semimajor_axis()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.semiparameter"><code class="docutils literal notranslate"><span class="pre">semiparameter()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-astrodynx.twobody.kepler_equation">Kepler Equation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.kepler_equation.mean_anomaly_ecliptic"><code class="docutils literal notranslate"><span class="pre">mean_anomaly_ecliptic()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.kepler_equation.mean_anomaly_hyperbolic"><code class="docutils literal notranslate"><span class="pre">mean_anomaly_hyperbolic()</span></code></a></li>
-</ul>
-</li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -384,333 +363,11 @@ document.write(`
   <section id="api-reference">
 <span id="api"></span><h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">#</a></h1>
 <p>This section provides the API documentation for the main modules of astrodynx.</p>
-<section id="module-astrodynx">
-<span id="main-package"></span><h2>Main Package<a class="headerlink" href="#module-astrodynx" title="Link to this heading">#</a></h2>
-</section>
-<section id="module-astrodynx.twobody.orb_integrals">
-<span id="two-body-integrals"></span><h2>Two-body Integrals<a class="headerlink" href="#module-astrodynx.twobody.orb_integrals" title="Link to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="astrodynx.twobody.orb_integrals.ang_momentum_vec">
-<span class="sig-prename descclassname"><span class="pre">astrodynx.twobody.orb_integrals.</span></span><span class="sig-name descname"><span class="pre">ang_momentum_vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/astrodynx/twobody/orb_integrals.html#ang_momentum_vec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#astrodynx.twobody.orb_integrals.ang_momentum_vec" title="Link to this definition">#</a></dt>
-<dd><p>Returns the angular momentum vector of a two-body system.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> (<em>(</em><em>3</em><em>,</em><em>) </em><em>ArrayLike</em>) – Position vector of the object.</p></li>
-<li><p><strong>v</strong> (<em>(</em><em>3</em><em>,</em><em>) </em><em>ArrayLike</em>) – Velocity vector of the object.</p></li>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="twobody.html">Two-body Module API</a></li>
 </ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Angular momentum vector of the object.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>(3,) Array</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The angular momentum vector is calculated using the cross product of the position and velocity vectors:
-<div class="math notranslate nohighlight">
-\[
-\mathbf{h} = \mathbf{r} \times \mathbf{v}
-\]</div>
-
-where <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> is the angular momentum vector, <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> is the position vector, <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> is the velocity vector.</p>
-<p class="rubric">References</p>
-<p>Battin, 1999, pp.115.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">astrodynx.towbody.orb_integrals</span><span class="w"> </span><span class="kn">import</span> <span class="n">ang_momentum</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ang_momentum</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-<span class="go">Array([0., 0., 1.])</span>
-</pre></div>
 </div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="astrodynx.twobody.orb_integrals.eccentricity_vec">
-<span class="sig-prename descclassname"><span class="pre">astrodynx.twobody.orb_integrals.</span></span><span class="sig-name descname"><span class="pre">eccentricity_vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/astrodynx/twobody/orb_integrals.html#eccentricity_vec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#astrodynx.twobody.orb_integrals.eccentricity_vec" title="Link to this definition">#</a></dt>
-<dd><p>Returns the eccentricity vector of a two-body system.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> (<em>(</em><em>3</em><em>,</em><em>) </em><em>ArrayLike</em>) – Position vector of the object.</p></li>
-<li><p><strong>v</strong> (<em>(</em><em>3</em><em>,</em><em>) </em><em>ArrayLike</em>) – Velocity vector of the object.</p></li>
-<li><p><strong>mu</strong> (<em>DTypeLike</em>) – Gravitational parameter of the central body.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Eccentricity vector of the object.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>(3,) Array</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The eccentricity vector is calculated using the formula:
-<div class="math notranslate nohighlight">
-\[
-\mathbf{e} = \frac{\mathbf{v} \times \mathbf{h}}{\mu} - \frac{\mathbf{r}}{r}
-\]</div>
-
-where <span class="math notranslate nohighlight">\(\mathbf{e}\)</span> is the eccentricity vector, <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> is the velocity vector, <span class="math notranslate nohighlight">\(\mathbf{h}\)</span> is the angular momentum vector, <span class="math notranslate nohighlight">\(\mu\)</span> is the gravitational parameter, and <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> is the position vector.</p>
-<p>The result is a 3D vector representing the eccentricity of the object’s orbit in the two-body system.</p>
-<p class="rubric">References</p>
-<p>Battin, 1999, pp.115.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">astrodynx.towbody.orb_integrals</span><span class="w"> </span><span class="kn">import</span> <span class="n">eccentricity_vec</span><span class="p">,</span> <span class="n">ang_momentum_vec</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mu</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="n">ang_momentum_vec</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">eccentricity_vec</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
-<span class="go">Array([-1.,  0.,  0.])</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="astrodynx.twobody.orb_integrals.equation_of_orbit">
-<span class="sig-prename descclassname"><span class="pre">astrodynx.twobody.orb_integrals.</span></span><span class="sig-name descname"><span class="pre">equation_of_orbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/astrodynx/twobody/orb_integrals.html#equation_of_orbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#astrodynx.twobody.orb_integrals.equation_of_orbit" title="Link to this definition">#</a></dt>
-<dd><p>Returns the equation of the orbit for a two-body system.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>p</strong> (<em>DTypeLike</em>) – Semiparameter of the object’s orbit.</p></li>
-<li><p><strong>e</strong> (<em>DTypeLike</em>) – Eccentricity of the object’s orbit.</p></li>
-<li><p><strong>f</strong> (<em>DTypeLike</em>) – True anomaly of the object’s orbit.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – radius.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DTypeLike</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The equation of the orbit is calculated using the formula:
-<div class="math notranslate nohighlight">
-\[
-r = \frac{p}{1 + e \cos(f)}
-\]</div>
-
-where <span class="math notranslate nohighlight">\(r\)</span> is the distance from the central body, <span class="math notranslate nohighlight">\(p\)</span> is the semiparameter, <span class="math notranslate nohighlight">\(e\)</span> is the eccentricity, and <span class="math notranslate nohighlight">\(f\)</span> is the true anomaly.</p>
-<p class="rubric">References</p>
-<p>Battin, 1999, pp.116.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">astrodynx.towbody.orb_integrals</span><span class="w"> </span><span class="kn">import</span> <span class="n">equation_of_orbit</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span>  <span class="c1"># 45 degrees in radians</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">equation_of_orbit</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-<span class="go">0.7071067811865476</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="astrodynx.twobody.orb_integrals.orb_period">
-<span class="sig-prename descclassname"><span class="pre">astrodynx.twobody.orb_integrals.</span></span><span class="sig-name descname"><span class="pre">orb_period</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/astrodynx/twobody/orb_integrals.html#orb_period"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#astrodynx.twobody.orb_integrals.orb_period" title="Link to this definition">#</a></dt>
-<dd><p>Returns the period of elliptic motion.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>a</strong> (<em>DTypeLike</em>) – Semimajor axis of the object’s orbit.</p></li>
-<li><p><strong>mu</strong> (<em>DTypeLike</em>) – Gravitational parameter of the central body.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Period of the object’s orbit.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DTypeLike</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The period is calculated using the formula:
-<div class="math notranslate nohighlight">
-\[
-P = 2\pi \sqrt{\frac{a^3}{\mu}}
-\]</div>
-
-where <span class="math notranslate nohighlight">\(P\)</span> is the period, <span class="math notranslate nohighlight">\(a\)</span> is the semimajor axis, and <span class="math notranslate nohighlight">\(\mu\)</span> is the gravitational parameter.</p>
-<p class="rubric">References</p>
-<p>Battin, 1999, pp.119.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">astrodynx.towbody.orb_integrals</span><span class="w"> </span><span class="kn">import</span> <span class="n">orb_period</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mu</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">orb_period</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
-<span class="go">6.283185307179586</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="astrodynx.twobody.orb_integrals.semimajor_axis">
-<span class="sig-prename descclassname"><span class="pre">astrodynx.twobody.orb_integrals.</span></span><span class="sig-name descname"><span class="pre">semimajor_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/astrodynx/twobody/orb_integrals.html#semimajor_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#astrodynx.twobody.orb_integrals.semimajor_axis" title="Link to this definition">#</a></dt>
-<dd><p>Returns the semimajor axis of a two-body system.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>r</strong> (<em>DTypeLike</em>) – Magnitude of the position vector of the object.</p></li>
-<li><p><strong>v</strong> (<em>DTypeLike</em>) – Magnitude of the velocity vector of the object.</p></li>
-<li><p><strong>mu</strong> (<em>DTypeLike</em>) – Gravitational parameter of the central body.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Semimajor axis of the object’s orbit.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DTypeLike</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The semimajor axis is calculated using the formula:
-<div class="math notranslate nohighlight">
-\[
-a = \left(\frac{2}{r} - \frac{v^2}{\mu}\right)^{-1}
-\]</div>
-
-where <span class="math notranslate nohighlight">\(a\)</span> is the semimajor axis, <span class="math notranslate nohighlight">\(r\)</span> is the magnitude of the position vector, <span class="math notranslate nohighlight">\(v\)</span> is the magnitude of the velocity vector, and <span class="math notranslate nohighlight">\(\mu\)</span> is the gravitational parameter.
-The result is a scalar value representing the semimajor axis of the object’s orbit in the two-body system.</p>
-<p class="rubric">References</p>
-<p>Battin, 1999, pp.116.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">astrodynx.towbody.orb_integrals</span><span class="w"> </span><span class="kn">import</span> <span class="n">semimajor_axis</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">v</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mu</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">semimajor_axis</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
-<span class="go">1.0</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="astrodynx.twobody.orb_integrals.semiparameter">
-<span class="sig-prename descclassname"><span class="pre">astrodynx.twobody.orb_integrals.</span></span><span class="sig-name descname"><span class="pre">semiparameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/astrodynx/twobody/orb_integrals.html#semiparameter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#astrodynx.twobody.orb_integrals.semiparameter" title="Link to this definition">#</a></dt>
-<dd><p>Returns the semiparameter of a two-body system.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>h</strong> (<em>DTypeLike</em>) – Magnitude of the angular momentum vector of the object.</p></li>
-<li><p><strong>mu</strong> (<em>DTypeLike</em>) – Gravitational parameter of the central body.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Semiparameter of the object’s orbit.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>DTypeLike</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The semiparameter is calculated using the formula:
-<div class="math notranslate nohighlight">
-\[
-p = \frac{h^2}{\mu}
-\]</div>
-
-where <span class="math notranslate nohighlight">\(p\)</span> is the semiparameter, <span class="math notranslate nohighlight">\(h\)</span> is the magnitude of the angular momentum vector, and <span class="math notranslate nohighlight">\(\mu\)</span> is the gravitational parameter.
-The result is a scalar value representing the semiparameter of the object’s orbit in the two-body system.</p>
-<p class="rubric">References</p>
-<p>Battin, 1999, pp.116.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">astrodynx.towbody.orb_integrals</span><span class="w"> </span><span class="kn">import</span> <span class="n">semiparameter</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">h</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mu</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">semiparameter</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
-<span class="go">1.0</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</section>
-<section id="module-astrodynx.twobody.kepler_equation">
-<span id="kepler-equation"></span><h2>Kepler Equation<a class="headerlink" href="#module-astrodynx.twobody.kepler_equation" title="Link to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="astrodynx.twobody.kepler_equation.mean_anomaly_ecliptic">
-<span class="sig-prename descclassname"><span class="pre">astrodynx.twobody.kepler_equation.</span></span><span class="sig-name descname"><span class="pre">mean_anomaly_ecliptic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eccentricity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eccentric_anomaly</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/astrodynx/twobody/kepler_equation.html#mean_anomaly_ecliptic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#astrodynx.twobody.kepler_equation.mean_anomaly_ecliptic" title="Link to this definition">#</a></dt>
-<dd><p>Returns the mean anomaly in the ecliptic frame.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>eccentricity</strong> (<em>DTypeLike</em>) – Eccentricity of the orbit.</p></li>
-<li><p><strong>eccentric_anomaly</strong> (<em>DTypeLike</em>) – Eccentric anomaly of the orbit.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Mean anomaly in the ecliptic frame.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Array</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The mean anomaly is calculated using the formula:
-<div class="math notranslate nohighlight">
-\[
-M = E - e \sin(E)
-\]</div>
-
-where <span class="math notranslate nohighlight">\(M\)</span> is the mean anomaly, <span class="math notranslate nohighlight">\(E\)</span> is the eccentric anomaly, and <span class="math notranslate nohighlight">\(e&lt;1\)</span> is the eccentricity.</p>
-<p class="rubric">References</p>
-<p>Battin, 1999, pp.160.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">astrodynx.twobody.kepler_equation</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_anomaly_ecliptic</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mean_anomaly_ecliptic</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
-<span class="go">Array(0.78539816)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="astrodynx.twobody.kepler_equation.mean_anomaly_hyperbolic">
-<span class="sig-prename descclassname"><span class="pre">astrodynx.twobody.kepler_equation.</span></span><span class="sig-name descname"><span class="pre">mean_anomaly_hyperbolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eccentricity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperbolic_anomaly</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/astrodynx/twobody/kepler_equation.html#mean_anomaly_hyperbolic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#astrodynx.twobody.kepler_equation.mean_anomaly_hyperbolic" title="Link to this definition">#</a></dt>
-<dd><p>Returns the mean anomaly in the hyperbolic frame.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>eccentricity</strong> (<em>DTypeLike</em>) – Eccentricity of the orbit.</p></li>
-<li><p><strong>hyperbolic_anomaly</strong> (<em>DTypeLike</em>) – Hyperbolic anomaly of the orbit.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>out</strong> – Mean anomaly in the hyperbolic frame.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Array</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>The mean anomaly is calculated using the formula:
-<div class="math notranslate nohighlight">
-\[
-M_h = e \sinh(H) - H
-\]</div>
-
-where <span class="math notranslate nohighlight">\(M_h\)</span> is the mean anomaly, <span class="math notranslate nohighlight">\(H\)</span> is the hyperbolic anomaly, and <span class="math notranslate nohighlight">\(e&gt;1\)</span> is the eccentricity.</p>
-<p class="rubric">References</p>
-<p>Battin, 1999, pp.168.</p>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">astrodynx.twobody.kepler_equation</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_anomaly_hyperbolic</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mean_anomaly_hyperbolic</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
-<span class="go">Array(0.78539816)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-</section>
 </section>
 
 
@@ -734,11 +391,11 @@ where <span class="math notranslate nohighlight">\(M_h\)</span> is the mean anom
       </div>
     </a>
     <a class="right-next"
-       href="../changelog.html"
+       href="twobody.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Changelog</p>
+        <p class="prev-next-title">Two-body Module API</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -748,35 +405,6 @@ where <span class="math notranslate nohighlight">\(M_h\)</span> is the mean anom
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-astrodynx">Main Package</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-astrodynx.twobody.orb_integrals">Two-body Integrals</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.ang_momentum_vec"><code class="docutils literal notranslate"><span class="pre">ang_momentum_vec()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.eccentricity_vec"><code class="docutils literal notranslate"><span class="pre">eccentricity_vec()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.equation_of_orbit"><code class="docutils literal notranslate"><span class="pre">equation_of_orbit()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.orb_period"><code class="docutils literal notranslate"><span class="pre">orb_period()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.semimajor_axis"><code class="docutils literal notranslate"><span class="pre">semimajor_axis()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.orb_integrals.semiparameter"><code class="docutils literal notranslate"><span class="pre">semiparameter()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-astrodynx.twobody.kepler_equation">Kepler Equation</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.kepler_equation.mean_anomaly_ecliptic"><code class="docutils literal notranslate"><span class="pre">mean_anomaly_ecliptic()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#astrodynx.twobody.kepler_equation.mean_anomaly_hyperbolic"><code class="docutils literal notranslate"><span class="pre">mean_anomaly_hyperbolic()</span></code></a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

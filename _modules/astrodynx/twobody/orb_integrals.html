@@ -153,7 +153,10 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API Reference</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/twobody.html">Two-body Module API</a></li>
+</ul>
+</details></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
@@ -313,7 +316,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="ang_momentum_vec">
-<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.ang_momentum_vec">[docs]</a>
+<a class="viewcode-back" href="../../../api/twobody.html#astrodynx.twobody.orb_integrals.ang_momentum_vec">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ang_momentum_vec</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the angular momentum vector of a two-body system.</span>
@@ -356,7 +359,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="eccentricity_vec">
-<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.eccentricity_vec">[docs]</a>
+<a class="viewcode-back" href="../../../api/twobody.html#astrodynx.twobody.orb_integrals.eccentricity_vec">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">eccentricity_vec</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the eccentricity vector of a two-body system.</span>
@@ -406,7 +409,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="semiparameter">
-<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.semiparameter">[docs]</a>
+<a class="viewcode-back" href="../../../api/twobody.html#astrodynx.twobody.orb_integrals.semiparameter">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">semiparameter</span><span class="p">(</span><span class="n">h</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DTypeLike</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the semiparameter of a two-body system.</span>
@@ -450,7 +453,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="semimajor_axis">
-<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.semimajor_axis">[docs]</a>
+<a class="viewcode-back" href="../../../api/twobody.html#astrodynx.twobody.orb_integrals.semimajor_axis">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">semimajor_axis</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DTypeLike</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the semimajor axis of a two-body system.</span>
@@ -497,7 +500,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="equation_of_orbit">
-<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.equation_of_orbit">[docs]</a>
+<a class="viewcode-back" href="../../../api/twobody.html#astrodynx.twobody.orb_integrals.equation_of_orbit">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">equation_of_orbit</span><span class="p">(</span><span class="n">p</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DTypeLike</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the equation of the orbit for a two-body system.</span>
@@ -543,7 +546,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="orb_period">
-<a class="viewcode-back" href="../../../api/index.html#astrodynx.twobody.orb_integrals.orb_period">[docs]</a>
+<a class="viewcode-back" href="../../../api/twobody.html#astrodynx.twobody.orb_integrals.orb_period">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">orb_period</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">,</span> <span class="n">mu</span><span class="p">:</span> <span class="n">DTypeLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DTypeLike</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the period of elliptic motion.</span>
