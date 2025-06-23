@@ -34,7 +34,7 @@ def ang_momentum_vec(r: ArrayLike, v: ArrayLike) -> Array:
     Examples
     --------
     >>> import jax.numpy as jnp
-    >>> from astrodynx.towbody.orb_integrals import ang_momentum
+    >>> from astrodynx.twobody.orb_integrals import ang_momentum
     >>> r = jnp.array([1.0, 0.0, 0.0])
     >>> v = jnp.array([0.0, 1.0, 0.0])
     >>> ang_momentum(r, v)
@@ -78,7 +78,7 @@ def eccentricity_vec(r: ArrayLike, v: ArrayLike, mu: DTypeLike) -> Array:
     Examples
     --------
     >>> import jax.numpy as jnp
-    >>> from astrodynx.towbody.orb_integrals import eccentricity_vec, ang_momentum_vec
+    >>> from astrodynx.twobody.orb_integrals import eccentricity_vec, ang_momentum_vec
     >>> r = jnp.array([1.0, 0.0, 0.0])
     >>> v = jnp.array([0.0, 1.0, 0.0])
     >>> mu = 1.0
@@ -122,7 +122,7 @@ def semiparameter(h: DTypeLike, mu: DTypeLike) -> DTypeLike:
     Examples
     --------
     >>> import jax.numpy as jnp
-    >>> from astrodynx.towbody.orb_integrals import semiparameter
+    >>> from astrodynx.twobody.orb_integrals import semiparameter
     >>> h = 1.0
     >>> mu = 1.0
     >>> semiparameter(h, mu)
@@ -165,7 +165,7 @@ def semimajor_axis(r: DTypeLike, v: DTypeLike, mu: DTypeLike) -> DTypeLike:
     Examples
     --------
     >>> import jax.numpy as jnp
-    >>> from astrodynx.towbody.orb_integrals import semimajor_axis
+    >>> from astrodynx.twobody.orb_integrals import semimajor_axis
     >>> r = 1.0
     >>> v = 1.0
     >>> mu = 1.0
@@ -208,7 +208,7 @@ def equation_of_orbit(p: DTypeLike, e: DTypeLike, f: DTypeLike) -> DTypeLike:
     Examples
     --------
     >>> import jax.numpy as jnp
-    >>> from astrodynx.towbody.orb_integrals import equation_of_orbit
+    >>> from astrodynx.twobody.orb_integrals import equation_of_orbit
     >>> p = 1.0
     >>> e = 0.5
     >>> f = jnp.pi / 4  # 45 degrees in radians
@@ -249,7 +249,7 @@ def orb_period(a: DTypeLike, mu: DTypeLike) -> DTypeLike:
     Examples
     --------
     >>> import jax.numpy as jnp
-    >>> from astrodynx.towbody.orb_integrals import orb_period
+    >>> from astrodynx.twobody.orb_integrals import orb_period
     >>> a = 1.0
     >>> mu = 1.0
     >>> orb_period(a, mu)
