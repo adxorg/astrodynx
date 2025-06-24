@@ -78,11 +78,11 @@ jobs:
               "categories": [
                 {
                   "title": "## 🚀 Features",
-                  "labels": ["feat", "enhancement"]
+                  "labels": ["feat"]
                 },
                 {
                   "title": "## 🐛 Bug Fixes",
-                  "labels": ["bug", "fix"]
+                  "labels": ["fix"]
                 },
                 {
                   "title": "⚙️ Miscellaneous",
@@ -99,6 +99,8 @@ jobs:
             }
 
       - name: Create Release
+        permissions:
+          contents: write
         uses: softprops/action-gh-release@v2
         with:
           body: ${{steps.github_release.outputs.changelog}}
