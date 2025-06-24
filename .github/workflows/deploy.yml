@@ -69,26 +69,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - name: Build Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v5
-        with:
-          configurationJson: |
-            {
-              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
-               "categories": [
-                {
-                  "title": "## 🚀 Features",
-                  "labels": ["feat","enhancement", "feature"]
-                },
-                {
-                  "title": "## 🐛 Bug Fixes",
-                  "labels": ["fix", "bug"]
-                }
-              ]
-            }
-
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          body: ${{steps.github_release.outputs.changelog}}
+          generate_release_notes: true
