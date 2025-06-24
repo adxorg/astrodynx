@@ -69,7 +69,7 @@ cz c
 ```
 Push your changes to your fork
 ```bash
-git push -f origin main --tags
+git push -f origin main
 ```
 
 ## Create a pull request
