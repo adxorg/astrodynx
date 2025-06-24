@@ -65,6 +65,8 @@ jobs:
     needs:
     - build-distribution
     name: Release to GitHub
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Build Changelog
@@ -78,14 +80,14 @@ jobs:
               "categories": [
                 {
                   "title": "## 🚀 Features",
-                  "labels": ["feat", "enhancement"]
+                  "labels": ["feat"]
                 },
                 {
                   "title": "## 🐛 Bug Fixes",
-                  "labels": ["bug", "fix"]
+                  "labels": ["fix"]
                 },
                 {
-                  "title": "⚙️ Miscellaneous",
+                  "title": "## ⚙️ Miscellaneous",
                   "labels": ["perf", "test", "build"]
                 }
               ],
