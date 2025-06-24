@@ -7,32 +7,23 @@
 
 # AstroDynX (adx)
 
-A modern astrodynamics library powered by JAX: differentiate, vectorize, JIT to GPU/TPU, and more.
+AstroDynX is a modern astrodynamics library powered by JAX, designed for high-performance scientific computing, automatic differentiation, and GPU/TPU acceleration.
 
 ## Features
-- JAX-based fast computation
-- Pre-commit code style and type checks
-- Continuous testing
-- Automated versioning and changelog
-- GitHub Actions for CI/CD
+- JAX support: automatic differentiation, vectorization, JIT compilation
+- Modern Python code style and type checking
+- Continuous integration and automated testing
+- Easy to extend and contribute
 
 ## Installation
+You can install AstroDynX from PyPI using pip:
 ```bash
 pip install astrodynx
 ```
+AstroDynX is written in pure Python build with JAX, so it is compatible with any platform that supports JAX, including CPU, GPU, and TPU. By default, it installs the CPU version. If you want to use AstroDynX on GPU/TPU, follow the [**instructions**](https://jax.readthedocs.io/en/latest/installation.html) to install the appropriate JAX backend for your hardware.
 
-## Usage
-Check version
-```python
-import astrodynx as adx
-print(adx.__version__)
-```
-
-## Build Docs
-```bash
-pip install -e .[docs]
-sphinx-build -b html docs docs/_build/html
-```
+## Documentation
+The documentation is available at [github.io](https://adxorg.github.io/astrodynx/).
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.

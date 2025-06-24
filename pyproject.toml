@@ -66,13 +66,7 @@ include = ["astrodynx*"]
 [tool.commitizen]
 name = "cz_conventional_commits"
 version_provider = "scm"
-version_files = [
-    "pyproject.toml:version"
-]
 tag_format = "v$version"
-update_changelog_on_bump = true
-changelog_file = "CHANGELOG.md"
-
 
 [tool.mypy]
 strict = true

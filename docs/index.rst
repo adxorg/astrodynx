@@ -74,16 +74,15 @@ If you use AstroDynX in your academic work, please cite our project:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
 
    tutorials/index
    examples/index
    api/index
-
-.. toctree::
-   :maxdepth: 1
-
    changelog
 
-* :ref:`genindex`
-* :ref:`modindex`
+.. toctree::
+   :caption: Indices and tables
+
+   Index <genindex>
+   Module Index <modindex>
