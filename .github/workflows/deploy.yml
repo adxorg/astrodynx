@@ -1,6 +1,7 @@
 name: Deploy
 permissions:
   contents: read
+  pull-requests: read
 on:
   push:
     branches: [main]
@@ -65,10 +66,31 @@ jobs:
     - build-distribution
     name: Release to GitHub
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Release
-        uses: softprops/action-gh-release@v2
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v5
+        with:
+          configurationJson: |
+            {
+              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
+              "categories": [
+                {
+                  "title": "## 🚀 Features",
+                  "labels": ["feat", "enhancement"]
+                },
+                {
+                  "title": "## 🐛 Bug Fixes",
+                  "labels": ["bug", "fix"]
+                },
+                {
+                  "title": "⚙️ Miscellaneous",
+                  "labels": ["perf", "test", "build"]
+                }
+              ]
+            }
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        with:
+          body: ${{steps.github_release.outputs.changelog}}
