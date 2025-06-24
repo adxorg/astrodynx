@@ -157,6 +157,7 @@ def semimajor_axis(r: DTypeLike, v: DTypeLike, mu: DTypeLike) -> DTypeLike:
     $$
     where $a$ is the semimajor axis, $r$ is the magnitude of the position vector, $v$ is the magnitude of the velocity vector, and $\mu$ is the gravitational parameter.
     The result is a scalar value representing the semimajor axis of the object's orbit in the two-body system.
+    If $a > 0$, the orbit is elliptical; if $a = 0$, the orbit is parabolic; and if $a < 0$, the orbit is hyperbolic.
 
     References
     ----------
