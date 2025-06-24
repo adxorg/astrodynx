@@ -71,9 +71,10 @@ jobs:
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v5
         with:
+          mode: "COMMIT"
           configurationJson: |
             {
-              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
+              "template": "#{{CHANGELOG}}",
               "categories": [
                 {
                   "title": "## 🚀 Features",
@@ -87,10 +88,17 @@ jobs:
                   "title": "⚙️ Miscellaneous",
                   "labels": ["perf", "test", "build"]
                 }
+              ],
+              "label_extractor": [
+                {
+                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|docs|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
+                  "on_property": "title",
+                  "target": "$1"
+                }
               ]
             }
 
       - name: Create Release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           body: ${{steps.github_release.outputs.changelog}}
