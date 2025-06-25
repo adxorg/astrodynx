@@ -1,259 +1,88 @@
 import jax.numpy as jnp
-from jax.typing import ArrayLike, DTypeLike
+from jax.typing import ArrayLike
 from jax import Array
 
 
-def ang_momentum_vec(r: ArrayLike, v: ArrayLike) -> Array:
-    r"""
-    Returns the angular momentum vector of a two-body system.
+def orb_period(a: ArrayLike, mu: ArrayLike) -> Array:
+    r"""Returns the orbital period of a two-body system.
 
-    Parameters
-    ----------
-    r : (3,) ArrayLike
-        Position vector of the object.
-    v : (3,) ArrayLike
-        Velocity vector of the object.
+    Args:
+        a: Semimajor axis of the orbit.
+        mu: Gravitational parameter of the central body; shape broadcast-compatible with `a`.
 
-    Returns
-    -------
-    out : (3,) Array
-        Angular momentum vector of the object.
+    Returns:
+        The orbital period of the object in the two-body system.
 
-    Notes
-    -----
-    The angular momentum vector is calculated using the cross product of the position and velocity vectors:
-    $$
-    \mathbf{h} = \mathbf{r} \times \mathbf{v}
-    $$
-    where $\mathbf{h}$ is the angular momentum vector, $\mathbf{r}$ is the position vector, $\mathbf{v}$ is the velocity vector.
+    Notes:
+        The orbital period is calculated using Kepler's third law:
+        $$
+        P = 2\pi \sqrt{\frac{a^3}{\mu}}
+        $$
+        where $P$ is the orbital period, $a$ is the semimajor axis, and $\mu$ is the gravitational parameter.
 
-    References
-    ----------
-    Battin, 1999, pp.115.
+    References:
+        Battin, 1999, pp.119.
 
-    Examples
-    --------
-    >>> import jax.numpy as jnp
-    >>> from astrodynx.twobody.orb_integrals import ang_momentum
-    >>> r = jnp.array([1.0, 0.0, 0.0])
-    >>> v = jnp.array([0.0, 1.0, 0.0])
-    >>> ang_momentum(r, v)
-    Array([0., 0., 1.])
-    """
-    return jnp.cross(r, v)
+    Examples:
+        A simple example of calculating the orbital period for a circular orbit with a semimajor axis of 1.0 and a gravitational parameter of 1.0:
 
+        >>> import jax.numpy as jnp
+        >>> from astrodynx.twobody import orb_period
+        >>> a = 1.0
+        >>> mu = 1.0
+        >>> orb_period(a, mu)
+        Array(6.2831855, dtype=float32, weak_type=True)
 
-def eccentricity_vec(r: ArrayLike, v: ArrayLike, mu: DTypeLike) -> Array:
-    r"""
-    Returns the eccentricity vector of a two-body system.
+        With broadcasting, you can calculate the orbital period for multiple semimajor axes and gravitational parameters:
 
-    Parameters
-    ----------
-    r : (3,) ArrayLike
-        Position vector of the object.
-    v : (3,) ArrayLike
-        Velocity vector of the object.
-    mu : DTypeLike
-        Gravitational parameter of the central body.
-
-    Returns
-    -------
-    out : (3,) Array
-        Eccentricity vector of the object.
-
-    Notes
-    -----
-    The eccentricity vector is calculated using the formula:
-    $$
-    \mathbf{e} = \frac{\mathbf{v} \times \mathbf{h}}{\mu} - \frac{\mathbf{r}}{r}
-    $$
-    where $\mathbf{e}$ is the eccentricity vector, $\mathbf{v}$ is the velocity vector, $\mathbf{h}$ is the angular momentum vector, $\mu$ is the gravitational parameter, and $\mathbf{r}$ is the position vector.
-
-    The result is a 3D vector representing the eccentricity of the object's orbit in the two-body system.
-
-    References
-    ----------
-    Battin, 1999, pp.115.
-
-    Examples
-    --------
-    >>> import jax.numpy as jnp
-    >>> from astrodynx.twobody.orb_integrals import eccentricity_vec, ang_momentum_vec
-    >>> r = jnp.array([1.0, 0.0, 0.0])
-    >>> v = jnp.array([0.0, 1.0, 0.0])
-    >>> mu = 1.0
-    >>> h = ang_momentum_vec(r, v)
-    >>> eccentricity_vec(r, v, mu)
-    Array([-1.,  0.,  0.])
-    """
-    h = ang_momentum_vec(r, v)
-    return (jnp.cross(v, h) / mu) - (r / jnp.linalg.norm(r))
-
-
-def semiparameter(h: DTypeLike, mu: DTypeLike) -> DTypeLike:
-    r"""
-    Returns the semiparameter of a two-body system.
-
-    Parameters
-    ----------
-    h : DTypeLike
-        Magnitude of the angular momentum vector of the object.
-    mu : DTypeLike
-        Gravitational parameter of the central body.
-
-    Returns
-    -------
-    out : DTypeLike
-        Semiparameter of the object's orbit.
-
-    Notes
-    -----
-    The semiparameter is calculated using the formula:
-    $$
-    p = \frac{h^2}{\mu}
-    $$
-    where $p$ is the semiparameter, $h$ is the magnitude of the angular momentum vector, and $\mu$ is the gravitational parameter.
-    The result is a scalar value representing the semiparameter of the object's orbit in the two-body system.
-
-    References
-    ----------
-    Battin, 1999, pp.116.
-
-    Examples
-    --------
-    >>> import jax.numpy as jnp
-    >>> from astrodynx.twobody.orb_integrals import semiparameter
-    >>> h = 1.0
-    >>> mu = 1.0
-    >>> semiparameter(h, mu)
-    1.0
-    """
-    return h**2 / mu
-
-
-def semimajor_axis(r: DTypeLike, v: DTypeLike, mu: DTypeLike) -> DTypeLike:
-    r"""
-    Returns the semimajor axis of a two-body system.
-
-    Parameters
-    ----------
-    r : DTypeLike
-        Magnitude of the position vector of the object.
-    v : DTypeLike
-        Magnitude of the velocity vector of the object.
-    mu : DTypeLike
-        Gravitational parameter of the central body.
-
-    Returns
-    -------
-    out : DTypeLike
-        Semimajor axis of the object's orbit.
-
-    Notes
-    -----
-    The semimajor axis is calculated using the formula:
-    $$
-    a = \left(\frac{2}{r} - \frac{v^2}{\mu}\right)^{-1}
-    $$
-    where $a$ is the semimajor axis, $r$ is the magnitude of the position vector, $v$ is the magnitude of the velocity vector, and $\mu$ is the gravitational parameter.
-    The result is a scalar value representing the semimajor axis of the object's orbit in the two-body system.
-    If $a > 0$, the orbit is elliptical; if $a = 0$, the orbit is parabolic; and if $a < 0$, the orbit is hyperbolic.
-
-    References
-    ----------
-    Battin, 1999, pp.116.
-
-    Examples
-    --------
-    >>> import jax.numpy as jnp
-    >>> from astrodynx.twobody.orb_integrals import semimajor_axis
-    >>> r = 1.0
-    >>> v = 1.0
-    >>> mu = 1.0
-    >>> semimajor_axis(r, v, mu)
-    1.0
-    """
-    return 1 / (2 / r - (v**2) / mu)
-
-
-def equation_of_orbit(p: DTypeLike, e: DTypeLike, f: DTypeLike) -> DTypeLike:
-    r"""
-    Returns the equation of the orbit for a two-body system.
-
-    Parameters
-    ----------
-    p : DTypeLike
-        Semiparameter of the object's orbit.
-    e : DTypeLike
-        Eccentricity of the object's orbit.
-    f : DTypeLike
-        True anomaly of the object's orbit.
-
-    Returns
-    -------
-    out : DTypeLike
-        radius.
-
-    Notes
-    -----
-    The equation of the orbit is calculated using the formula:
-    $$
-    r = \frac{p}{1 + e \cos(f)}
-    $$
-    where $r$ is the distance from the central body, $p$ is the semiparameter, $e$ is the eccentricity, and $f$ is the true anomaly.
-
-    References
-    ----------
-    Battin, 1999, pp.116.
-
-    Examples
-    --------
-    >>> import jax.numpy as jnp
-    >>> from astrodynx.twobody.orb_integrals import equation_of_orbit
-    >>> p = 1.0
-    >>> e = 0.5
-    >>> f = jnp.pi / 4  # 45 degrees in radians
-    >>> equation_of_orbit(p, e, f)
-    0.7071067811865476
-    """
-    return p / (1 + e * jnp.cos(f))
-
-
-def orb_period(a: DTypeLike, mu: DTypeLike) -> DTypeLike:
-    r"""
-    Returns the period of elliptic motion.
-
-    Parameters
-    ----------
-    a : DTypeLike
-        Semimajor axis of the object's orbit.
-    mu : DTypeLike
-        Gravitational parameter of the central body.
-
-    Returns
-    -------
-    out : DTypeLike
-        Period of the object's orbit.
-
-    Notes
-    -----
-    The period is calculated using the formula:
-    $$
-    P = 2\pi \sqrt{\frac{a^3}{\mu}}
-    $$
-    where $P$ is the period, $a$ is the semimajor axis, and $\mu$ is the gravitational parameter.
-
-    References
-    ----------
-    Battin, 1999, pp.119.
-
-    Examples
-    --------
-    >>> import jax.numpy as jnp
-    >>> from astrodynx.twobody.orb_integrals import orb_period
-    >>> a = 1.0
-    >>> mu = 1.0
-    >>> orb_period(a, mu)
-    6.283185307179586
+        >>> a = jnp.array([1.0, 2.0])
+        >>> mu = jnp.array([1.0, 2.0])
+        >>> orb_period(a, mu)
+        Array([ 6.2831855, 12.566371 ], dtype=float32)
     """
     return 2 * jnp.pi * jnp.sqrt(a**3 / mu)
+
+
+def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
+    r"""
+    Returns the specific angular momentum of a two-body system.
+
+    Args:
+        r: (..., 3) position vector of the object in the two-body system.
+        v: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `r`.
+
+    Returns:
+        The specific angular momentum vector of the object in the two-body system.
+
+    Notes
+    ----------
+    The specific angular momentum is calculated using the cross product of the position and velocity vectors:
+    $$
+    h = r \times v
+    $$
+    where $h$ is the specific angular momentum, $r$ is the position vector, and $v$ is the velocity vector.
+
+    References
+    ----------
+    Battin, 1999, pp.115.
+
+    Examples
+    --------
+    A simple example of calculating the specific angular momentum for a position vector [1, 0, 0] and velocity vector [0, 1, 0]:
+
+    >>> import jax.numpy as jnp
+    >>> from astrodynx.twobody import angular_momentum
+    >>> r = jnp.array([1.0, 0.0, 0.0])
+    >>> v = jnp.array([0.0, 1.0, 0.0])
+    >>> angular_momentum(r, v)
+    Array([0., 0., 1.], dtype=float32)
+
+    With broadcasting, you can calculate the specific angular momentum for multiple position and velocity vectors:
+
+    >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+    >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+    >>> angular_momentum(r, v)
+    Array([[0., 0., 1.],
+           [0., 0., 4.]], dtype=float32)
+    """
+    return jnp.cross(r, v)

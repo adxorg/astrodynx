@@ -34,9 +34,6 @@ keywords = ["astrodynamics", "celestial mechanics"]
 "Documentation" = "https://adxorg.github.io/astrodynx"
 
 [project.optional-dependencies]
-cuda12 = [
-    "jax[cuda12]"
-]
 dev = [
     "commitizen",
     "pytest",
@@ -67,9 +64,6 @@ include = ["astrodynx*"]
 name = "cz_conventional_commits"
 version_provider = "scm"
 tag_format = "v$version"
-
-[tool.mypy]
-strict = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

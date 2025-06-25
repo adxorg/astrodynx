@@ -31,12 +31,6 @@ Default installation for CPU usage:
 
    pip install astrodynx
 
-If you want to use Nvidia GPUs, install the CUDA version:
-
-.. code-block:: bash
-
-   pip install astrodynx[cuda12]
-
 .. hint::
 
    AstroDynX is written in pure Python build with JAX, so it is compatible with any platform that supports JAX, including CPU, GPU, and TPU. By default, it installs the CPU version. If you want to use AstroDynX on GPU/TPU, follow the `instructions <https://jax.readthedocs.io/en/latest/installation.html>`_ to install the appropriate JAX backend for your hardware.
@@ -78,7 +72,7 @@ If you use AstroDynX in your academic work, please cite our project:
 
    tutorials/index
    examples/index
-   api/index
+   api
    changelog
 
 .. toctree::

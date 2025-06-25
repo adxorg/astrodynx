@@ -6,6 +6,8 @@
 
 import os
 import sys
+import jax.typing
+
 
 sys.path.insert(0, os.path.abspath("../src"))
 
@@ -32,6 +34,28 @@ extensions = [
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+
+
+# -- Options for autodoc -----------------------------------------------------
+_TYPE_MAP = {
+    jax.typing.ArrayLike: ":py:data:`~jax.typing.ArrayLike`",
+    jax.typing.DTypeLike: ":py:data:`~jax.typing.DTypeLike`",
+}
+
+
+def custom_typehints_formatter(annotation: str, config) -> str | None:
+    return _TYPE_MAP.get(annotation)
+
+
+typehints_formatter = custom_typehints_formatter
+
+always_use_bars_union = True
+
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "jax": ("https://jax.readthedocs.io/en/latest/", None),
+}
 
 
 # -- Options for MyST --------------------------------------------------------
