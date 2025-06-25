@@ -4,7 +4,8 @@ from jax import Array
 
 
 def orb_period(a: ArrayLike, mu: ArrayLike) -> Array:
-    r"""Returns the orbital period of a two-body system.
+    r"""
+    Returns the orbital period of a two-body system.
 
     Args:
         a: Semimajor axis of the orbit.
@@ -55,34 +56,31 @@ def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
         The specific angular momentum vector of the object in the two-body system.
 
     Notes
-    ----------
-    The specific angular momentum is calculated using the cross product of the position and velocity vectors:
-    $$
-    h = r \times v
-    $$
-    where $h$ is the specific angular momentum, $r$ is the position vector, and $v$ is the velocity vector.
+        The specific angular momentum is calculated using the cross product of the position and velocity vectors:
+        $$
+        \boldsymbol{h} = \boldsymbol{r} \times \boldsymbol{v}
+        $$
+        where $\boldsymbol{h}$ is the specific angular momentum, $\boldsymbol{r}$ is the position vector, and $\boldsymbol{v}$ is the velocity vector.
 
     References
-    ----------
-    Battin, 1999, pp.115.
+        Battin, 1999, pp.115.
 
     Examples
-    --------
-    A simple example of calculating the specific angular momentum for a position vector [1, 0, 0] and velocity vector [0, 1, 0]:
+        A simple example of calculating the specific angular momentum for a position vector [1, 0, 0] and velocity vector [0, 1, 0]:
 
-    >>> import jax.numpy as jnp
-    >>> from astrodynx.twobody import angular_momentum
-    >>> r = jnp.array([1.0, 0.0, 0.0])
-    >>> v = jnp.array([0.0, 1.0, 0.0])
-    >>> angular_momentum(r, v)
-    Array([0., 0., 1.], dtype=float32)
+        >>> import jax.numpy as jnp
+        >>> from astrodynx.twobody import angular_momentum
+        >>> r = jnp.array([1.0, 0.0, 0.0])
+        >>> v = jnp.array([0.0, 1.0, 0.0])
+        >>> angular_momentum(r, v)
+        Array([0., 0., 1.], dtype=float32)
 
-    With broadcasting, you can calculate the specific angular momentum for multiple position and velocity vectors:
+        With broadcasting, you can calculate the specific angular momentum for multiple position and velocity vectors:
 
-    >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-    >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
-    >>> angular_momentum(r, v)
-    Array([[0., 0., 1.],
-           [0., 0., 4.]], dtype=float32)
+        >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        >>> angular_momentum(r, v)
+        Array([[0., 0., 1.],
+            [0., 0., 4.]], dtype=float32)
     """
     return jnp.cross(r, v)
