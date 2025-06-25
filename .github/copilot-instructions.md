@@ -9,6 +9,7 @@ AstroDynX is a modern astrodynamics library powered by JAX, designed for high-pe
 - Prefer `jax.numpy` over `numpy` for numerical operations.
 - Use `Array`, `ArrayLike` and `DTypeLike` for type hints. Prefer `ArrayLike` for array inputs and `Array` for array outputs.
 - Ensure compatibility with JAX and avoid using features incompatible with JAX transformations (e.g., in-place array modifications).
+- Functional programming paradigms are encouraged, such as using `jax.lax` for control flow and `jax.vmap` for vectorization.
 
 ## Testing
 - Place all tests in the `tests/` directory.
