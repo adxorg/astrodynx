@@ -84,3 +84,47 @@ def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
             [0., 0., 4.]], dtype=float32)
     """
     return jnp.cross(r, v)
+
+
+def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
+    r"""
+    Returns the semimajor axis of a two-body orbit.
+
+    Args:
+        r: (..., 3) position vector of the object in the two-body system.
+        v: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `r`.
+        mu: Gravitational parameter of the central body; shape broadcast-compatible with `r` and `v`.
+
+    Returns:
+        The semimajor axis of the orbit.
+
+    Notes
+        The semimajor axis is calculated using equation (3.16):
+        $$
+        a = \left( \frac{2}{r} - \frac{v^2}{\mu} \right)^{-1}
+        $$
+        where $a$ is the semimajor axis, $r$ is the norm of the position vector, $v$ is the norm of the velocity vector, and $\mu$ is the gravitational parameter.
+
+    References
+        Battin, 1999, pp.116.
+
+    Examples
+        A simple example of calculating the semimajor axis for a position vector [1, 0, 0] and velocity vector [0, 1, 0] with a gravitational parameter of 1:
+
+        >>> import jax.numpy as jnp
+        >>> from astrodynx.twobody import semimajor_axis
+        >>> r = jnp.array([1.0, 0.0, 0.0])
+        >>> v = jnp.array([0.0, 1.0, 0.0])
+        >>> mu = 1.0
+        >>> semimajor_axis(r, v, mu)
+        Array(1., dtype=float32)
+
+        With broadcasting, you can calculate the semimajor axis for multiple position and velocity vectors:
+
+        >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        >>> mu = jnp.array([1.0, 2.0])
+        >>> semimajor_axis(r, v, mu)
+        Array([ 1., -1.], dtype=float32)
+    """
+    return 1 / (2 / jnp.linalg.norm(r, axis=-1) - jnp.linalg.norm(v, axis=-1) ** 2 / mu)
