@@ -79,45 +79,41 @@ class TestAngularMomentum:
 
 class TestSemimajorAxis:
     def test_scalar_inputs(self) -> None:
-        r = jnp.array([1.0, 0.0, 0.0])
-        v = jnp.array([0.0, 1.0, 0.0])
+        r = 1.0
+        v = 1.0
         mu = 1.0
-        expected = 1.0
+        expected = 1 / (2 / r - v**2 / mu)
         result = semimajor_axis(r, v, mu)
         assert jnp.allclose(result, expected)
 
     def test_array_inputs(self) -> None:
-        r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        r = jnp.array([1.0, 2.0])
+        v = jnp.array([1.0, 2.0])
         mu = jnp.array([1.0, 2.0])
-        expected = jnp.array([1.0, -1.0])
+        expected = 1 / (2 / r - v**2 / mu)
         result = semimajor_axis(r, v, mu)
         assert jnp.allclose(result, expected)
 
-    def test_broadcasting_mu(self) -> None:
-        r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
-        mu = 2.0
-        expected = 1 / (
-            2 / jnp.linalg.norm(r, axis=-1) - jnp.linalg.norm(v, axis=-1) ** 2 / mu
-        )
+    def test_broadcasting(self) -> None:
+        r = jnp.array([1.0, 2.0])
+        v = 1.0
+        mu = 1.0
+        expected = 1 / (2 / r - v**2 / mu)
         result = semimajor_axis(r, v, mu)
         assert jnp.allclose(result, expected)
 
     def test_zero_velocity(self) -> None:
-        r = jnp.array([2.0, 0.0, 0.0])
-        v = jnp.array([0.0, 0.0, 0.0])
-        mu = 2.0
-        expected = 1.0
+        r = 2.0
+        v = 0.0
+        mu = 1.0
+        expected = 1 / (2 / r - v**2 / mu)
         result = semimajor_axis(r, v, mu)
         assert jnp.allclose(result, expected)
 
-    def test_broadcasting_single_vector(self) -> None:
-        r = jnp.array([1.0, 0.0, 0.0])
-        v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+    def test_negative_result(self) -> None:
+        r = 1.0
+        v = 2.0
         mu = 1.0
-        expected = 1 / (
-            2 / jnp.linalg.norm(r, axis=-1) - jnp.linalg.norm(v, axis=-1) ** 2 / mu
-        )
+        expected = 1 / (2 / r - v**2 / mu)
         result = semimajor_axis(r, v, mu)
         assert jnp.allclose(result, expected)

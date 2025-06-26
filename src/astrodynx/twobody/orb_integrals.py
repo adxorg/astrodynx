@@ -86,13 +86,13 @@ def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
     return jnp.cross(r, v)
 
 
-def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
+def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> ArrayLike:
     r"""
     Returns the semimajor axis of a two-body orbit.
 
     Args:
-        r: (..., 3) position vector of the object in the two-body system.
-        v: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `r`.
+        r: Norm of the object's position vector in the two-body system.
+        v: Norm of the object's velocity vector in the two-body system, which shape broadcast-compatible with `r`.
         mu: Gravitational parameter of the central body; shape broadcast-compatible with `r` and `v`.
 
     Returns:
@@ -109,22 +109,22 @@ def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
         Battin, 1999, pp.116.
 
     Examples
-        A simple example of calculating the semimajor axis for a position vector [1, 0, 0] and velocity vector [0, 1, 0] with a gravitational parameter of 1:
+        A simple example of calculating the semimajor axis with a position vector norm of 1.0, velocity vector norm of 1.0, and gravitational parameter of 1.0:
 
         >>> import jax.numpy as jnp
         >>> from astrodynx.twobody import semimajor_axis
-        >>> r = jnp.array([1.0, 0.0, 0.0])
-        >>> v = jnp.array([0.0, 1.0, 0.0])
+        >>> r = 1.0
+        >>> v = 1.0
         >>> mu = 1.0
         >>> semimajor_axis(r, v, mu)
-        Array(1., dtype=float32)
+        1.0
 
         With broadcasting, you can calculate the semimajor axis for multiple position and velocity vectors:
 
-        >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        >>> r = jnp.array([1.0, 2.0])
+        >>> v = jnp.array([1.0, 2.0])
         >>> mu = jnp.array([1.0, 2.0])
         >>> semimajor_axis(r, v, mu)
         Array([ 1., -1.], dtype=float32)
     """
-    return 1 / (2 / jnp.linalg.norm(r, axis=-1) - jnp.linalg.norm(v, axis=-1) ** 2 / mu)
+    return 1 / (2 / r - v**2 / mu)
