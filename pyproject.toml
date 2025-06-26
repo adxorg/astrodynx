@@ -66,5 +66,5 @@ version_provider = "scm"
 tag_format = "v$version"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-addopts = "--cov=src/astrodynx --cov-report=term-missing"
+testpaths = ["tests","src/astrodynx"]
+addopts = "--cov=src/astrodynx --cov-report=term-missing --doctest-modules"

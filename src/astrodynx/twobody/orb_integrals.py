@@ -81,7 +81,7 @@ def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
         >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
         >>> angular_momentum(r, v)
         Array([[0., 0., 1.],
-            [0., 0., 4.]], dtype=float32)
+               [0., 0., 4.]], dtype=float32)
     """
     return jnp.cross(r, v)
 
