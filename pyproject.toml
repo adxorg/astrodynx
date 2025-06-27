@@ -68,3 +68,8 @@ tag_format = "v$version"
 [tool.pytest.ini_options]
 testpaths = ["tests","src/astrodynx"]
 addopts = "--cov=src/astrodynx --cov-report=term-missing"
+
+[tool.coverage.run]
+omit = [
+    "src/astrodynx/_version.py"
+]

@@ -1,3 +1,0 @@
-[run]
-omit =
-    src/astrodynx/_version.py
