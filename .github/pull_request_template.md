@@ -1,8 +1,3 @@
----
-name: Pull Request
-about: Submit a pull request to AstroDynX
----
-
 ## Description
 
 Please provide a short summary of your changes and the motivation behind them.
