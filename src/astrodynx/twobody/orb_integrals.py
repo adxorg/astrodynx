@@ -128,3 +128,49 @@ def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> ArrayLike:
         Array([ 1., -1.], dtype=float32)
     """
     return 1 / (2 / r - v**2 / mu)
+
+
+def eccentricity_vector(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
+    r"""
+    Returns the eccentricity vector of a two-body orbit.
+
+    Args:
+        r: (..., 3) position vector of the object in the two-body system.
+        v: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `r`.
+        mu: Gravitational parameter of the central body; shape broadcast-compatible with `r` and `v`.
+
+    Returns:
+        The eccentricity vector of the orbit.
+
+    Notes
+        The eccentricity vector is calculated using equation (3.14):
+        $$
+        \boldsymbol{e} = \frac{\boldsymbol{v} \times \boldsymbol{h}}{\mu} - \frac{\boldsymbol{r}}{r}
+        $$
+        where $\boldsymbol{e}$ is the eccentricity vector, $\boldsymbol{v}$ is the velocity vector, $\boldsymbol{h}$ is the specific angular momentum vector, $\mu$ is the gravitational parameter, and $\boldsymbol{r}$ is the position vector.
+
+    References
+        Battin, 1999, pp.116.
+
+    Examples
+        A simple example of calculating the eccentricity vector for a position vector [1, 0, 0] and velocity vector [0, 1, 0]:
+
+        >>> import jax.numpy as jnp
+        >>> from astrodynx.twobody import eccentricity_vector
+        >>> r = jnp.array([1.0, 0.0, 0.0])
+        >>> v = jnp.array([0.0, 1.0, 0.0])
+        >>> mu = 1.0
+        >>> eccentricity_vector(r, v, mu)
+        Array([0., 0., 0.], dtype=float32)
+
+        With broadcasting, you can calculate the eccentricity vector for multiple position and velocity vectors:
+
+        >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        >>> mu = jnp.array([[1.0],[2.0]])
+        >>> eccentricity_vector(r, v, mu)
+        Array([[0., 0., 0.],
+            [3., 0., 0.]], dtype=float32)
+    """
+    h = angular_momentum(r, v)
+    return jnp.cross(v, h) / mu - r / jnp.linalg.norm(r, axis=-1, keepdims=True)

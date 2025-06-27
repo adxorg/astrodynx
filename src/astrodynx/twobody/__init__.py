@@ -6,6 +6,7 @@ from astrodynx.twobody.orb_integrals import (
     angular_momentum,
     orb_period,
     semimajor_axis,
+    eccentricity_vector,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "angular_momentum",
     "orb_period",
     "semimajor_axis",
+    "eccentricity_vector",
 ]

@@ -1,6 +1,7 @@
 from astrodynx.twobody import orb_period
 from astrodynx.twobody import angular_momentum
 from astrodynx.twobody import semimajor_axis
+from astrodynx.twobody import eccentricity_vector
 
 import jax.numpy as jnp
 
@@ -116,4 +117,39 @@ class TestSemimajorAxis:
         mu = 1.0
         expected = 1 / (2 / r - v**2 / mu)
         result = semimajor_axis(r, v, mu)
+        assert jnp.allclose(result, expected)
+
+
+class TestEccentricityVector:
+    def test_circular_orbit(self) -> None:
+        r = jnp.array([1.0, 0.0, 0.0])
+        v = jnp.array([0.0, 1.0, 0.0])
+        mu = 1.0
+        expected = jnp.array([0.0, 0.0, 0.0])
+        result = eccentricity_vector(r, v, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_elliptical_orbit(self) -> None:
+        r = jnp.array([1.0, 1.0, 0.0])
+        v = jnp.array([0.0, 1.0, 0.0])
+        mu = 2.0
+        h = angular_momentum(r, v)
+        expected = jnp.cross(v, h) / mu - r / jnp.linalg.norm(r)
+        result = eccentricity_vector(r, v, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_broadcasting(self) -> None:
+        r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        mu = jnp.array([[1.0], [2.0]])
+        expected = jnp.array([[0.0, 0.0, 0.0], [3.0, 0.0, 0.0]])
+        result = eccentricity_vector(r, v, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_zero_velocity(self) -> None:
+        r = jnp.array([1.0, 0.0, 0.0])
+        v = jnp.array([0.0, 0.0, 0.0])
+        mu = 1.0
+        expected = jnp.array([-1.0, 0.0, 0.0])
+        result = eccentricity_vector(r, v, mu)
         assert jnp.allclose(result, expected)
