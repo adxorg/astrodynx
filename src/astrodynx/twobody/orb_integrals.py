@@ -170,7 +170,7 @@ def eccentricity_vector(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
         >>> mu = jnp.array([[1.0],[2.0]])
         >>> eccentricity_vector(r, v, mu)
         Array([[0., 0., 0.],
-            [3., 0., 0.]], dtype=float32)
+               [3., 0., 0.]], dtype=float32)
     """
     h = angular_momentum(r, v)
     return jnp.cross(v, h) / mu - r / jnp.linalg.norm(r, axis=-1, keepdims=True)
