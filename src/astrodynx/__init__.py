@@ -4,8 +4,10 @@ from astrodynx._version import __version__ as __version__
 from astrodynx._version import __version_tuple__ as __version_tuple__
 
 from astrodynx.twobody.kepler_equation import (
-    mean_anomaly_equ_elps,
-    mean_anomaly_equ_hypb,
+    keplerequ_elps,
+    keplerequ_hypb,
+    mean_anomaly_elps,
+    mean_anomaly_hypb,
 )
 from astrodynx.twobody.orb_integrals import (
     orb_period,
@@ -21,8 +23,10 @@ from astrodynx.twobody.orb_integrals import (
 
 
 __all__ = [
-    "mean_anomaly_equ_elps",
-    "mean_anomaly_equ_hypb",
+    "keplerequ_elps",
+    "keplerequ_hypb",
+    "mean_anomaly_elps",
+    "mean_anomaly_hypb",
     "orb_period",
     "angular_momentum",
     "semimajor_axis",

@@ -7,34 +7,34 @@ class TestMeanAnomalyEquElps:
         e = 0.1
         E = jnp.pi / 4
         expected = E - e * jnp.sin(E)
-        result = adx.mean_anomaly_equ_elps(e, E)
+        result = adx.keplerequ_elps(e, E)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_array(self) -> None:
         e = jnp.array([0.1, 0.2])
         E = jnp.array([jnp.pi / 4, jnp.pi / 3])
         expected = E - e * jnp.sin(E)
-        result = adx.mean_anomaly_equ_elps(e, E)
+        result = adx.keplerequ_elps(e, E)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_broadcasting(self) -> None:
         e = jnp.array([0.1, 0.2])
         E = jnp.pi / 4
         expected = E - e * jnp.sin(E)
-        result = adx.mean_anomaly_equ_elps(e, E)
+        result = adx.keplerequ_elps(e, E)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_zero_eccentricity(self) -> None:
         e = 0.0
         E = jnp.linspace(0, 2 * jnp.pi, 5)
         expected = E
-        result = adx.mean_anomaly_equ_elps(e, E)
+        result = adx.keplerequ_elps(e, E)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_types(self) -> None:
         e = 0.1
         E = jnp.pi / 2
-        result = adx.mean_anomaly_equ_elps(e, E)
+        result = adx.keplerequ_elps(e, E)
         assert isinstance(result, jnp.ndarray)
 
 
@@ -44,7 +44,7 @@ class TestMeanAnomalyEquHypb:
         e = 1.1
         H = 1.0
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_array(self) -> None:
@@ -52,7 +52,7 @@ class TestMeanAnomalyEquHypb:
         e = jnp.array([1.1, 1.2])
         H = jnp.array([1.0, 2.0])
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_broadcasting(self) -> None:
@@ -60,7 +60,7 @@ class TestMeanAnomalyEquHypb:
         e = jnp.array([1.1, 1.2])
         H = 1.0
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_broadcasting_reverse(self) -> None:
@@ -68,7 +68,7 @@ class TestMeanAnomalyEquHypb:
         e = 1.5
         H = jnp.array([0.5, 1.0, 1.5])
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_minimum_eccentricity(self) -> None:
@@ -76,7 +76,7 @@ class TestMeanAnomalyEquHypb:
         e = 1.001  # Just above 1
         H = 0.5
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_large_eccentricity(self) -> None:
@@ -84,7 +84,7 @@ class TestMeanAnomalyEquHypb:
         e = 10.0
         H = 0.5
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_zero_hyperbolic_anomaly(self) -> None:
@@ -92,7 +92,7 @@ class TestMeanAnomalyEquHypb:
         e = jnp.array([1.1, 1.5, 2.0])
         H = 0.0
         expected = e * jnp.sinh(H) - H  # Should be 0 since sinh(0) = 0
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
         assert jnp.allclose(result, 0.0, atol=1e-7)
 
@@ -101,7 +101,7 @@ class TestMeanAnomalyEquHypb:
         e = 1.5
         H = jnp.array([-1.0, -0.5, 0.0, 0.5, 1.0])
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_large_hyperbolic_anomaly(self) -> None:
@@ -109,7 +109,7 @@ class TestMeanAnomalyEquHypb:
         e = 1.2
         H = 5.0
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
 
     def test_multidimensional_arrays(self) -> None:
@@ -117,7 +117,7 @@ class TestMeanAnomalyEquHypb:
         e = jnp.array([[1.1, 1.2], [1.3, 1.4]])
         H = jnp.array([[0.5, 1.0], [1.5, 2.0]])
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
         assert result.shape == e.shape
 
@@ -125,7 +125,7 @@ class TestMeanAnomalyEquHypb:
         """Test that the function returns the correct type."""
         e = 1.1
         H = 1.0
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert isinstance(result, jnp.ndarray)
 
     def test_mathematical_properties(self) -> None:
@@ -134,7 +134,7 @@ class TestMeanAnomalyEquHypb:
 
         # Test that the function is monotonic in H for fixed e
         H_values = jnp.linspace(-2, 2, 10)
-        results = adx.mean_anomaly_equ_hypb(e, H_values)
+        results = adx.keplerequ_hypb(e, H_values)
         # Check that results are monotonically increasing
         assert jnp.all(jnp.diff(results) > 0)
 
@@ -143,8 +143,8 @@ class TestMeanAnomalyEquHypb:
         e = 1.5
         H = 1.0
 
-        result_pos = adx.mean_anomaly_equ_hypb(e, H)
-        result_neg = adx.mean_anomaly_equ_hypb(e, -H)
+        result_pos = adx.keplerequ_hypb(e, H)
+        result_neg = adx.keplerequ_hypb(e, -H)
 
         # For hyperbolic orbits: N(-H) = e*sinh(-H) - (-H) = -e*sinh(H) + H = -(e*sinh(H) - H) = -N(H)
         assert jnp.allclose(result_neg, -result_pos, rtol=1e-7)
@@ -154,14 +154,14 @@ class TestMeanAnomalyEquHypb:
         # First example
         e = 1.1
         H = 1.0
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         expected = 0.29272127  # From corrected docstring
         assert jnp.allclose(result, expected, rtol=1e-6)
 
         # Second example with broadcasting
         e = jnp.array([1.1, 1.2])
         H = jnp.array([1.0, 2.0])
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         expected = jnp.array([0.29272127, 2.3522325])  # From corrected docstring
         assert jnp.allclose(result, expected, rtol=1e-6)
 
@@ -170,7 +170,7 @@ class TestMeanAnomalyEquHypb:
         e = 1.1
         H = 1e-10
         expected = e * jnp.sinh(H) - H
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         assert jnp.allclose(result, expected, rtol=1e-7)
         # For small H, sinh(H) ≈ H, so result ≈ e*H - H = H*(e-1)
         assert jnp.allclose(result, H * (e - 1), rtol=1e-6)
@@ -185,7 +185,7 @@ class TestMeanAnomalyEquHypb:
         H = jnp.linspace(-5, 5, size)
 
         start_time = time.time()
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         end_time = time.time()
 
         # Check that computation completes and results are reasonable
@@ -203,7 +203,7 @@ class TestMeanAnomalyEquHypb:
         # Note: e = 1 is parabolic, not hyperbolic, but test the boundary behavior
         e = 1.0
         H = 1.0
-        result = adx.mean_anomaly_equ_hypb(e, H)
+        result = adx.keplerequ_hypb(e, H)
         expected = e * jnp.sinh(H) - H
         assert jnp.allclose(result, expected, rtol=1e-7)
 
@@ -215,8 +215,118 @@ class TestMeanAnomalyEquHypb:
 
         for e in e_values:
             for H in H_values:
-                result = adx.mean_anomaly_equ_hypb(e, H)
+                result = adx.keplerequ_hypb(e, H)
                 expected = e * jnp.sinh(H) - H
                 assert jnp.allclose(result, expected, rtol=1e-7), (
                     f"Failed for e={e}, H={H}"
                 )
+
+
+class TestMeanAnomalyElps:
+    def test_scalar_inputs(self) -> None:
+        """Test with scalar inputs."""
+        a = 1.0
+        mu = 1.0
+        deltat = 1.0
+        expected = jnp.sqrt(mu / a**3) * deltat
+        result = adx.mean_anomaly_elps(a, mu, deltat)
+        assert jnp.allclose(result, expected)
+
+    def test_array_inputs(self) -> None:
+        """Test with array inputs."""
+        a = jnp.array([1.0, 2.0])
+        mu = jnp.array([1.0, 2.0])
+        deltat = jnp.array([1.0, 1.0])
+        expected = jnp.sqrt(mu / a**3) * deltat
+        result = adx.mean_anomaly_elps(a, mu, deltat)
+        assert jnp.allclose(result, expected)
+
+    def test_broadcasting(self) -> None:
+        """Test broadcasting capabilities."""
+        a = jnp.array([1.0, 2.0])
+        mu = 1.0
+        deltat = 1.0
+        expected = jnp.sqrt(mu / a**3) * deltat
+        result = adx.mean_anomaly_elps(a, mu, deltat)
+        assert jnp.allclose(result, expected)
+
+    def test_docstring_examples(self) -> None:
+        """Test the examples provided in the function docstring."""
+        # First example
+        a = 1.0
+        mu = 1.0
+        deltat = 1.0
+        result = adx.mean_anomaly_elps(a, mu, deltat)
+        expected = 1.0
+        assert jnp.allclose(result, expected)
+
+        # Second example with broadcasting
+        a = jnp.array([1.0, 2.0])
+        mu = jnp.array([1.0, 2.0])
+        deltat = jnp.array([1.0, 1.0])
+        result = adx.mean_anomaly_elps(a, mu, deltat)
+        expected = jnp.array([1.0, 0.5])
+        assert jnp.allclose(result, expected)
+
+    def test_types(self) -> None:
+        """Test that the function returns the correct type."""
+        a = 1.0
+        mu = 1.0
+        deltat = 1.0
+        result = adx.mean_anomaly_elps(a, mu, deltat)
+        assert isinstance(result, jnp.ndarray)
+
+
+class TestMeanAnomalyHypb:
+    def test_scalar_inputs(self) -> None:
+        """Test with scalar inputs."""
+        a = -1.0
+        mu = 1.0
+        deltat = 1.0
+        expected = jnp.sqrt(mu / -(a**3)) * deltat
+        result = adx.mean_anomaly_hypb(a, mu, deltat)
+        assert jnp.allclose(result, expected)
+
+    def test_array_inputs(self) -> None:
+        """Test with array inputs."""
+        a = jnp.array([-1.0, -2.0])
+        mu = jnp.array([1.0, 2.0])
+        deltat = jnp.array([1.0, 1.0])
+        expected = jnp.sqrt(mu / -(a**3)) * deltat
+        result = adx.mean_anomaly_hypb(a, mu, deltat)
+        assert jnp.allclose(result, expected)
+
+    def test_broadcasting(self) -> None:
+        """Test broadcasting capabilities."""
+        a = jnp.array([-1.0, -2.0])
+        mu = 1.0
+        deltat = 1.0
+        expected = jnp.sqrt(mu / -(a**3)) * deltat
+        result = adx.mean_anomaly_hypb(a, mu, deltat)
+        assert jnp.allclose(result, expected)
+
+    def test_docstring_examples(self) -> None:
+        """Test the examples provided in the function docstring."""
+        # First example
+        a = -1.0
+        mu = 1.0
+        deltat = 1.0
+        result = adx.mean_anomaly_hypb(a, mu, deltat)
+        expected = 1.0
+        assert jnp.allclose(result, expected)
+
+        # Second example with broadcasting
+        a = jnp.array([-1.0, -2.0])
+        mu = jnp.array([1.0, 2.0])
+        deltat = jnp.array([1.0, 1.0])
+        result = adx.mean_anomaly_hypb(a, mu, deltat)
+        expected = jnp.array([1.0, 0.5])
+        assert jnp.allclose(result, expected)
+
+    def test_types(self) -> None:
+        """Test that the function returns the correct type."""
+        a = -1.0
+        mu = 1.0
+        deltat = 1.0
+        result = adx.mean_anomaly_hypb(a, mu, deltat)
+        assert isinstance(result, jnp.ndarray)

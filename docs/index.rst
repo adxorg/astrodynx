@@ -70,13 +70,13 @@ Get started with AstroDynX by exploring some basic orbital mechanics calculation
    # Example 2: Calculate mean anomaly for elliptical orbit
    e = 0.1  # eccentricity
    E = jnp.pi / 4  # eccentric anomaly
-   M = adx.mean_anomaly_equ_elps(e, E)
+   M = adx.keplerequ_elps(e, E)
    print(f"Mean anomaly: {M:.4f}")
 
    # Example 3: Calculate mean anomaly for hyperbolic orbit
    e_hyp = 1.5  # hyperbolic eccentricity
    H = 1.0  # hyperbolic eccentric anomaly
-   N = adx.mean_anomaly_equ_hypb(e_hyp, H)
+   N = adx.keplerequ_hypb(e_hyp, H)
    print(f"Hyperbolic mean anomaly: {N:.4f}")
 
    # Example 4: Compute angular momentum
