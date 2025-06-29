@@ -1,4 +1,4 @@
-astrodynx
+``astrodynx``
 =============
 
 .. automodule:: astrodynx
