@@ -28,17 +28,17 @@ def orb_period(a: ArrayLike, mu: ArrayLike) -> Array:
         A simple example of calculating the orbital period for a circular orbit with a semimajor axis of 1.0 and a gravitational parameter of 1.0:
 
         >>> import jax.numpy as jnp
-        >>> from astrodynx.twobody import orb_period
+        >>> import astrodynx as adx
         >>> a = 1.0
         >>> mu = 1.0
-        >>> orb_period(a, mu)
+        >>> adx.orb_period(a, mu)
         Array(6.2831855, dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the orbital period for multiple semimajor axes and gravitational parameters:
 
         >>> a = jnp.array([1.0, 2.0])
         >>> mu = jnp.array([1.0, 2.0])
-        >>> orb_period(a, mu)
+        >>> adx.orb_period(a, mu)
         Array([ 6.2831855, 12.566371 ], dtype=float32)
     """
     return 2 * jnp.pi * jnp.sqrt(a**3 / mu)
@@ -69,17 +69,17 @@ def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
         A simple example of calculating the specific angular momentum for a position vector [1, 0, 0] and velocity vector [0, 1, 0]:
 
         >>> import jax.numpy as jnp
-        >>> from astrodynx.twobody import angular_momentum
+        >>> import astrodynx as adx
         >>> r = jnp.array([1.0, 0.0, 0.0])
         >>> v = jnp.array([0.0, 1.0, 0.0])
-        >>> angular_momentum(r, v)
+        >>> adx.angular_momentum(r, v)
         Array([0., 0., 1.], dtype=float32)
 
         With broadcasting, you can calculate the specific angular momentum for multiple position and velocity vectors:
 
         >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
         >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
-        >>> angular_momentum(r, v)
+        >>> adx.angular_momentum(r, v)
         Array([[0., 0., 1.],
                [0., 0., 4.]], dtype=float32)
     """
@@ -112,11 +112,11 @@ def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> ArrayLike:
         A simple example of calculating the semimajor axis with a position vector norm of 1.0, velocity vector norm of 1.0, and gravitational parameter of 1.0:
 
         >>> import jax.numpy as jnp
-        >>> from astrodynx.twobody import semimajor_axis
+        >>> import astrodynx as adx
         >>> r = 1.0
         >>> v = 1.0
         >>> mu = 1.0
-        >>> semimajor_axis(r, v, mu)
+        >>> adx.semimajor_axis(r, v, mu)
         1.0
 
         With broadcasting, you can calculate the semimajor axis for multiple position and velocity vectors:
@@ -124,7 +124,7 @@ def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> ArrayLike:
         >>> r = jnp.array([1.0, 2.0])
         >>> v = jnp.array([1.0, 2.0])
         >>> mu = jnp.array([1.0, 2.0])
-        >>> semimajor_axis(r, v, mu)
+        >>> adx.semimajor_axis(r, v, mu)
         Array([ 1., -1.], dtype=float32)
     """
     return 1 / (2 / r - v**2 / mu)
@@ -156,11 +156,11 @@ def eccentricity_vector(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
         A simple example of calculating the eccentricity vector for a position vector [1, 0, 0] and velocity vector [0, 1, 0]:
 
         >>> import jax.numpy as jnp
-        >>> from astrodynx.twobody import eccentricity_vector
+        >>> import astrodynx as adx
         >>> r = jnp.array([1.0, 0.0, 0.0])
         >>> v = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
-        >>> eccentricity_vector(r, v, mu)
+        >>> adx.eccentricity_vector(r, v, mu)
         Array([0., 0., 0.], dtype=float32)
 
         With broadcasting, you can calculate the eccentricity vector for multiple position and velocity vectors:
@@ -168,7 +168,7 @@ def eccentricity_vector(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
         >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
         >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
         >>> mu = jnp.array([[1.0],[2.0]])
-        >>> eccentricity_vector(r, v, mu)
+        >>> adx.eccentricity_vector(r, v, mu)
         Array([[0., 0., 0.],
                [3., 0., 0.]], dtype=float32)
     """

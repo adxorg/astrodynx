@@ -62,31 +62,27 @@ Get started with AstroDynX by exploring some basic orbital mechanics calculation
    print(f"AstroDynX version: {adx.__version__}")
 
    # Example 1: Compute the orbital period of an elliptical orbit
-   from astrodynx.twobody import orb_period
    a = 1.0  # semimajor axis
    mu = 1.0  # gravitational parameter
-   period = orb_period(a, mu)
+   period = adx.orb_period(a, mu)
    print(f"Orbital period: {period:.4f}")
 
    # Example 2: Calculate mean anomaly for elliptical orbit
-   from astrodynx.twobody import mean_anomaly_equ_elps
    e = 0.1  # eccentricity
    E = jnp.pi / 4  # eccentric anomaly
-   M = mean_anomaly_equ_elps(e, E)
+   M = adx.mean_anomaly_equ_elps(e, E)
    print(f"Mean anomaly: {M:.4f}")
 
    # Example 3: Calculate mean anomaly for hyperbolic orbit
-   from astrodynx.twobody import mean_anomaly_equ_hypb
    e_hyp = 1.5  # hyperbolic eccentricity
    H = 1.0  # hyperbolic eccentric anomaly
-   N = mean_anomaly_equ_hypb(e_hyp, H)
+   N = adx.mean_anomaly_equ_hypb(e_hyp, H)
    print(f"Hyperbolic mean anomaly: {N:.4f}")
 
    # Example 4: Compute angular momentum
-   from astrodynx.twobody import angular_momentum
    r = jnp.array([1.0, 0.0, 0.0])  # position vector
    v = jnp.array([0.0, 1.0, 0.0])  # velocity vector
-   h = angular_momentum(r, v)
+   h = adx.angular_momentum(r, v)
    print(f"Angular momentum: {h}")
 
 Citation
@@ -108,7 +104,7 @@ If you use AstroDynX in your academic work, please cite our project:
    :hidden:
 
    tutorials/index
-   api
+   api/index
    changelog
 
 
