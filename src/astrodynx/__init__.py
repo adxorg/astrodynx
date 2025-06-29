@@ -12,6 +12,11 @@ from astrodynx.twobody.orb_integrals import (
     angular_momentum,
     semimajor_axis,
     eccentricity_vector,
+    semiparameter,
+    mean_motion,
+    equ_of_orbit,
+    radius_periapsis,
+    radius_apoapsis,
 )
 
 
@@ -22,4 +27,9 @@ __all__ = [
     "angular_momentum",
     "semimajor_axis",
     "eccentricity_vector",
+    "semiparameter",
+    "mean_motion",
+    "equ_of_orbit",
+    "radius_periapsis",
+    "radius_apoapsis",
 ]

@@ -174,3 +174,208 @@ def eccentricity_vector(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
     """
     h = angular_momentum(r, v)
     return jnp.cross(v, h) / mu - r / jnp.linalg.norm(r, axis=-1, keepdims=True)
+
+
+def semiparameter(h: ArrayLike, mu: ArrayLike) -> ArrayLike:
+    r"""
+    Returns the semiparameter of a two-body orbit.
+
+    Args:
+        h: Norm of the specific angular momentum vector of the object in the two-body system.
+        mu: Gravitational parameter of the central body; shape broadcast-compatible with `h`.
+
+    Returns:
+        The semiparameter of the orbit.
+
+    Notes
+        The semiparameter is calculated using equation (3.15):
+        $$
+        p = \frac{h^2}{\mu}
+        $$
+        where $p$ is the semiparameter, $h$ is the norm of the specific angular momentum vector, and $\mu$ is the gravitational parameter.
+
+    References
+        Battin, 1999, pp.116.
+
+    Examples
+        A simple example of calculating the semiparameter with a specific angular momentum norm of 1.0 and gravitational parameter of 1.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> h = 1.0
+        >>> mu = 1.0
+        >>> adx.semiparameter(h, mu)
+        1.0
+
+        With broadcasting, you can calculate the semiparameter for multiple specific angular momentum norms and gravitational parameters:
+
+        >>> h = jnp.array([1.0, 2.0])
+        >>> mu = jnp.array([1.0, 2.0])
+        >>> adx.semiparameter(h, mu)
+        Array([1., 2.], dtype=float32)
+    """
+    return h**2 / mu
+
+
+def mean_motion(P: ArrayLike) -> ArrayLike:
+    r"""
+    Returns the mean motion of a two-body orbit.
+
+    Args:
+        P: Orbital period of the object in the two-body system.
+
+    Returns:
+        The mean motion of the orbit.
+
+    Notes
+        The mean motion is calculated using equation (3.24):
+        $$
+        n = \frac{2\pi}{P}
+        $$
+        where $n$ is the mean motion and $P$ is the orbital period.
+
+    References
+        Battin, 1999, pp.119.
+
+    Examples
+        A simple example of calculating the mean motion with an orbital period of 1.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> P = 1.0
+        >>> jnp.allclose(adx.mean_motion(P), 6.283185307179586, atol=1e-7)
+        Array(True, dtype=bool)
+
+        With broadcasting, you can calculate the mean motion for multiple orbital periods:
+
+        >>> P = jnp.array([1.0, 2.0])
+        >>> adx.mean_motion(P)
+        Array([6.2831855, 3.1415927], dtype=float32)
+    """
+    return 2 * jnp.pi / P
+
+
+def equ_of_orbit(p: ArrayLike, e: ArrayLike, f: ArrayLike) -> Array:
+    r"""
+    Returns the equation of the orbit in the two-body system.
+
+    Args:
+        p: Semiparameter of the orbit.
+        e: Eccentricity of the orbit; shape broadcast-compatible with `p`.
+        f: True anomaly of the orbit; shape broadcast-compatible with `p` and `e`.
+
+    Returns:
+        The equation of the orbit.
+
+    Notes
+        The equation of the orbit is calculated using equation (3.20):
+        $$
+        r = \frac{p}{1 + e \cos(f)}
+        $$
+        where $r$ is the norm of the position vector, $p$ is the semiparameter, $e$ is the eccentricity, and $f$ is the true anomaly.
+
+    References
+        Battin, 1999, pp.117.
+
+    Examples
+        A simple example of calculating the equation of the orbit with a semiparameter of 1.0, eccentricity of 0.0, and true anomaly of 0.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> p = 1.0
+        >>> e = 0.0
+        >>> f = 0.0
+        >>> adx.equ_of_orbit(p, e, f)
+        Array(1., dtype=float32, weak_type=True)
+
+        With broadcasting, you can calculate the equation of the orbit for multiple semiparameters, eccentricities, and true anomalies:
+
+        >>> p = jnp.array([1.0, 2.0])
+        >>> e = jnp.array([0.0, 0.0])
+        >>> f = jnp.array([0.0, 0.0])
+        >>> adx.equ_of_orbit(p, e, f)
+        Array([1., 2.], dtype=float32)
+    """
+    return p / (1 + e * jnp.cos(f))
+
+
+def radius_periapsis(p: ArrayLike, e: ArrayLike) -> ArrayLike:
+    r"""
+    Returns the radius of periapsis of the orbit.
+
+    Args:
+        p: Semiparameter of the orbit.
+        e: Eccentricity of the orbit; shape broadcast-compatible with `p`.
+
+    Returns:
+        The radius of periapsis of the orbit.
+
+    Notes
+        The radius of periapsis is calculated using equation:
+        $$
+        r_p = \frac{p}{1 + e}
+        $$
+        where $r_p$ is the radius of periapsis, $p$ is the semiparameter, and $e$ is the eccentricity.
+
+    References
+        Battin, 1999, pp.117.
+
+    Examples
+        A simple example of calculating the radius of periapsis with a semiparameter of 1.0 and eccentricity of 0.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> p = 1.0
+        >>> e = 0.0
+        >>> adx.radius_periapsis(p, e)
+        1.0
+
+        With broadcasting, you can calculate the radius of periapsis for multiple semiparameters and eccentricities:
+
+        >>> p = jnp.array([1.0, 2.0])
+        >>> e = jnp.array([0.0, 0.0])
+        >>> adx.radius_periapsis(p, e)
+        Array([1., 2.], dtype=float32)
+    """
+    return p / (1 + e)
+
+
+def radius_apoapsis(p: ArrayLike, e: ArrayLike) -> ArrayLike:
+    r"""
+    Returns the radius of apoapsis of the orbit.
+
+    Args:
+        p: Semiparameter of the orbit.
+        e: Eccentricity of the orbit; shape broadcast-compatible with `p`.
+
+    Returns:
+        The radius of apoapsis of the orbit.
+
+    Notes
+        The radius of apoapsis is calculated using equation:
+        $$
+        r_a = \frac{p}{1 - e}
+        $$
+        where $r_a$ is the radius of apoapsis, $p$ is the semiparameter, and $e$ is the eccentricity.
+
+    References
+        Battin, 1999, pp.117.
+
+    Examples
+        A simple example of calculating the radius of apoapsis with a semiparameter of 1.0 and eccentricity of 0.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> p = 1.0
+        >>> e = 0.0
+        >>> adx.radius_apoapsis(p, e)
+        1.0
+
+        With broadcasting, you can calculate the radius of apoapsis for multiple semiparameters and eccentricities:
+
+        >>> p = jnp.array([1.0, 2.0])
+        >>> e = jnp.array([0.0, 0.0])
+        >>> adx.radius_apoapsis(p, e)
+        Array([1., 2.], dtype=float32)
+    """
+    return p / (1 - e)

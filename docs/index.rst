@@ -104,9 +104,9 @@ If you use AstroDynX in your academic work, please cite our project:
    :hidden:
 
    tutorials/index
+   tests
    api/index
    changelog
-
 
 .. toctree::
    :caption: Indices and tables
