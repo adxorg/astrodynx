@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: AstroDynX Documentation
+    url: https://adxorg.github.io/astrodynx
+    about: Check the documentation before creating an issue
+  - name: Contributing Guidelines
+    url: https://github.com/adxorg/astrodynx/blob/main/CONTRIBUTING.md
+    about: Please read the contributing guidelines before creating an issue

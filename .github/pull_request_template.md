@@ -7,11 +7,14 @@ Fixes #(issue)
 ## Type of change
 
 - [ ] Bug fix
-- [ ] New feature or enhancement
-- [ ] Documentation update
-- [ ] Refactor
-- [ ] Other (please describe):
+- [ ] Enhancement (new feature or request)
+- [ ] Documentation (improvements or additions)
 
+
+## Checklist
+
+- [ ] I have read the [CONTRIBUTING](../CONTRIBUTING.md) document
+- [ ] New and existing unit tests pass locally with my changes
 
 ## Additional context (optional)
 
