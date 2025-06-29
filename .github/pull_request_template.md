@@ -9,6 +9,7 @@ Fixes #(issue)
 - [ ] Bug fix
 - [ ] Enhancement (new feature or request)
 - [ ] Documentation (improvements or additions)
+- [ ] Other (please specify)
 
 
 ## Checklist
