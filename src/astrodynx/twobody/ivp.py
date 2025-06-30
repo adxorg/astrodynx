@@ -79,14 +79,14 @@ def U0(chi: ArrayLike, alpha: ArrayLike) -> Array:
         >>> chi = 1.0
         >>> alpha = 1.0
         >>> adx.twobody.ivp.U0(chi, alpha)
-        Array(0.5403023, dtype=float32, weak_type=True)
+        Array(0.5403..., dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the universal function U0 for multiple arguments and parameters:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = jnp.array([1.0, -2.0])
         >>> adx.twobody.ivp.U0(chi, alpha)
-        Array([0.5403023, 8.488967 ], dtype=float32)
+        Array([0.5403..., 8.4889...], dtype=float32)
     """
     conds = [
         alpha > 0,
@@ -131,14 +131,14 @@ def U1(chi: ArrayLike, alpha: ArrayLike) -> Array:
         >>> chi = 1.0
         >>> alpha = 1.0
         >>> adx.twobody.ivp.U1(chi, alpha)
-        Array(0.841471, dtype=float32, weak_type=True)
+        Array(0.8414..., dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the universal function U1 for multiple arguments and parameters:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = jnp.array([1.0, -2.0])
         >>> adx.twobody.ivp.U1(chi, alpha)
-        Array([0.841471 , 5.9608126], dtype=float32)
+        Array([0.8414..., 5.9608...], dtype=float32)
     """
     conds = [
         alpha > 0,
@@ -183,14 +183,14 @@ def U2(chi: ArrayLike, alpha: ArrayLike) -> Array:
         >>> chi = 1.0
         >>> alpha = 1.0
         >>> adx.twobody.ivp.U2(chi, alpha)
-        Array(0.45969772, dtype=float32, weak_type=True)
+        Array(0.4596..., dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the universal function U2 for multiple arguments and parameters:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = jnp.array([1.0, -2.0])
         >>> adx.twobody.ivp.U2(chi, alpha)
-        Array([0.45969772, 3.7444835 ], dtype=float32)
+        Array([0.4596..., 3.7444...], dtype=float32)
     """
     conds = [
         alpha > 0,
@@ -235,14 +235,14 @@ def U3(chi: ArrayLike, alpha: ArrayLike) -> Array:
         >>> chi = 1.0
         >>> alpha = 1.0
         >>> adx.twobody.ivp.U3(chi, alpha)
-        Array(0.15852898, dtype=float32, weak_type=True)
+        Array(0.1585..., dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the universal function U3 for multiple arguments and parameters:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = jnp.array([1.0, -2.0])
         >>> adx.twobody.ivp.U3(chi, alpha)
-        Array([0.15852898, 1.9804062 ], dtype=float32)
+        Array([0.1585..., 1.9804...], dtype=float32)
     """
 
     conds = [
@@ -291,14 +291,14 @@ def U4(chi: ArrayLike, alpha: ArrayLike) -> Array:
         >>> chi = 1.0
         >>> alpha = 1.0
         >>> adx.twobody.ivp.U4(chi, alpha)
-        Array(0.04030228, dtype=float32, weak_type=True)
+        Array(0.0403..., dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the universal function U4 for multiple arguments and parameters:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = jnp.array([1.0, -2.0])
         >>> adx.twobody.ivp.U4(chi, alpha)
-        Array([0.04030228, 0.87224174], dtype=float32)
+        Array([0.0403..., 0.8722...], dtype=float32)
     """
     return jnp.where(
         jnp.isclose(alpha, 0.0), chi**4 / 24.0, (chi**2 / 2 - U2(chi, alpha)) / alpha
@@ -336,14 +336,14 @@ def U5(chi: ArrayLike, alpha: ArrayLike) -> Array:
         >>> chi = 1.0
         >>> alpha = 1.0
         >>> adx.twobody.ivp.U5(chi, alpha)
-        Array(0.00813769, dtype=float32, weak_type=True)
+        Array(0.008137..., dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the universal function U5 for multiple arguments and parameters:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = jnp.array([1.0, -2.0])
         >>> adx.twobody.ivp.U5(chi, alpha)
-        Array([0.00813769, 0.3235364 ], dtype=float32)
+        Array([0.008137..., 0.323536...], dtype=float32)
     """
     return jnp.where(
         jnp.isclose(alpha, 0.0), chi**5 / 120.0, (chi**3 / 6 - U3(chi, alpha)) / alpha

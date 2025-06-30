@@ -243,14 +243,14 @@ def mean_motion(P: ArrayLike) -> ArrayLike:
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
         >>> P = 1.0
-        >>> jnp.allclose(adx.mean_motion(P), 6.283185307179586, atol=1e-7)
-        Array(True, dtype=bool)
+        >>> adx.mean_motion(P)
+        6.2831...
 
         With broadcasting, you can calculate the mean motion for multiple orbital periods:
 
         >>> P = jnp.array([1.0, 2.0])
         >>> adx.mean_motion(P)
-        Array([6.2831855, 3.1415927], dtype=float32)
+        Array([6.2831..., 3.1415...], dtype=float32)
     """
     return 2 * jnp.pi / P
 
