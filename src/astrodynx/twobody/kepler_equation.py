@@ -1,6 +1,8 @@
 import jax.numpy as jnp
 from jax.typing import ArrayLike
 from jax import Array
+from astrodynx.twobody.ivp import U1, U2, U3, sigma_func
+import astrodynx as adx
 
 
 def keplerequ_elps(E: ArrayLike, e: ArrayLike, a: ArrayLike, mu: ArrayLike) -> Array:
@@ -93,6 +95,61 @@ def keplerequ_hypb(H: ArrayLike, e: ArrayLike, a: ArrayLike, mu: ArrayLike) -> A
         Array([0.29272127, 0.82048297], dtype=float32)
     """
     return (e * jnp.sinh(H) - H) * jnp.sqrt(-(a**3) / mu)
+
+
+def keplerequ_uni(chi: ArrayLike, r0: ArrayLike, v0: ArrayLike, mu: ArrayLike) -> Array:
+    r"""Returns the flight time from $t_0$ to the moment when the generalized anomaly is $\chi$.
+
+    Args:
+        chi: The generalized anomaly.
+        r0: (..., 3) The position vector at $t_0$.
+        v0: (..., 3) The velocity vector at $t_0$.
+        mu: The gravitational parameter.
+
+    Returns:
+        The flight time from $t_0$ to the moment when the generalized anomaly is $\chi$.
+
+    Notes:
+        The flight time from $t_0$ to the moment when the generalized anomaly is $\chi$ is calculated using the formula:
+        $$
+        \Delta t = \frac{r_0 U_1(\chi, \alpha) + \sigma_0 U_2(\chi, \alpha) + U_3(\chi, \alpha)}{\sqrt{\mu}}
+        $$
+        where $\Delta t = t - t_0$ is the flight time, $r_0$ is the norm of the position vector at $t_0$, $v_0$ is the norm of the velocity vector at $t_0$, $\mu$ is the gravitational parameter, $U_1$ is the universal function U1, $U_2$ is the universal function U2, $U_3$ is the universal function U3, and $\sigma_0$ is the sigma function at $t_0$.
+
+    References:
+        Battin, 1999, pp.178.
+
+    Examples:
+        A simple example of calculating the flight time for an orbit with a generalized anomaly of 1.0, a position vector of [1, 0, 0], a velocity vector of [0, 1, 0], and a gravitational parameter of 1.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> chi = 1.0
+        >>> r0 = jnp.array([1.0, 0.0, 0.0])
+        >>> v0 = jnp.array([0.0, 1.0, 0.0])
+        >>> mu = 1.0
+        >>> adx.keplerequ_uni(chi, r0, v0, mu)
+        Array([1.], dtype=float32)
+
+        With broadcasting, you can calculate the flight time for multiple generalized anomalies, position and velocity vectors, and gravitational parameters:
+
+        >>> chi = jnp.array([[1.0], [1.0]])
+        >>> r0 = jnp.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+        >>> v0 = jnp.array([[0.0, 1.0, 0.0], [-1.0, 0.0, 0.0]])
+        >>> mu = jnp.array([[1.0], [1.0]])
+        >>> adx.keplerequ_uni(chi, r0, v0, mu)
+        Array([[1.],
+               [1.]], dtype=float32)
+    """
+    r0_norm = jnp.linalg.norm(r0, axis=-1, keepdims=True)
+    alpha = 1.0 / adx.semimajor_axis(
+        r0_norm, jnp.linalg.norm(v0, axis=-1, keepdims=True), mu
+    )
+    return (
+        r0_norm * U1(chi, alpha)
+        + sigma_func(r0, v0, mu) * U2(chi, alpha)
+        + U3(chi, alpha)
+    ) / jnp.sqrt(mu)
 
 
 def mean_anomaly_elps(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:

@@ -156,3 +156,46 @@ class TestKeplerequHypb:
         mu = 1.0
         result = adx.keplerequ_hypb(H, e, a, mu)
         assert isinstance(result, jnp.ndarray)
+
+
+class TestKeplerequUni:
+    def test_scalar_inputs(self) -> None:
+        """Test with scalar inputs."""
+        chi = 1.0
+        r0 = jnp.array([1.0, 0.0, 0.0])
+        v0 = jnp.array([0.0, 1.0, 0.0])
+        mu = 1.0
+        expected = 1.0  # Value from the function's implementation
+        result = adx.keplerequ_uni(chi, r0, v0, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_array_inputs(self) -> None:
+        """Test with array inputs."""
+        chi = jnp.array([1.0, 1.0])
+        r0 = jnp.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+        v0 = jnp.array([[0.0, 1.0, 0.0], [-1.0, 0.0, 0.0]])
+        mu = jnp.array([[1.0, 1.0]])
+        # Expected values calculated from the function's formula
+        expected = jnp.array([1.0, 1.0])
+        result = adx.keplerequ_uni(chi, r0, v0, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_broadcasting(self) -> None:
+        """Test broadcasting capabilities."""
+        chi = jnp.array([1.0, 2.0])
+        r0 = jnp.array([1.0, 0.0, 0.0])
+        v0 = jnp.array([0.0, 1.0, 0.0])
+        mu = 1.0
+        # Expected values for broadcasting
+        expected = jnp.array([1.0, 2.0])
+        result = adx.keplerequ_uni(chi, r0, v0, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_types(self) -> None:
+        """Test that the function returns the correct type."""
+        chi = 1.0
+        r0 = jnp.array([1.0, 0.0, 0.0])
+        v0 = jnp.array([0.0, 1.0, 0.0])
+        mu = 1.0
+        result = adx.keplerequ_uni(chi, r0, v0, mu)
+        assert isinstance(result, jnp.ndarray)

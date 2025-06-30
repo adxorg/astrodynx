@@ -33,17 +33,18 @@ def sigma_func(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
         >>> v = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
         >>> adx.twobody.ivp.sigma_func(r, v, mu)
-        Array(0., dtype=float32)
+        Array([0.], dtype=float32)
 
         With broadcasting, you can calculate the sigma function for multiple position and velocity vectors:
 
         >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
         >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
-        >>> mu = jnp.array([1.0, 2.0])
+        >>> mu = jnp.array([[1.0], [2.0]])
         >>> adx.twobody.ivp.sigma_func(r, v, mu)
-        Array([0., 0.], dtype=float32)
+        Array([[0.],
+               [0.]], dtype=float32)
     """
-    return jnp.sum(r * v, axis=-1) / jnp.sqrt(mu)
+    return jnp.sum(r * v, axis=-1, keepdims=True) / jnp.sqrt(mu)
 
 
 def U0(chi: ArrayLike, alpha: ArrayLike) -> Array:

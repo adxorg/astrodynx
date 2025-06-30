@@ -6,6 +6,7 @@ from astrodynx._version import __version_tuple__ as __version_tuple__
 from astrodynx.twobody.kepler_equation import (
     keplerequ_elps,
     keplerequ_hypb,
+    keplerequ_uni,
     mean_anomaly_elps,
     mean_anomaly_hypb,
 )
@@ -25,6 +26,7 @@ from astrodynx.twobody.orb_integrals import (
 __all__ = [
     "keplerequ_elps",
     "keplerequ_hypb",
+    "keplerequ_uni",
     "mean_anomaly_elps",
     "mean_anomaly_hypb",
     "orb_period",
