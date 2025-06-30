@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/adxorg/astrodynx/graph/badge.svg?token=azxgWzPIIU)](https://codecov.io/gh/adxorg/astrodynx)
 
 
-# AstroDynX (adx)
+# Welcome to AstroDynX! 🚀
 
 AstroDynX is a modern astrodynamics library powered by JAX, designed for high-performance scientific computing, automatic differentiation, and GPU/TPU acceleration.
 
@@ -26,4 +26,11 @@ AstroDynX is written in pure Python build with JAX, so it is compatible with any
 The documentation is available at [github.io](https://adxorg.github.io/astrodynx/).
 
 ## Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+
+We welcome contributions from the community! Please see our comprehensive contribution guides:
+
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Complete guide for contributors
+- **[DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md)** - Detailed development guidelines
+- **[NEWCOMER_GUIDE.md](NEWCOMER_GUIDE.md)** - Perfect starting point for new contributors
+
+Whether you're fixing bugs, adding features, improving documentation, or helping with testing, your contributions are valued!
