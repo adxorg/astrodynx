@@ -3,84 +3,96 @@ from jax.typing import ArrayLike
 from jax import Array
 
 
-def keplerequ_elps(e: ArrayLike, E: ArrayLike) -> Array:
-    r"""Returns the mean anomaly for an elliptical orbit.
+def keplerequ_elps(E: ArrayLike, e: ArrayLike, a: ArrayLike, mu: ArrayLike) -> Array:
+    r"""Returns the flight time from periapsis for an elliptical orbit.
 
     Args:
+        E: Eccentric anomaly of the orbit.
         e: Eccentricity of the orbit; $e < 1$.
-        E: Eccentric anomaly of the orbit; shape broadcast-compatible with `e`.
+        a: Semimajor axis of the orbit, a > 0.
+        mu: Gravitational parameter of the central body.
 
     Returns:
-        The mean anomaly for an elliptical orbit.
+        The flight time from periapsis for an elliptical orbit.
 
     Notes:
-        The mean anomaly for an elliptical orbit is calculated using the formula:
+        The flight time from periapsis for an elliptical orbit is calculated using the formula:
         $$
-        M = E - e \sin(E)
+        \Delta t = (E - e \sin E) \sqrt{\frac{a^3}{\mu}}
         $$
-        where $M$ is the mean anomaly, $E$ is the eccentric anomaly, and $e < 1$ is the eccentricity.
+        where $\Delta t$ is the flight time, $E$ is the eccentric anomaly, $e$ is the eccentricity, $a$ is the semimajor axis, and $\mu$ is the gravitational parameter.
 
     References:
         Battin, 1999, pp.160.
 
     Examples:
-        A simple example of calculating the mean anomaly for an orbit with eccentricity 0.1 and eccentric anomaly π/4:
+        A simple example of calculating the flight time for an orbit with eccentricity 0.1, eccentric anomaly π/4, semimajor axis 1.0, and gravitational parameter 1.0:
 
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
         >>> e = 0.1
         >>> E = jnp.pi / 4
-        >>> adx.keplerequ_elps(e, E)
+        >>> a = 1.0
+        >>> mu = 1.0
+        >>> adx.keplerequ_elps(E, e, a, mu)
         Array(0.7146875, dtype=float32, weak_type=True)
 
-        With broadcasting, you can calculate the mean anomaly for multiple eccentricities and eccentric anomalies:
+        With broadcasting, you can calculate the flight time for multiple eccentricities, eccentric anomalies, semimajor axes, and gravitational parameters:
 
         >>> e = jnp.array([0.1, 0.2])
         >>> E = jnp.array([jnp.pi / 4, jnp.pi / 3])
-        >>> adx.keplerequ_elps(e, E)
-        Array([0.7146875, 0.8739925], dtype=float32)
+        >>> a = jnp.array([1.0, 2.0])
+        >>> mu = jnp.array([1.0, 2.0])
+        >>> adx.keplerequ_elps(E, e, a, mu)
+        Array([0.7146875, 1.747985 ], dtype=float32)
     """
-    return E - e * jnp.sin(E)
+    return (E - e * jnp.sin(E)) * jnp.sqrt(a**3 / mu)
 
 
-def keplerequ_hypb(e: ArrayLike, H: ArrayLike) -> Array:
-    r"""Returns the mean anomaly for a hyperbolic orbit.
+def keplerequ_hypb(H: ArrayLike, e: ArrayLike, a: ArrayLike, mu: ArrayLike) -> Array:
+    r"""Returns the flight time from periapsis for a hyperbolic orbit.
 
     Args:
+        H: Hyperbolic eccentric anomaly of the orbit.
         e: Eccentricity of the orbit; $e > 1$.
-        H: Hyperbolic eccentric anomaly of the orbit; shape broadcast-compatible with `e`.
+        a: Semimajor axis of the orbit, a < 0.
+        mu: Gravitational parameter of the central body.
 
     Returns:
-        The mean anomaly for a hyperbolic orbit.
+        The flight time from periapsis for a hyperbolic orbit.
 
     Notes:
-        The mean anomaly for a hyperbolic orbit is calculated using the formula:
+        The flight time from periapsis for a hyperbolic orbit is calculated using the formula:
         $$
-        N = e \sinh(H) - H
+        \Delta t = (e \sinh H - H) \sqrt{\frac{-a^3}{\mu}}
         $$
-        where $N$ is the mean anomaly, $H$ is the hyperbolic eccentric anomaly, and $e > 1$ is the eccentricity.
+        where $\Delta t$ is the flight time, $H$ is the hyperbolic eccentric anomaly, $e > 1$ is the eccentricity, $a < 0$ is the semimajor axis, and $\mu$ is the gravitational parameter.
 
     References:
-        Battin, 1999, pp.168.
+        Battin, 1999, pp.166.
 
     Examples:
-        A simple example of calculating the mean anomaly for an orbit with eccentricity 1.1 and hyperbolic eccentric anomaly 1.0:
+        A simple example of calculating the flight time for an orbit with eccentricity 1.1, hyperbolic eccentric anomaly 1.0, semimajor axis -1.0, and gravitational parameter 1.0:
 
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
         >>> e = 1.1
         >>> H = 1.0
-        >>> adx.keplerequ_hypb(e, H)
+        >>> a = -1.0
+        >>> mu = 1.0
+        >>> adx.keplerequ_hypb(H, e, a, mu)
         Array(0.29272127, dtype=float32, weak_type=True)
 
-        With broadcasting, you can calculate the mean anomaly for multiple eccentricities and hyperbolic eccentric anomalies:
+        With broadcasting, you can calculate the flight time for multiple eccentricities, hyperbolic eccentric anomalies, semimajor axes, and gravitational parameters:
 
         >>> e = jnp.array([1.1, 1.2])
-        >>> H = jnp.array([1.0, 2.0])
-        >>> adx.keplerequ_hypb(e, H)
-        Array([0.29272127, 2.3522325 ], dtype=float32)
+        >>> H = jnp.array([1.0, 1.0])
+        >>> a = jnp.array([-1.0, -2.0])
+        >>> mu = jnp.array([1.0, 2.0])
+        >>> adx.keplerequ_hypb(H, e, a, mu)
+        Array([0.29272127, 0.82048297], dtype=float32)
     """
-    return e * jnp.sinh(H) - H
+    return (e * jnp.sinh(H) - H) * jnp.sqrt(-(a**3) / mu)
 
 
 def mean_anomaly_elps(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
@@ -88,8 +100,8 @@ def mean_anomaly_elps(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
 
     Args:
         a: Semimajor axis of the orbit, a > 0.
-        mu: Gravitational parameter of the central body; shape broadcast-compatible with `a`.
-        deltat: Time since periapsis passage; shape broadcast-compatible with `a` and `mu`.
+        mu: Gravitational parameter of the central body.
+        deltat: Time since periapsis passage.
 
     Returns:
         The mean anomaly for an elliptical orbit.
@@ -131,8 +143,8 @@ def mean_anomaly_hypb(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
 
     Args:
         a: Semimajor axis of the orbit, a < 0.
-        mu: Gravitational parameter of the central body; shape broadcast-compatible with `a`.
-        deltat: Time since periapsis passage; shape broadcast-compatible with `a` and `mu`.
+        mu: Gravitational parameter of the central body.
+        deltat: Time since periapsis passage.
 
     Returns:
         The mean anomaly for a hyperbolic orbit.

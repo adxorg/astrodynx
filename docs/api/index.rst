@@ -5,7 +5,8 @@ API Reference
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    astrodynx
    astrodynx.utils
+   astrodynx.twobody

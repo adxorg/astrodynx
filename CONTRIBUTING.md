@@ -73,7 +73,7 @@ git push -f origin main
 ```
 
 ## Create a pull request
-Go to the original repository on GitHub and create a pull request from your fork's `main` branch to the original repository's `main` branch. Provide a clear description of your changes and any relevant information.
+Go to your forked repository on GitHub and create a pull request from your fork's `main` branch to the original repository's `main` branch. Provide a clear description of your changes and any relevant information.
 
 ## Check github actions
 After creating the pull request, GitHub Actions will automatically run tests and checks on your code. Ensure that all checks pass before the pull request can be merged.
