@@ -181,8 +181,8 @@ def kepler_equ_uni(
     alpha: ArrayLike,
     sigma0: ArrayLike,
     r0: ArrayLike,
-    deltat: ArrayLike = 0,
     mu: ArrayLike = 1,
+    deltat: ArrayLike = 0,
 ) -> Array:
     r"""Returns the universal Kepler's equation in the form f(chi) = 0.
 
@@ -191,8 +191,8 @@ def kepler_equ_uni(
         alpha: The reciprocal of the semimajor axis.
         sigma0: The sigma function at the initial time.
         r0: The norm of the position vector at the initial time.
-        deltat: (optional) The time since the initial time.
         mu: (optional) The gravitational parameter.
+        deltat: (optional) The time since the initial time.
 
     Returns:
         The value of the universal Kepler's equation.
@@ -216,8 +216,9 @@ def kepler_equ_uni(
         >>> alpha = 1.0
         >>> sigma0 = 0.0
         >>> r0 = 1.0
+        >>> mu = 1.0
         >>> deltat = 1.0
-        >>> adx.kepler_equ_uni(chi, alpha, sigma0, r0, deltat)
+        >>> adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
         Array(0., dtype=float32, weak_type=True)
 
         With broadcasting:
@@ -227,7 +228,8 @@ def kepler_equ_uni(
         >>> sigma0 = jnp.array([0.0, 0.0])
         >>> r0 = jnp.array([1.0, 1.0])
         >>> deltat = jnp.array([1.0, 1.0])
-        >>> adx.kepler_equ_uni(chi, alpha, sigma0, r0, deltat)
+        >>> mu = jnp.array([1.0, 1.0])
+        >>> adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
         Array([0., 1.], dtype=float32)
     """
     return (

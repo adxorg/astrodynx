@@ -167,7 +167,7 @@ class TestKeplerequUni:
             + adx.twobody.ivp.U3(chi, alpha)
             - jnp.sqrt(mu) * deltat
         )
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, deltat, mu)
+        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
         assert jnp.allclose(result, expected)
 
     def test_array_inputs(self) -> None:
@@ -184,7 +184,7 @@ class TestKeplerequUni:
             + adx.twobody.ivp.U3(chi, alpha)
             - jnp.sqrt(mu) * deltat
         )
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, deltat, mu)
+        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
         assert jnp.allclose(result, expected)
 
     def test_broadcasting(self) -> None:
@@ -201,7 +201,7 @@ class TestKeplerequUni:
             + adx.twobody.ivp.U3(chi, alpha)
             - jnp.sqrt(mu) * deltat
         )
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, deltat, mu)
+        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
         assert jnp.allclose(result, expected)
 
     def test_default_parameters(self) -> None:
@@ -229,5 +229,5 @@ class TestKeplerequUni:
         mu = 1.0
         # The docstring example shows this should be 0
         expected = 0.0
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, deltat, mu)
+        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
         assert jnp.allclose(result, expected, atol=1e-7)
