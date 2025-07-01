@@ -35,6 +35,9 @@ Key Features
    - Broadcasting support for array operations
    - Clean, well-documented API
 
+.. warning::
+   This project is still experimental, APIs could change between releases without notice.
+
 Installation
 ------------
 Default installation for CPU usage:

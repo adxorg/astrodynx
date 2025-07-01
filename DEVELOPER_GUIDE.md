@@ -31,6 +31,19 @@ astrodynx/
     └── rotation_matrix.py    # Coordinate transformations
 ```
 
+## Naming Conventions
+### General Guidelines
+- Use `snake_case` for function and variable names.
+- Use `CamelCase` for class names.
+- Use `UPPERCASE` for constants.
+
+### Physical Parameters
+- Use `pos_vec` for position vectors and `radius` for its magnitude.
+- Use `vel_vec` for velocity vectors and `speed` for its magnitude.
+- Use `ecc_vec` for eccentricity vectors and `eccentricity` for its magnitude.
+- Use suffix `_vec` for vector quantities and `_mag` for their magnitudes.
+
+
 ## JAX Development Guidelines
 
 ### Array Handling
@@ -182,68 +195,56 @@ def test_kepler_solver_performance(self):
 
 ### Docstring Format
 
-Use NumPy-style docstrings with mathematical notation:
+Use Google-style docstrings with mathematical notation:
 
 ```python
-def true_anomaly_from_eccentric(eccentric_anomaly: Array, eccentricity: Array) -> Array:
-    """Convert eccentric anomaly to true anomaly.
+def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
+    r"""
+    Returns the specific angular momentum of a two-body system.
 
-    Uses the relationship:
+    Args:
+        r: (..., 3) position vector of the object in the two-body system.
+        v: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `r`.
 
-    .. math::
-        \\tan\\left(\\frac{\\nu}{2}\\right) = \\sqrt{\\frac{1+e}{1-e}} \\tan\\left(\\frac{E}{2}\\right)
+    Returns:
+        The specific angular momentum vector of the object in the two-body system.
 
-    Parameters
-    ----------
-    eccentric_anomaly : Array
-        Eccentric anomaly in radians.
-    eccentricity : Array
-        Orbital eccentricity (0 <= e < 1).
-
-    Returns
-    -------
-    Array
-        True anomaly in radians.
-
-    Examples
-    --------
-    >>> import jax.numpy as jnp
-    >>> E = jnp.pi / 2
-    >>> e = 0.5
-    >>> nu = true_anomaly_from_eccentric(E, e)
-    >>> print(f"True anomaly: {nu:.4f} rad")
-    True anomaly: 2.0344 rad
+    Notes
+        The specific angular momentum is calculated using the cross product of the position and velocity vectors:
+        $$
+        \boldsymbol{h} = \boldsymbol{r} \times \boldsymbol{v}
+        $$
+        where $\boldsymbol{h}$ is the specific angular momentum, $\boldsymbol{r}$ is the position vector, and $\boldsymbol{v}$ is the velocity vector.
 
     References
-    ----------
-    .. [1] Curtis, H. D. (2013). Orbital Mechanics for Engineering Students.
+        Battin, 1999, pp.115.
     """
 ```
 
 ### Code Examples
 
-Include practical examples in documentation:
+Include practical examples in docstrings:
 
 ```python
-# In docstrings or tutorials
+# In docstrings
 """
-Example: Satellite orbit analysis
----------------------------------
+Examples
+    A simple example of calculating the specific angular momentum for a position vector [1, 0, 0] and velocity vector [0, 1, 0]:
 
-Calculate orbital elements for a satellite:
+    >>> import jax.numpy as jnp
+    >>> import astrodynx as adx
+    >>> r = jnp.array([1.0, 0.0, 0.0])
+    >>> v = jnp.array([0.0, 1.0, 0.0])
+    >>> adx.angular_momentum(r, v)
+    Array([0., 0., 1.], dtype=float32)
 
->>> import jax.numpy as jnp
->>> import astrodynx as adx
+    With broadcasting, you can calculate the specific angular momentum for multiple position and velocity vectors:
 
->>> # Initial conditions
->>> r0 = jnp.array([7000e3, 0, 0])      # Position (m)
->>> v0 = jnp.array([0, 7.5e3, 0])      # Velocity (m/s)
->>> mu = 3.986004418e14                 # Earth's GM (m³/s²)
-
->>> # Calculate orbital elements
->>> elements = adx.twobody.cartesian_to_elements(r0, v0, mu)
->>> print(f"Semi-major axis: {elements.a/1000:.1f} km")
->>> print(f"Eccentricity: {elements.e:.4f}")
+    >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+    >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+    >>> adx.angular_momentum(r, v)
+    Array([[0., 0., 1.],
+            [0., 0., 4.]], dtype=float32)
 """
 ```
 
@@ -312,36 +313,7 @@ def inefficient_calculation(data: Array) -> Array:
     return temp3
 ```
 
-## Error Handling
 
-### Input Validation
-
-Validate inputs for physical constraints:
-
-```python
-def solve_kepler_equation(mean_anomaly: Array, eccentricity: Array) -> Array:
-    """Solve Kepler's equation with input validation."""
-    # Validate eccentricity range
-    if jnp.any(eccentricity < 0) or jnp.any(eccentricity >= 1):
-        raise ValueError("Eccentricity must be in range [0, 1)")
-
-    # Normalize mean anomaly to [0, 2π]
-    M = jnp.mod(mean_anomaly, 2 * jnp.pi)
-
-    # Solver implementation
-    return _kepler_solver_impl(M, eccentricity)
-```
-
-### Numerical Stability
-
-Handle edge cases and numerical issues:
-
-```python
-def safe_division(numerator: Array, denominator: Array, epsilon: float = 1e-15) -> Array:
-    """Perform division with protection against division by zero."""
-    safe_denom = jnp.where(jnp.abs(denominator) < epsilon, epsilon, denominator)
-    return numerator / safe_denom
-```
 
 ## Debugging Tips
 

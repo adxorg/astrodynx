@@ -298,8 +298,7 @@ pip install -e .[docs]
 2. Build the documentation:
 
 ```bash
-cd docs
-sphinx-build -b html . _build/html
+sphinx-build -b html docs docs/_build/html
 ```
 
 3. View the documentation locally:
