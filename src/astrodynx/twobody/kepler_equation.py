@@ -1,157 +1,93 @@
 import jax.numpy as jnp
 from jax.typing import ArrayLike
 from jax import Array
-from astrodynx.twobody.ivp import U1, U2, U3, sigma_func
-import astrodynx as adx
+from astrodynx.twobody.ivp import U1, U2, U3
 
 
-def keplerequ_elps(E: ArrayLike, e: ArrayLike, a: ArrayLike, mu: ArrayLike) -> Array:
-    r"""Returns the flight time from periapsis for an elliptical orbit.
+def kepler_equ_elps(E: ArrayLike, e: ArrayLike, M: ArrayLike = 0) -> Array:
+    r"""Returns the Kepler's equation for elliptical orbits in the form f(E) = 0.
 
     Args:
-        E: Eccentric anomaly of the orbit.
-        e: Eccentricity of the orbit; $e < 1$.
-        a: Semimajor axis of the orbit, a > 0.
-        mu: Gravitational parameter of the central body.
+        E: Eccentric anomaly.
+        e: Eccentricity of the orbit, 0 <= e < 1.
+        M: (optional) Mean anomaly.
 
     Returns:
-        The flight time from periapsis for an elliptical orbit.
+        The value of Kepler's equation for elliptical orbits: E - e*sin(E) - M.
 
     Notes:
-        The flight time from periapsis for an elliptical orbit is calculated using the formula:
+        Kepler's equation for elliptical orbits relates the eccentric anomaly E to the mean anomaly M:
         $$
-        \Delta t = (E - e \sin E) \sqrt{\frac{a^3}{\mu}}
+        E - e \sin E = M
         $$
-        where $\Delta t$ is the flight time, $E$ is the eccentric anomaly, $e$ is the eccentricity, $a$ is the semimajor axis, and $\mu$ is the gravitational parameter.
+        This function returns the equation in the form f(E) = 0, which is useful for root-finding algorithms.
 
     References:
         Battin, 1999, pp.160.
 
     Examples:
-        A simple example of calculating the flight time for an orbit with eccentricity 0.1, eccentric anomaly π/4, semimajor axis 1.0, and gravitational parameter 1.0:
+        A simple example:
 
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
+        >>> E = jnp.pi/4
         >>> e = 0.1
-        >>> E = jnp.pi / 4
-        >>> a = 1.0
-        >>> mu = 1.0
-        >>> adx.keplerequ_elps(E, e, a, mu)
-        Array(0.7146875, dtype=float32, weak_type=True)
+        >>> M = 0.7
+        >>> adx.kepler_equ_elps(E, e, M)
+        Array(0.01468..., dtype=float32, weak_type=True)
 
-        With broadcasting, you can calculate the flight time for multiple eccentricities, eccentric anomalies, semimajor axes, and gravitational parameters:
+        With broadcasting, you can calculate the Kepler's equation for multiple eccentric anomalies, eccentricities, and mean anomalies:
 
+        >>> E = jnp.array([jnp.pi/4, jnp.pi/2])
         >>> e = jnp.array([0.1, 0.2])
-        >>> E = jnp.array([jnp.pi / 4, jnp.pi / 3])
-        >>> a = jnp.array([1.0, 2.0])
-        >>> mu = jnp.array([1.0, 2.0])
-        >>> adx.keplerequ_elps(E, e, a, mu)
-        Array([0.7146875, 1.747985 ], dtype=float32)
+        >>> M = jnp.array([0.7, 0.8])
+        >>> adx.kepler_equ_elps(E, e, M)
+        Array([0.01468..., 0.5707...], dtype=float32)
     """
-    return (E - e * jnp.sin(E)) * jnp.sqrt(a**3 / mu)
+    return E - e * jnp.sin(E) - M
 
 
-def keplerequ_hypb(H: ArrayLike, e: ArrayLike, a: ArrayLike, mu: ArrayLike) -> Array:
-    r"""Returns the flight time from periapsis for a hyperbolic orbit.
+def kepler_equ_hypb(H: ArrayLike, e: ArrayLike, N: ArrayLike = 0) -> Array:
+    r"""Returns the Kepler's equation for hyperbolic orbits in the form f(H) = 0.
 
     Args:
-        H: Hyperbolic eccentric anomaly of the orbit.
-        e: Eccentricity of the orbit; $e > 1$.
-        a: Semimajor axis of the orbit, a < 0.
-        mu: Gravitational parameter of the central body.
+        H: Hyperbolic eccentric anomaly.
+        e: Eccentricity of the orbit, e > 1.
+        N: (optional) Hyperbolic mean anomaly.
 
     Returns:
-        The flight time from periapsis for a hyperbolic orbit.
+        The value of Kepler's equation for hyperbolic orbits: e*sinh(H) - H - N.
 
     Notes:
-        The flight time from periapsis for a hyperbolic orbit is calculated using the formula:
+        Kepler's equation for hyperbolic orbits relates the hyperbolic eccentric anomaly H to the hyperbolic mean anomaly N:
         $$
-        \Delta t = (e \sinh H - H) \sqrt{\frac{-a^3}{\mu}}
+        e \sinh H - H = N
         $$
-        where $\Delta t$ is the flight time, $H$ is the hyperbolic eccentric anomaly, $e > 1$ is the eccentricity, $a < 0$ is the semimajor axis, and $\mu$ is the gravitational parameter.
+        This function returns the equation in the form f(H) = 0, which is useful for root-finding algorithms.
 
     References:
-        Battin, 1999, pp.166.
+        Battin, 1999, pp.168.
 
     Examples:
-        A simple example of calculating the flight time for an orbit with eccentricity 1.1, hyperbolic eccentric anomaly 1.0, semimajor axis -1.0, and gravitational parameter 1.0:
+        A simple example:
 
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
-        >>> e = 1.1
         >>> H = 1.0
-        >>> a = -1.0
-        >>> mu = 1.0
-        >>> adx.keplerequ_hypb(H, e, a, mu)
-        Array(0.29272127, dtype=float32, weak_type=True)
+        >>> e = 1.5
+        >>> N = 1.0
+        >>> adx.kepler_equ_hypb(H, e, N)
+        Array(-0.2371..., dtype=float32, weak_type=True)
 
-        With broadcasting, you can calculate the flight time for multiple eccentricities, hyperbolic eccentric anomalies, semimajor axes, and gravitational parameters:
+        With broadcasting, you can calculate the Kepler's equation for multiple hyperbolic eccentric anomalies, eccentricities, and hyperbolic mean anomalies:
 
-        >>> e = jnp.array([1.1, 1.2])
-        >>> H = jnp.array([1.0, 1.0])
-        >>> a = jnp.array([-1.0, -2.0])
-        >>> mu = jnp.array([1.0, 2.0])
-        >>> adx.keplerequ_hypb(H, e, a, mu)
-        Array([0.29272127, 0.82048297], dtype=float32)
+        >>> H = jnp.array([1.0, 2.0])
+        >>> e = jnp.array([1.5, 1.5])
+        >>> N = jnp.array([1.0, 1.0])
+        >>> adx.kepler_equ_hypb(H, e, N)
+        Array([-0.2371...,  2.4402...], dtype=float32)
     """
-    return (e * jnp.sinh(H) - H) * jnp.sqrt(-(a**3) / mu)
-
-
-def keplerequ_uni(
-    chi: ArrayLike, pos0_vec: ArrayLike, vel0_vec: ArrayLike, mu: ArrayLike
-) -> Array:
-    r"""Returns the flight time from $t_0$ to the moment when the generalized anomaly is $\chi$.
-
-    Args:
-        chi: The generalized anomaly.
-        pos0_vec: (..., 3) The position vector at $t_0$.
-        vel0_vec: (..., 3) The velocity vector at $t_0$.
-        mu: The gravitational parameter.
-
-    Returns:
-        The flight time from $t_0$ to the moment when the generalized anomaly is $\chi$.
-
-    Notes:
-        The flight time from $t_0$ to the moment when the generalized anomaly is $\chi$ is calculated using the formula:
-        $$
-        \Delta t = \frac{r_0 U_1(\chi, \alpha) + \sigma_0 U_2(\chi, \alpha) + U_3(\chi, \alpha)}{\sqrt{\mu}}
-        $$
-        where $\Delta t = t - t_0$ is the flight time, $r_0$ is the norm of the position vector at $t_0$, $v_0$ is the norm of the velocity vector at $t_0$, $\mu$ is the gravitational parameter, $U_1$ is the universal function U1, $U_2$ is the universal function U2, $U_3$ is the universal function U3, and $\sigma_0$ is the sigma function at $t_0$.
-
-    References:
-        Battin, 1999, pp.178.
-
-    Examples:
-        A simple example of calculating the flight time for an orbit with a generalized anomaly of 1.0, a position vector of [1, 0, 0], a velocity vector of [0, 1, 0], and a gravitational parameter of 1.0:
-
-        >>> import jax.numpy as jnp
-        >>> import astrodynx as adx
-        >>> chi = 1.0
-        >>> pos0_vec = jnp.array([1.0, 0.0, 0.0])
-        >>> vel0_vec = jnp.array([0.0, 1.0, 0.0])
-        >>> mu = 1.0
-        >>> adx.keplerequ_uni(chi, pos0_vec, vel0_vec, mu)
-        Array([1.], dtype=float32)
-
-        With broadcasting, you can calculate the flight time for multiple generalized anomalies, position and velocity vectors, and gravitational parameters:
-
-        >>> chi = jnp.array([[1.0], [1.0]])
-        >>> pos0_vec = jnp.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
-        >>> vel0_vec = jnp.array([[0.0, 1.0, 0.0], [-1.0, 0.0, 0.0]])
-        >>> mu = jnp.array([[1.0], [1.0]])
-        >>> adx.keplerequ_uni(chi, pos0_vec, vel0_vec, mu)
-        Array([[1.],
-               [1.]], dtype=float32)
-    """
-    r0_norm = jnp.linalg.norm(pos0_vec, axis=-1, keepdims=True)
-    alpha = 1.0 / adx.semimajor_axis(
-        r0_norm, jnp.linalg.norm(vel0_vec, axis=-1, keepdims=True), mu
-    )
-    return (
-        r0_norm * U1(chi, alpha)
-        + sigma_func(pos0_vec, vel0_vec, mu) * U2(chi, alpha)
-        + U3(chi, alpha)
-    ) / jnp.sqrt(mu)
+    return e * jnp.sinh(H) - H - N
 
 
 def mean_anomaly_elps(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
@@ -238,3 +174,65 @@ def mean_anomaly_hypb(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
         Array([1. , 0.5], dtype=float32)
     """
     return jnp.sqrt(mu / -(a**3)) * deltat
+
+
+def kepler_equ_uni(
+    chi: ArrayLike,
+    alpha: ArrayLike,
+    sigma0: ArrayLike,
+    r0: ArrayLike,
+    deltat: ArrayLike = 0,
+    mu: ArrayLike = 1,
+) -> Array:
+    r"""Returns the universal Kepler's equation in the form f(chi) = 0.
+
+    Args:
+        chi: The generalized anomaly.
+        alpha: The reciprocal of the semimajor axis.
+        sigma0: The sigma function at the initial time.
+        r0: The norm of the position vector at the initial time.
+        deltat: (optional) The time since the initial time.
+        mu: (optional) The gravitational parameter.
+
+    Returns:
+        The value of the universal Kepler's equation.
+
+    Notes:
+        The universal Kepler's equation is defined as:
+        $$
+        r_0 U_1(\chi, \alpha) + \sigma_0 U_2(\chi, \alpha) + U_3(\chi, \alpha) - \sqrt{\mu} \Delta t = 0
+        $$
+        where $\chi$ is the generalized anomaly, $\alpha = \frac{1}{a}$ is the reciprocal of semimajor axis, $\sigma_0$ is the sigma function at the initial time, $r_0$ is the norm of the position vector at the initial time, $\mu$ is the gravitational parameter, $U_1$ is the universal function U1, $U_2$ is the universal function U2, $U_3$ is the universal function U3, and $\Delta t$ is the time since the initial time.
+
+    References:
+        Battin, 1999, pp.178.
+
+    Examples:
+        A simple example:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> chi = 1.0
+        >>> alpha = 1.0
+        >>> sigma0 = 0.0
+        >>> r0 = 1.0
+        >>> deltat = 1.0
+        >>> adx.kepler_equ_uni(chi, alpha, sigma0, r0, deltat)
+        Array(0., dtype=float32, weak_type=True)
+
+        With broadcasting:
+
+        >>> chi = jnp.array([1.0, 2.0])
+        >>> alpha = jnp.array([1.0, 1.0])
+        >>> sigma0 = jnp.array([0.0, 0.0])
+        >>> r0 = jnp.array([1.0, 1.0])
+        >>> deltat = jnp.array([1.0, 1.0])
+        >>> adx.kepler_equ_uni(chi, alpha, sigma0, r0, deltat)
+        Array([0., 1.], dtype=float32)
+    """
+    return (
+        r0 * U1(chi, alpha)
+        + sigma0 * U2(chi, alpha)
+        + U3(chi, alpha)
+        - jnp.sqrt(mu) * deltat
+    )
