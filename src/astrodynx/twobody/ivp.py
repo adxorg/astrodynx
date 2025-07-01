@@ -349,3 +349,51 @@ def U5(chi: ArrayLike, alpha: ArrayLike) -> Array:
     return jnp.where(
         jnp.isclose(alpha, 0.0), chi**5 / 120.0, (chi**3 / 6 - U3(chi, alpha)) / alpha
     )
+
+
+def orb_equ_chi(
+    chi: ArrayLike, alpha: ArrayLike, sigma0: ArrayLike, r0: ArrayLike
+) -> Array:
+    r"""The orbital equation in terms of the generalized anomaly.
+
+    Args:
+        chi: The generalized anomaly.
+        alpha: The reciprocal of the semimajor axis.
+        sigma0: The sigma function at the initial time.
+        r0: The norm of the position vector at the initial time.
+
+    Returns:
+        The value of the orbital equation.
+
+    Notes:
+        The orbital equation is defined as:
+        $$
+        r = r_0 U_0(\chi, \alpha) + \sigma_0 U_1(\chi, \alpha) + U_2(\chi, \alpha)
+        $$
+        where $r$ is the radius, $\chi$ is the generalized anomaly, $\alpha = \frac{1}{a}$ is the reciprocal of semimajor axis, $\sigma_0$ is the sigma function at the initial time, $r_0$ is the norm of the position vector at the initial time, $U_0$ is the universal function U0, $U_1$ is the universal function U1, and $U_2$ is the universal function U2.
+
+    References:
+        Battin, 1999, pp.178.
+
+    Examples:
+        A simple example:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> chi = 1.0
+        >>> alpha = 1.0
+        >>> sigma0 = 0.0
+        >>> r0 = 1.0
+        >>> adx.twobody.ivp.orb_equ_chi(chi, alpha, sigma0, r0)
+        Array(1., dtype=float32, weak_type=True)
+
+        With broadcasting:
+
+        >>> chi = jnp.array([1.0, 1.0])
+        >>> alpha = jnp.array([1.0, 0.0])
+        >>> sigma0 = jnp.array([0.0, 1.0])
+        >>> r0 = jnp.array([1.0, 1.0])
+        >>> adx.twobody.ivp.orb_equ_chi(chi, alpha, sigma0, r0)
+        Array([1. , 2.5], dtype=float32)
+    """
+    return r0 * U0(chi, alpha) + sigma0 * U1(chi, alpha) + U2(chi, alpha)

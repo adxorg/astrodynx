@@ -7,6 +7,7 @@ from astrodynx.twobody.kepler_equation import (
     kepler_equ_elps,
     kepler_equ_hypb,
     kepler_equ_uni,
+    generalized_anomaly,
     mean_anomaly_elps,
     mean_anomaly_hypb,
 )
@@ -27,6 +28,7 @@ __all__ = [
     "kepler_equ_elps",
     "kepler_equ_hypb",
     "kepler_equ_uni",
+    "generalized_anomaly",
     "mean_anomaly_elps",
     "mean_anomaly_hypb",
     "orb_period",

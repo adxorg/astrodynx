@@ -236,3 +236,58 @@ def kepler_equ_uni(
         + U3(chi, alpha)
         - jnp.sqrt(mu) * deltat
     )
+
+
+def generalized_anomaly(
+    alpha: ArrayLike,
+    sigma: ArrayLike,
+    sigma0: ArrayLike,
+    mu: ArrayLike = 1,
+    deltat: ArrayLike = 0,
+) -> Array:
+    r"""Returns the generalized anomaly.
+
+    Args:
+        alpha: The reciprocal of the semimajor axis.
+        sigma: The sigma function at the current time.
+        sigma0: The sigma function at the initial time.
+        mu: (optional) The gravitational parameter.
+        deltat: (optional) The time since the initial time.
+
+    Returns:
+        The generalized anomaly.
+
+    Notes:
+        The generalized anomaly is defined as:
+        $$
+        \chi = \alpha \sqrt{\mu} \Delta t + \sigma - \sigma_0
+        $$
+        where $\chi$ is the generalized anomaly, $\alpha = \frac{1}{a}$ is the reciprocal of semimajor axis, $\sigma$ is the sigma function at the current time, $\sigma_0$ is the sigma function at the initial time, $\mu$ is the gravitational parameter, and $\Delta t$ is the time since the initial time.
+
+    References:
+        Battin, 1999, pp.179.
+
+    Examples:
+        A simple example:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> alpha = 1.0
+        >>> sigma = 1.0
+        >>> sigma0 = 0.0
+        >>> mu = 1.0
+        >>> deltat = 1.0
+        >>> adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        Array(2., dtype=float32, weak_type=True)
+
+        With broadcasting:
+
+        >>> alpha = jnp.array([1.0, 1.0])
+        >>> sigma = jnp.array([1.0, 2.0])
+        >>> sigma0 = jnp.array([0.0, 0.0])
+        >>> mu = jnp.array([1.0, 1.0])
+        >>> deltat = jnp.array([1.0, 1.0])
+        >>> adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        Array([2., 3.], dtype=float32)
+    """
+    return alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
