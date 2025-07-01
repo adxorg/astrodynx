@@ -3,12 +3,12 @@ from jax.typing import ArrayLike
 from jax import Array
 
 
-def sigma_func(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
+def sigma_func(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike) -> Array:
     r"""The sigma function
 
     Args:
-        r: (...,3) The position vector.
-        v: (...,3) The velocity vector.
+        pos_vec: (...,3) The position vector.
+        vel_vec: (...,3) The velocity vector.
         mu: The gravitational parameter.
 
     Returns:
@@ -29,22 +29,22 @@ def sigma_func(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
 
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
-        >>> r = jnp.array([1.0, 0.0, 0.0])
-        >>> v = jnp.array([0.0, 1.0, 0.0])
+        >>> pos_vec = jnp.array([1.0, 0.0, 0.0])
+        >>> vel_vec = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
-        >>> adx.twobody.ivp.sigma_func(r, v, mu)
+        >>> adx.twobody.ivp.sigma_func(pos_vec, vel_vec, mu)
         Array([0.], dtype=float32)
 
         With broadcasting, you can calculate the sigma function for multiple position and velocity vectors:
 
-        >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        >>> pos_vec = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        >>> vel_vec = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
         >>> mu = jnp.array([[1.0], [2.0]])
-        >>> adx.twobody.ivp.sigma_func(r, v, mu)
+        >>> adx.twobody.ivp.sigma_func(pos_vec, vel_vec, mu)
         Array([[0.],
                [0.]], dtype=float32)
     """
-    return jnp.sum(r * v, axis=-1, keepdims=True) / jnp.sqrt(mu)
+    return jnp.sum(pos_vec * vel_vec, axis=-1, keepdims=True) / jnp.sqrt(mu)
 
 
 def U0(chi: ArrayLike, alpha: ArrayLike) -> Array:

@@ -198,13 +198,13 @@ def test_kepler_solver_performance(self):
 Use Google-style docstrings with mathematical notation:
 
 ```python
-def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
+def angular_momentum(pos_vec: ArrayLike, vel_vec: ArrayLike) -> Array:
     r"""
     Returns the specific angular momentum of a two-body system.
 
     Args:
-        r: (..., 3) position vector of the object in the two-body system.
-        v: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `r`.
+        pos_vec: (..., 3) position vector of the object in the two-body system.
+        vel_vec: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `pos_vec`.
 
     Returns:
         The specific angular momentum vector of the object in the two-body system.
@@ -233,18 +233,18 @@ Examples
 
     >>> import jax.numpy as jnp
     >>> import astrodynx as adx
-    >>> r = jnp.array([1.0, 0.0, 0.0])
-    >>> v = jnp.array([0.0, 1.0, 0.0])
-    >>> adx.angular_momentum(r, v)
+    >>> pos_vec = jnp.array([1.0, 0.0, 0.0])
+    >>> vel_vec = jnp.array([0.0, 1.0, 0.0])
+    >>> adx.angular_momentum(pos_vec, vel_vec)
     Array([0., 0., 1.], dtype=float32)
 
     With broadcasting, you can calculate the specific angular momentum for multiple position and velocity vectors:
 
-    >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-    >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
-    >>> adx.angular_momentum(r, v)
+    >>> pos_vec = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+    >>> vel_vec = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+    >>> adx.angular_momentum(pos_vec, vel_vec)
     Array([[0., 0., 1.],
-            [0., 0., 4.]], dtype=float32)
+           [0., 0., 4.]], dtype=float32)
 """
 ```
 

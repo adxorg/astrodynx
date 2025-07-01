@@ -97,13 +97,15 @@ def keplerequ_hypb(H: ArrayLike, e: ArrayLike, a: ArrayLike, mu: ArrayLike) -> A
     return (e * jnp.sinh(H) - H) * jnp.sqrt(-(a**3) / mu)
 
 
-def keplerequ_uni(chi: ArrayLike, r0: ArrayLike, v0: ArrayLike, mu: ArrayLike) -> Array:
+def keplerequ_uni(
+    chi: ArrayLike, pos0_vec: ArrayLike, vel0_vec: ArrayLike, mu: ArrayLike
+) -> Array:
     r"""Returns the flight time from $t_0$ to the moment when the generalized anomaly is $\chi$.
 
     Args:
         chi: The generalized anomaly.
-        r0: (..., 3) The position vector at $t_0$.
-        v0: (..., 3) The velocity vector at $t_0$.
+        pos0_vec: (..., 3) The position vector at $t_0$.
+        vel0_vec: (..., 3) The velocity vector at $t_0$.
         mu: The gravitational parameter.
 
     Returns:
@@ -125,29 +127,29 @@ def keplerequ_uni(chi: ArrayLike, r0: ArrayLike, v0: ArrayLike, mu: ArrayLike) -
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
         >>> chi = 1.0
-        >>> r0 = jnp.array([1.0, 0.0, 0.0])
-        >>> v0 = jnp.array([0.0, 1.0, 0.0])
+        >>> pos0_vec = jnp.array([1.0, 0.0, 0.0])
+        >>> vel0_vec = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
-        >>> adx.keplerequ_uni(chi, r0, v0, mu)
+        >>> adx.keplerequ_uni(chi, pos0_vec, vel0_vec, mu)
         Array([1.], dtype=float32)
 
         With broadcasting, you can calculate the flight time for multiple generalized anomalies, position and velocity vectors, and gravitational parameters:
 
         >>> chi = jnp.array([[1.0], [1.0]])
-        >>> r0 = jnp.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
-        >>> v0 = jnp.array([[0.0, 1.0, 0.0], [-1.0, 0.0, 0.0]])
+        >>> pos0_vec = jnp.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+        >>> vel0_vec = jnp.array([[0.0, 1.0, 0.0], [-1.0, 0.0, 0.0]])
         >>> mu = jnp.array([[1.0], [1.0]])
-        >>> adx.keplerequ_uni(chi, r0, v0, mu)
+        >>> adx.keplerequ_uni(chi, pos0_vec, vel0_vec, mu)
         Array([[1.],
                [1.]], dtype=float32)
     """
-    r0_norm = jnp.linalg.norm(r0, axis=-1, keepdims=True)
+    r0_norm = jnp.linalg.norm(pos0_vec, axis=-1, keepdims=True)
     alpha = 1.0 / adx.semimajor_axis(
-        r0_norm, jnp.linalg.norm(v0, axis=-1, keepdims=True), mu
+        r0_norm, jnp.linalg.norm(vel0_vec, axis=-1, keepdims=True), mu
     )
     return (
         r0_norm * U1(chi, alpha)
-        + sigma_func(r0, v0, mu) * U2(chi, alpha)
+        + sigma_func(pos0_vec, vel0_vec, mu) * U2(chi, alpha)
         + U3(chi, alpha)
     ) / jnp.sqrt(mu)
 

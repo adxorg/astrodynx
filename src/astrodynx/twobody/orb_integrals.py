@@ -44,13 +44,13 @@ def orb_period(a: ArrayLike, mu: ArrayLike) -> Array:
     return 2 * jnp.pi * jnp.sqrt(a**3 / mu)
 
 
-def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
+def angular_momentum(pos_vec: ArrayLike, vel_vec: ArrayLike) -> Array:
     r"""
     Returns the specific angular momentum of a two-body system.
 
     Args:
-        r: (..., 3) position vector of the object in the two-body system.
-        v: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `r`.
+        pos_vec: (..., 3) position vector of the object in the two-body system.
+        vel_vec: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `pos_vec`.
 
     Returns:
         The specific angular momentum vector of the object in the two-body system.
@@ -70,20 +70,20 @@ def angular_momentum(r: ArrayLike, v: ArrayLike) -> Array:
 
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
-        >>> r = jnp.array([1.0, 0.0, 0.0])
-        >>> v = jnp.array([0.0, 1.0, 0.0])
-        >>> adx.angular_momentum(r, v)
+        >>> pos_vec = jnp.array([1.0, 0.0, 0.0])
+        >>> vel_vec = jnp.array([0.0, 1.0, 0.0])
+        >>> adx.angular_momentum(pos_vec, vel_vec)
         Array([0., 0., 1.], dtype=float32)
 
         With broadcasting, you can calculate the specific angular momentum for multiple position and velocity vectors:
 
-        >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
-        >>> adx.angular_momentum(r, v)
+        >>> pos_vec = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        >>> vel_vec = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        >>> adx.angular_momentum(pos_vec, vel_vec)
         Array([[0., 0., 1.],
                [0., 0., 4.]], dtype=float32)
     """
-    return jnp.cross(r, v)
+    return jnp.cross(pos_vec, vel_vec)
 
 
 def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> ArrayLike:
@@ -130,14 +130,14 @@ def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> ArrayLike:
     return 1 / (2 / r - v**2 / mu)
 
 
-def eccentricity_vector(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
+def eccentricity_vector(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike) -> Array:
     r"""
     Returns the eccentricity vector of a two-body orbit.
 
     Args:
-        r: (..., 3) position vector of the object in the two-body system.
-        v: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `r`.
-        mu: Gravitational parameter of the central body; shape broadcast-compatible with `r` and `v`.
+        pos_vec: (..., 3) position vector of the object in the two-body system.
+        vel_vec: (..., 3) velocity vector of the object in the two-body system, which shape broadcast-compatible with `pos_vec`.
+        mu: Gravitational parameter of the central body; shape broadcast-compatible with `pos_vec` and `vel_vec`.
 
     Returns:
         The eccentricity vector of the orbit.
@@ -157,23 +157,25 @@ def eccentricity_vector(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> Array:
 
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
-        >>> r = jnp.array([1.0, 0.0, 0.0])
-        >>> v = jnp.array([0.0, 1.0, 0.0])
+        >>> pos_vec = jnp.array([1.0, 0.0, 0.0])
+        >>> vel_vec = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
-        >>> adx.eccentricity_vector(r, v, mu)
+        >>> adx.eccentricity_vector(pos_vec, vel_vec, mu)
         Array([0., 0., 0.], dtype=float32)
 
         With broadcasting, you can calculate the eccentricity vector for multiple position and velocity vectors:
 
-        >>> r = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        >>> v = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        >>> pos_vec = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        >>> vel_vec = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
         >>> mu = jnp.array([[1.0],[2.0]])
-        >>> adx.eccentricity_vector(r, v, mu)
+        >>> adx.eccentricity_vector(pos_vec, vel_vec, mu)
         Array([[0., 0., 0.],
                [3., 0., 0.]], dtype=float32)
     """
-    h = angular_momentum(r, v)
-    return jnp.cross(v, h) / mu - r / jnp.linalg.norm(r, axis=-1, keepdims=True)
+    h = angular_momentum(pos_vec, vel_vec)
+    return jnp.cross(vel_vec, h) / mu - pos_vec / jnp.linalg.norm(
+        pos_vec, axis=-1, keepdims=True
+    )
 
 
 def semiparameter(h: ArrayLike, mu: ArrayLike) -> ArrayLike:
