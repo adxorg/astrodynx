@@ -112,6 +112,8 @@ git fetch upstream
 git checkout main
 git rebase upstream/main
 ```
+> [!NOTE]
+> Always fetch and rebase before starting your work. This will help keep linear history and avoid merge commits.
 
 ### 2. Make Your Changes
 
@@ -145,17 +147,9 @@ pre-commit run --all-files
 
 ## Submitting Changes
 
-### Before Submitting
+### Before Committing
 
-1. **Sync with upstream**:
-
-```bash
-git fetch upstream
-git checkout main
-git rebase upstream/main
-```
-
-2. **Run all checks**:
+1. **Run all checks**:
 
 ```bash
 pytest           # Run tests
@@ -163,9 +157,28 @@ git add .        # Stage changes
 pre-commit       # Run code quality checks
 ```
 
-3. **Update documentation** if needed
+2. **Stash any uncommitted changes**:
 
-### Commit Message Format
+```bash
+git stash
+```
+
+3. **Sync with upstream**:
+
+```bash
+git fetch upstream
+git rebase upstream/main
+```
+If there are conflicts, resolve them and continue the rebase with `git rebase --continue`.
+
+4. **Unstash your changes**:
+
+```bash
+git stash pop
+```
+
+
+### Commit your Changes
 
 We use [Conventional Commits](https://www.conventionalcommits.org/) format.
 Use `cz c` (commitizen) for interactive commit message creation:
@@ -180,7 +193,7 @@ Once your changes are ready and tested, it's time to create a pull request (PR).
 1. **Push your changes**:
 
 ```bash
-git push origin main
+git push origin main -f
 ```
 
 2. **Create PR on GitHub**:
