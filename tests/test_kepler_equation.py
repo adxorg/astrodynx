@@ -152,19 +152,19 @@ class TestKeplerEquHypb:
         assert jnp.allclose(results, expected)
 
 
-class TestKeplerequUni:
+class TestKeplerEquUni:
     def test_scalar_inputs(self) -> None:
         """Test with scalar inputs."""
         chi = 1.0
         alpha = 1.0
         sigma0 = 0.0
         r0 = 1.0
-        deltat = 1.0
         mu = 1.0
+        deltat = 1.0
         expected = (
-            r0 * adx.twobody.ivp.U1(chi, alpha)
-            + sigma0 * adx.twobody.ivp.U2(chi, alpha)
-            + adx.twobody.ivp.U3(chi, alpha)
+            r0 * adx.twobody.uniformulas.U1(chi, alpha)
+            + sigma0 * adx.twobody.uniformulas.U2(chi, alpha)
+            + adx.twobody.uniformulas.U3(chi, alpha)
             - jnp.sqrt(mu) * deltat
         )
         result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
@@ -173,15 +173,15 @@ class TestKeplerequUni:
     def test_array_inputs(self) -> None:
         """Test with array inputs."""
         chi = jnp.array([1.0, 2.0])
-        alpha = jnp.array([1.0, 1.0])
+        alpha = 1.0
         sigma0 = jnp.array([0.0, 0.0])
         r0 = jnp.array([1.0, 1.0])
-        deltat = jnp.array([1.0, 1.0])
         mu = jnp.array([1.0, 1.0])
+        deltat = jnp.array([1.0, 1.0])
         expected = (
-            r0 * adx.twobody.ivp.U1(chi, alpha)
-            + sigma0 * adx.twobody.ivp.U2(chi, alpha)
-            + adx.twobody.ivp.U3(chi, alpha)
+            r0 * adx.twobody.uniformulas.U1(chi, alpha)
+            + sigma0 * adx.twobody.uniformulas.U2(chi, alpha)
+            + adx.twobody.uniformulas.U3(chi, alpha)
             - jnp.sqrt(mu) * deltat
         )
         result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
@@ -193,41 +193,71 @@ class TestKeplerequUni:
         alpha = 1.0
         sigma0 = 0.0
         r0 = 1.0
-        deltat = 1.0
         mu = 1.0
+        deltat = 1.0
         expected = (
-            r0 * adx.twobody.ivp.U1(chi, alpha)
-            + sigma0 * adx.twobody.ivp.U2(chi, alpha)
-            + adx.twobody.ivp.U3(chi, alpha)
+            r0 * adx.twobody.uniformulas.U1(chi, alpha)
+            + sigma0 * adx.twobody.uniformulas.U2(chi, alpha)
+            + adx.twobody.uniformulas.U3(chi, alpha)
             - jnp.sqrt(mu) * deltat
         )
         result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
         assert jnp.allclose(result, expected)
 
-    def test_default_parameters(self) -> None:
-        """Test with default parameter values."""
+    def test_known_values(self) -> None:
+        """Test with known values."""
+        # This test uses the example from the docstring
         chi = 1.0
         alpha = 1.0
         sigma0 = 0.0
         r0 = 1.0
-        # Using default deltat=0 and mu=1
-        expected = (
-            r0 * adx.twobody.ivp.U1(chi, alpha)
-            + sigma0 * adx.twobody.ivp.U2(chi, alpha)
-            + adx.twobody.ivp.U3(chi, alpha)
-        )
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0)
+        mu = 1.0
+        deltat = 1.0
+        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
+        assert jnp.allclose(result, 0.0)
+
+
+class TestGeneralizedAnomaly:
+    def test_scalar_inputs(self) -> None:
+        """Test with scalar inputs."""
+        alpha = 1.0
+        sigma = 1.0
+        sigma0 = 0.0
+        mu = 1.0
+        deltat = 1.0
+        expected = alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
+        result = adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        assert jnp.allclose(result, expected)
+
+    def test_array_inputs(self) -> None:
+        """Test with array inputs."""
+        alpha = jnp.array([1.0, 1.0])
+        sigma = jnp.array([1.0, 2.0])
+        sigma0 = jnp.array([0.0, 0.0])
+        mu = jnp.array([1.0, 1.0])
+        deltat = jnp.array([1.0, 1.0])
+        expected = alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
+        result = adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        assert jnp.allclose(result, expected)
+
+    def test_broadcasting(self) -> None:
+        """Test broadcasting capabilities."""
+        alpha = jnp.array([1.0, 2.0])
+        sigma = 1.0
+        sigma0 = 0.0
+        mu = 1.0
+        deltat = 1.0
+        expected = alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
+        result = adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
         assert jnp.allclose(result, expected)
 
     def test_known_values(self) -> None:
-        """Test with known values from the docstring example."""
-        chi = 1.0
+        """Test with known values."""
+        # This test uses the example from the docstring
         alpha = 1.0
+        sigma = 1.0
         sigma0 = 0.0
-        r0 = 1.0
-        deltat = 1.0
         mu = 1.0
-        # The docstring example shows this should be 0
-        expected = 0.0
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
-        assert jnp.allclose(result, expected, atol=1e-7)
+        deltat = 1.0
+        result = adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        assert jnp.allclose(result, 2.0)

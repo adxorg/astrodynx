@@ -25,10 +25,10 @@
     :undoc-members:
     :show-inheritance:
 
-``twobody.ivp``
+``twobody.uniformulas``
 ---------------
 
-.. automodule:: astrodynx.twobody.ivp
+.. automodule:: astrodynx.twobody.uniformulas
     :members:
     :undoc-members:
     :show-inheritance:

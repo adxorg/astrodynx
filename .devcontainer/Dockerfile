@@ -6,5 +6,3 @@ RUN mkdir -p /home/$USERNAME/.pip \
     && echo '[global]' > /home/$USERNAME/.pip/pip.conf \
     && echo 'index-url = https://pypi.tuna.tsinghua.edu.cn/simple' >> /home/$USERNAME/.pip/pip.conf \
     && echo 'trusted-host = pypi.tuna.tsinghua.edu.cn' >> /home/$USERNAME/.pip/pip.conf
-
-ENV LC_ALL en_US.UTF-8

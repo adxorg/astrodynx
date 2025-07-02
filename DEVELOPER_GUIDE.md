@@ -26,7 +26,7 @@ astrodynx/
 ├── twobody/              # Two-body orbital mechanics
 │   ├── kepler_equation.py    # Kepler's equation solvers
 │   ├── orb_integrals.py      # Orbital integrals and elements
-│   └── ivp.py                # Initial value problems
+│   └── uniformulas.py        # Uniformized anomaly functions
 └── utils/                # Utility functions
     └── rotation_matrix.py    # Coordinate transformations
 ```

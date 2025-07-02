@@ -246,7 +246,6 @@ tests/
 ├── test_kepler_equation.py     # Kepler equation tests
 ├── test_orb_integrals.py       # Orbital integrals tests
 ├── test_rotation_matrix.py     # Rotation matrix tests
-└── test_twobody_ivp.py         # Two-body IVP tests
 ```
 
 ### Writing Tests

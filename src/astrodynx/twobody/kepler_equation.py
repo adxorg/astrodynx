@@ -1,7 +1,9 @@
 import jax.numpy as jnp
-from jax.typing import ArrayLike
+from jax.typing import ArrayLike, DTypeLike
 from jax import Array
-from astrodynx.twobody.ivp import U1, U2, U3
+from astrodynx.twobody.uniformulas import U1, U2, U3
+
+"""Kepler's equations and generalized anomaly for two-body orbital mechanics."""
 
 
 def kepler_equ_elps(E: ArrayLike, e: ArrayLike, M: ArrayLike = 0) -> Array:
@@ -178,7 +180,7 @@ def mean_anomaly_hypb(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
 
 def kepler_equ_uni(
     chi: ArrayLike,
-    alpha: ArrayLike,
+    alpha: DTypeLike,
     sigma0: ArrayLike,
     r0: ArrayLike,
     mu: ArrayLike = 1,
@@ -224,7 +226,7 @@ def kepler_equ_uni(
         With broadcasting:
 
         >>> chi = jnp.array([1.0, 2.0])
-        >>> alpha = jnp.array([1.0, 1.0])
+        >>> alpha = 1.
         >>> sigma0 = jnp.array([0.0, 0.0])
         >>> r0 = jnp.array([1.0, 1.0])
         >>> deltat = jnp.array([1.0, 1.0])

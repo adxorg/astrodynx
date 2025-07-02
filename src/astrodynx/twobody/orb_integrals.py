@@ -2,6 +2,8 @@ import jax.numpy as jnp
 from jax.typing import ArrayLike
 from jax import Array
 
+"""Orbital integrals and elements for two-body orbital mechanics."""
+
 
 def orb_period(a: ArrayLike, mu: ArrayLike) -> Array:
     r"""
