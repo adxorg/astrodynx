@@ -6,7 +6,55 @@ from jax import Array
 """Universal functions for two-body orbital mechanics."""
 
 
-def sigma_func(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike) -> Array:
+def radius(
+    chi: ArrayLike, alpha: DTypeLike = 1, r0: ArrayLike = 1, sigma0: ArrayLike = 0
+) -> Array:
+    r"""The radius function
+
+    Args:
+        chi: The generalized anomaly.
+        alpha: The reciprocal of the semimajor axis.
+        r0: The radius at the initial time.
+        sigma0: The sigma function at the initial time.
+
+    Returns:
+        The value of the radius function.
+
+    Notes:
+        The radius function is defined as:
+        $$
+        r= r_0 U_0(\chi, \alpha) + \sigma_0 U_1(\chi, \alpha) + U_2(\chi, \alpha)
+        $$
+        where $\chi$ is the generalized anomaly, $\alpha = \frac{1}{a}$ is the reciprocal of semimajor axis, $r_0$ is the radius at the initial time, and $\sigma_0$ is the sigma function at the initial time.
+
+    References:
+        Battin, 1999, pp.180.
+
+    Examples:
+        A simple example:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> chi = 1.0
+        >>> alpha = 1.0
+        >>> r0 = 1.0
+        >>> sigma0 = 0.0
+        >>> adx.twobody.uniformulas.radius(chi, alpha, r0, sigma0)
+        Array(1., dtype=float32, weak_type=True)
+
+        With broadcasting:
+
+        >>> chi = jnp.array([0.6, 1.2])
+        >>> alpha = 1.0
+        >>> r0 = jnp.array([1.0, 1.0])
+        >>> sigma0 = jnp.array([0.0, 0.0])
+        >>> adx.twobody.uniformulas.radius(chi, alpha, r0, sigma0)
+        Array([1., 1.], dtype=float32)
+    """
+    return r0 * U0(chi, alpha) + sigma0 * U1(chi, alpha) + U2(chi, alpha)
+
+
+def sigma_bvp(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike = 1) -> Array:
     r"""The sigma function
 
     Args:
@@ -35,7 +83,7 @@ def sigma_func(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike) -> Array:
         >>> pos_vec = jnp.array([1.0, 0.0, 0.0])
         >>> vel_vec = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
-        >>> adx.twobody.uniformulas.sigma_func(pos_vec, vel_vec, mu)
+        >>> adx.twobody.uniformulas.sigma_bvp(pos_vec, vel_vec, mu)
         Array([0.], dtype=float32)
 
         With broadcasting, you can calculate the sigma function for multiple position and velocity vectors:
@@ -43,7 +91,7 @@ def sigma_func(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike) -> Array:
         >>> pos_vec = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
         >>> vel_vec = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
         >>> mu = jnp.array([[1.0], [2.0]])
-        >>> adx.twobody.uniformulas.sigma_func(pos_vec, vel_vec, mu)
+        >>> adx.twobody.uniformulas.sigma_bvp(pos_vec, vel_vec, mu)
         Array([[0.],
                [0.]], dtype=float32)
     """

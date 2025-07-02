@@ -72,7 +72,7 @@ Use `@jax.jit` for performance-critical functions:
 from jax import jit
 
 @jit
-def orbital_energy(position: Array, velocity: Array, mu: float) -> Array:
+def orbital_energy(position: Array, velocity: Array, mu: ArrayLike = 1) -> Array:
     """Calculate specific orbital energy."""
     r = jnp.linalg.norm(position)
     v_squared = jnp.sum(velocity**2)
@@ -85,7 +85,7 @@ Design functions to work with both scalar and array inputs:
 
 ```python
 @jit
-def mean_motion(semi_major_axis: Array, mu: float) -> Array:
+def mean_motion(semi_major_axis: Array, mu: ArrayLike = 1) -> Array:
     """Calculate mean motion for scalar or array inputs."""
     return jnp.sqrt(mu / jnp.power(semi_major_axis, 3))
 
@@ -104,7 +104,7 @@ Ensure functions are differentiable:
 ```python
 from jax import grad, jacfwd
 
-def orbital_period(semi_major_axis: Array, mu: float) -> Array:
+def orbital_period(semi_major_axis: Array, mu: ArrayLike = 1) -> Array:
     return 2 * jnp.pi * jnp.sqrt(semi_major_axis**3 / mu)
 
 # Compute gradient with respect to semi-major axis
@@ -257,7 +257,7 @@ Examples
 ```python
 # Pre-compile for expected input shapes
 @jit
-def propagate_orbit(r0: Array, v0: Array, t: Array, mu: float) -> tuple[Array, Array]:
+def propagate_orbit(r0: Array, v0: Array, t: Array, mu: ArrayLike = 1) -> tuple[Array, Array]:
     # Implementation
     pass
 

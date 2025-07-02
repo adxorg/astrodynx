@@ -92,13 +92,13 @@ def kepler_equ_hypb(H: ArrayLike, e: ArrayLike, N: ArrayLike = 0) -> Array:
     return e * jnp.sinh(H) - H - N
 
 
-def mean_anomaly_elps(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
+def mean_anomaly_elps(a: ArrayLike, deltat: ArrayLike, mu: ArrayLike = 1) -> Array:
     r"""Returns the mean anomaly for an elliptical orbit.
 
     Args:
         a: Semimajor axis of the orbit, a > 0.
-        mu: Gravitational parameter of the central body.
         deltat: Time since periapsis passage.
+        mu: (optional) Gravitational parameter of the central body.
 
     Returns:
         The mean anomaly for an elliptical orbit.
@@ -121,7 +121,7 @@ def mean_anomaly_elps(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
         >>> a = 1.0
         >>> mu = 1.0
         >>> deltat = 1.0
-        >>> adx.mean_anomaly_elps(a, mu, deltat)
+        >>> adx.mean_anomaly_elps(a, deltat, mu)
         Array(1., dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the mean anomaly for multiple semimajor axes, gravitational parameters, and times since periapsis passage:
@@ -129,19 +129,19 @@ def mean_anomaly_elps(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
         >>> a = jnp.array([1.0, 2.0])
         >>> mu = jnp.array([1.0, 2.0])
         >>> deltat = jnp.array([1.0, 1.0])
-        >>> adx.mean_anomaly_elps(a, mu, deltat)
+        >>> adx.mean_anomaly_elps(a, deltat, mu)
         Array([1. , 0.5], dtype=float32)
     """
     return jnp.sqrt(mu / a**3) * deltat
 
 
-def mean_anomaly_hypb(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
+def mean_anomaly_hypb(a: ArrayLike, deltat: ArrayLike, mu: ArrayLike = 1) -> Array:
     r"""Returns the mean anomaly for a hyperbolic orbit.
 
     Args:
         a: Semimajor axis of the orbit, a < 0.
-        mu: Gravitational parameter of the central body.
         deltat: Time since periapsis passage.
+        mu: (optional) Gravitational parameter of the central body.
 
     Returns:
         The mean anomaly for a hyperbolic orbit.
@@ -164,7 +164,7 @@ def mean_anomaly_hypb(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
         >>> a = -1.0
         >>> mu = 1.0
         >>> deltat = 1.0
-        >>> adx.mean_anomaly_hypb(a, mu, deltat)
+        >>> adx.mean_anomaly_hypb(a, deltat, mu)
         Array(1., dtype=float32, weak_type=True)
 
         With broadcasting, you can calculate the mean anomaly for multiple semimajor axes, gravitational parameters, and times since periapsis passage:
@@ -172,7 +172,7 @@ def mean_anomaly_hypb(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
         >>> a = jnp.array([-1.0, -2.0])
         >>> mu = jnp.array([1.0, 2.0])
         >>> deltat = jnp.array([1.0, 1.0])
-        >>> adx.mean_anomaly_hypb(a, mu, deltat)
+        >>> adx.mean_anomaly_hypb(a, deltat, mu)
         Array([1. , 0.5], dtype=float32)
     """
     return jnp.sqrt(mu / -(a**3)) * deltat
@@ -180,21 +180,21 @@ def mean_anomaly_hypb(a: ArrayLike, mu: ArrayLike, deltat: ArrayLike) -> Array:
 
 def kepler_equ_uni(
     chi: ArrayLike,
-    alpha: DTypeLike,
-    sigma0: ArrayLike,
-    r0: ArrayLike,
-    mu: ArrayLike = 1,
+    alpha: DTypeLike = 1,
+    r0: ArrayLike = 1,
+    sigma0: ArrayLike = 0,
     deltat: ArrayLike = 0,
+    mu: ArrayLike = 1,
 ) -> Array:
     r"""Returns the universal Kepler's equation in the form f(chi) = 0.
 
     Args:
         chi: The generalized anomaly.
-        alpha: The reciprocal of the semimajor axis.
-        sigma0: The sigma function at the initial time.
-        r0: The norm of the position vector at the initial time.
-        mu: (optional) The gravitational parameter.
+        alpha: (optional) The reciprocal of the semimajor axis.
+        r0: (optional) The radius at the initial time.
+        sigma0: (optional) The sigma function at the initial time.
         deltat: (optional) The time since the initial time.
+        mu: (optional) The gravitational parameter.
 
     Returns:
         The value of the universal Kepler's equation.
@@ -220,7 +220,7 @@ def kepler_equ_uni(
         >>> r0 = 1.0
         >>> mu = 1.0
         >>> deltat = 1.0
-        >>> adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
+        >>> adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
         Array(0., dtype=float32, weak_type=True)
 
         With broadcasting:
@@ -231,7 +231,7 @@ def kepler_equ_uni(
         >>> r0 = jnp.array([1.0, 1.0])
         >>> deltat = jnp.array([1.0, 1.0])
         >>> mu = jnp.array([1.0, 1.0])
-        >>> adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
+        >>> adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
         Array([0., 1.], dtype=float32)
     """
     return (
@@ -246,8 +246,8 @@ def generalized_anomaly(
     alpha: ArrayLike,
     sigma: ArrayLike,
     sigma0: ArrayLike,
-    mu: ArrayLike = 1,
     deltat: ArrayLike = 0,
+    mu: ArrayLike = 1,
 ) -> Array:
     r"""Returns the generalized anomaly.
 
@@ -255,8 +255,8 @@ def generalized_anomaly(
         alpha: The reciprocal of the semimajor axis.
         sigma: The sigma function at the current time.
         sigma0: The sigma function at the initial time.
-        mu: (optional) The gravitational parameter.
         deltat: (optional) The time since the initial time.
+        mu: (optional) The gravitational parameter.
 
     Returns:
         The generalized anomaly.
@@ -281,7 +281,7 @@ def generalized_anomaly(
         >>> sigma0 = 0.0
         >>> mu = 1.0
         >>> deltat = 1.0
-        >>> adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        >>> adx.generalized_anomaly(alpha, sigma, sigma0, deltat, mu)
         Array(2., dtype=float32, weak_type=True)
 
         With broadcasting:
@@ -291,7 +291,7 @@ def generalized_anomaly(
         >>> sigma0 = jnp.array([0.0, 0.0])
         >>> mu = jnp.array([1.0, 1.0])
         >>> deltat = jnp.array([1.0, 1.0])
-        >>> adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        >>> adx.generalized_anomaly(alpha, sigma, sigma0, deltat, mu)
         Array([2., 3.], dtype=float32)
     """
     return alpha * jnp.sqrt(mu) * deltat + sigma - sigma0

@@ -5,7 +5,7 @@ from jax import Array
 """Orbital integrals and elements for two-body orbital mechanics."""
 
 
-def orb_period(a: ArrayLike, mu: ArrayLike) -> Array:
+def orb_period(a: ArrayLike, mu: ArrayLike = 1) -> Array:
     r"""
     Returns the orbital period of a two-body system.
 
@@ -88,7 +88,7 @@ def angular_momentum(pos_vec: ArrayLike, vel_vec: ArrayLike) -> Array:
     return jnp.cross(pos_vec, vel_vec)
 
 
-def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> ArrayLike:
+def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike = 1) -> ArrayLike:
     r"""
     Returns the semimajor axis of a two-body orbit.
 
@@ -132,7 +132,9 @@ def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike) -> ArrayLike:
     return 1 / (2 / r - v**2 / mu)
 
 
-def eccentricity_vector(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike) -> Array:
+def eccentricity_vector(
+    pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike = 1
+) -> Array:
     r"""
     Returns the eccentricity vector of a two-body orbit.
 
@@ -180,7 +182,7 @@ def eccentricity_vector(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike) -
     )
 
 
-def semiparameter(h: ArrayLike, mu: ArrayLike) -> ArrayLike:
+def semiparameter(h: ArrayLike, mu: ArrayLike = 1) -> ArrayLike:
     r"""
     Returns the semiparameter of a two-body orbit.
 

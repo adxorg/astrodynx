@@ -1,79 +1,6 @@
 import astrodynx as adx
+import jax
 import jax.numpy as jnp
-
-
-class TestMeanAnomalyElps:
-    def test_scalar_inputs(self) -> None:
-        """Test with scalar inputs."""
-        a = 1.0
-        mu = 1.0
-        deltat = 1.0
-        expected = jnp.sqrt(mu / a**3) * deltat
-        result = adx.mean_anomaly_elps(a, mu, deltat)
-        assert jnp.allclose(result, expected)
-
-    def test_array_inputs(self) -> None:
-        """Test with array inputs."""
-        a = jnp.array([1.0, 2.0])
-        mu = jnp.array([1.0, 2.0])
-        deltat = jnp.array([1.0, 1.0])
-        expected = jnp.sqrt(mu / a**3) * deltat
-        result = adx.mean_anomaly_elps(a, mu, deltat)
-        assert jnp.allclose(result, expected)
-
-    def test_broadcasting(self) -> None:
-        """Test broadcasting capabilities."""
-        a = jnp.array([1.0, 2.0])
-        mu = 1.0
-        deltat = 1.0
-        expected = jnp.sqrt(mu / a**3) * deltat
-        result = adx.mean_anomaly_elps(a, mu, deltat)
-        assert jnp.allclose(result, expected)
-
-    def test_types(self) -> None:
-        """Test that the function returns the correct type."""
-        a = 1.0
-        mu = 1.0
-        deltat = 1.0
-        result = adx.mean_anomaly_elps(a, mu, deltat)
-        assert isinstance(result, jnp.ndarray)
-
-
-class TestMeanAnomalyHypb:
-    def test_scalar_inputs(self) -> None:
-        """Test with scalar inputs."""
-        a = -1.0
-        mu = 1.0
-        deltat = 1.0
-        expected = jnp.sqrt(mu / -(a**3)) * deltat
-        result = adx.mean_anomaly_hypb(a, mu, deltat)
-        assert jnp.allclose(result, expected)
-
-    def test_array_inputs(self) -> None:
-        """Test with array inputs."""
-        a = jnp.array([-1.0, -2.0])
-        mu = jnp.array([1.0, 2.0])
-        deltat = jnp.array([1.0, 1.0])
-        expected = jnp.sqrt(mu / -(a**3)) * deltat
-        result = adx.mean_anomaly_hypb(a, mu, deltat)
-        assert jnp.allclose(result, expected)
-
-    def test_broadcasting(self) -> None:
-        """Test broadcasting capabilities."""
-        a = jnp.array([-1.0, -2.0])
-        mu = 1.0
-        deltat = 1.0
-        expected = jnp.sqrt(mu / -(a**3)) * deltat
-        result = adx.mean_anomaly_hypb(a, mu, deltat)
-        assert jnp.allclose(result, expected)
-
-    def test_types(self) -> None:
-        """Test that the function returns the correct type."""
-        a = -1.0
-        mu = 1.0
-        deltat = 1.0
-        result = adx.mean_anomaly_hypb(a, mu, deltat)
-        assert isinstance(result, jnp.ndarray)
 
 
 class TestKeplerEquElps:
@@ -152,69 +79,110 @@ class TestKeplerEquHypb:
         assert jnp.allclose(results, expected)
 
 
+class TestMeanAnomalyElps:
+    def test_scalar_inputs(self) -> None:
+        """Test with scalar inputs."""
+        a = 1.0
+        mu = 1.0
+        deltat = 1.0
+        expected = jnp.sqrt(mu / a**3) * deltat
+        result = adx.mean_anomaly_elps(a, deltat, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_array_inputs(self) -> None:
+        """Test with array inputs."""
+        a = jnp.array([1.0, 2.0])
+        mu = jnp.array([1.0, 2.0])
+        deltat = jnp.array([1.0, 1.0])
+        expected = jnp.sqrt(mu / a**3) * deltat
+        result = adx.mean_anomaly_elps(a, deltat, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_broadcasting(self) -> None:
+        """Test broadcasting capabilities."""
+        a = jnp.array([1.0, 2.0])
+        mu = 1.0
+        deltat = 1.0
+        expected = jnp.sqrt(mu / a**3) * deltat
+        result = adx.mean_anomaly_elps(a, deltat, mu)
+        assert jnp.allclose(result, expected)
+
+
+class TestMeanAnomalyHypb:
+    def test_scalar_inputs(self) -> None:
+        """Test with scalar inputs."""
+        a = -1.0
+        mu = 1.0
+        deltat = 1.0
+        expected = jnp.sqrt(mu / -(a**3)) * deltat
+        result = adx.mean_anomaly_hypb(a, deltat, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_array_inputs(self) -> None:
+        """Test with array inputs."""
+        a = jnp.array([-1.0, -2.0])
+        mu = jnp.array([1.0, 2.0])
+        deltat = jnp.array([1.0, 1.0])
+        expected = jnp.sqrt(mu / -(a**3)) * deltat
+        result = adx.mean_anomaly_hypb(a, deltat, mu)
+        assert jnp.allclose(result, expected)
+
+    def test_broadcasting(self) -> None:
+        """Test broadcasting capabilities."""
+        a = jnp.array([-1.0, -2.0])
+        mu = 1.0
+        deltat = 1.0
+        expected = jnp.sqrt(mu / -(a**3)) * deltat
+        result = adx.mean_anomaly_hypb(a, deltat, mu)
+        assert jnp.allclose(result, expected)
+
+
 class TestKeplerEquUni:
     def test_scalar_inputs(self) -> None:
         """Test with scalar inputs."""
         chi = 1.0
         alpha = 1.0
-        sigma0 = 0.0
         r0 = 1.0
-        mu = 1.0
+        sigma0 = 0.0
         deltat = 1.0
+        mu = 1.0
         expected = (
             r0 * adx.twobody.uniformulas.U1(chi, alpha)
             + sigma0 * adx.twobody.uniformulas.U2(chi, alpha)
             + adx.twobody.uniformulas.U3(chi, alpha)
             - jnp.sqrt(mu) * deltat
         )
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
+        result = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
         assert jnp.allclose(result, expected)
 
     def test_array_inputs(self) -> None:
         """Test with array inputs."""
         chi = jnp.array([1.0, 2.0])
         alpha = 1.0
-        sigma0 = jnp.array([0.0, 0.0])
         r0 = jnp.array([1.0, 1.0])
-        mu = jnp.array([1.0, 1.0])
+        sigma0 = jnp.array([0.0, 0.0])
         deltat = jnp.array([1.0, 1.0])
+        mu = jnp.array([1.0, 1.0])
         expected = (
             r0 * adx.twobody.uniformulas.U1(chi, alpha)
             + sigma0 * adx.twobody.uniformulas.U2(chi, alpha)
             + adx.twobody.uniformulas.U3(chi, alpha)
             - jnp.sqrt(mu) * deltat
         )
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
+        result = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
         assert jnp.allclose(result, expected)
 
-    def test_broadcasting(self) -> None:
-        """Test broadcasting capabilities."""
-        chi = jnp.array([1.0, 2.0])
-        alpha = 1.0
-        sigma0 = 0.0
-        r0 = 1.0
-        mu = 1.0
-        deltat = 1.0
-        expected = (
-            r0 * adx.twobody.uniformulas.U1(chi, alpha)
-            + sigma0 * adx.twobody.uniformulas.U2(chi, alpha)
-            + adx.twobody.uniformulas.U3(chi, alpha)
-            - jnp.sqrt(mu) * deltat
+    def test_gradient_wrt_chi(self) -> None:
+        """Test gradient with respect to chi."""
+        chi = jnp.pi * 0.6
+        alpha = jnp.array([1.0, 0, -1.0])
+        expected = jax.vmap(adx.twobody.uniformulas.radius, in_axes=(None, 0))(
+            chi, alpha
+        )  # dt/d chi = r / sqrt(mu), Battin 1999, pp.174.
+        result = jax.vmap(jax.grad(adx.kepler_equ_uni, argnums=0), in_axes=(None, 0))(
+            chi, alpha
         )
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
         assert jnp.allclose(result, expected)
-
-    def test_known_values(self) -> None:
-        """Test with known values."""
-        # This test uses the example from the docstring
-        chi = 1.0
-        alpha = 1.0
-        sigma0 = 0.0
-        r0 = 1.0
-        mu = 1.0
-        deltat = 1.0
-        result = adx.kepler_equ_uni(chi, alpha, sigma0, r0, mu, deltat)
-        assert jnp.allclose(result, 0.0)
 
 
 class TestGeneralizedAnomaly:
@@ -223,10 +191,10 @@ class TestGeneralizedAnomaly:
         alpha = 1.0
         sigma = 1.0
         sigma0 = 0.0
-        mu = 1.0
         deltat = 1.0
+        mu = 1.0
         expected = alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
-        result = adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        result = adx.generalized_anomaly(alpha, sigma, sigma0, deltat, mu)
         assert jnp.allclose(result, expected)
 
     def test_array_inputs(self) -> None:
@@ -234,30 +202,19 @@ class TestGeneralizedAnomaly:
         alpha = jnp.array([1.0, 1.0])
         sigma = jnp.array([1.0, 2.0])
         sigma0 = jnp.array([0.0, 0.0])
-        mu = jnp.array([1.0, 1.0])
         deltat = jnp.array([1.0, 1.0])
+        mu = jnp.array([1.0, 1.0])
         expected = alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
-        result = adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
+        result = adx.generalized_anomaly(alpha, sigma, sigma0, deltat, mu)
         assert jnp.allclose(result, expected)
 
     def test_broadcasting(self) -> None:
         """Test broadcasting capabilities."""
-        alpha = jnp.array([1.0, 2.0])
-        sigma = 1.0
-        sigma0 = 0.0
-        mu = 1.0
-        deltat = 1.0
-        expected = alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
-        result = adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
-        assert jnp.allclose(result, expected)
-
-    def test_known_values(self) -> None:
-        """Test with known values."""
-        # This test uses the example from the docstring
         alpha = 1.0
-        sigma = 1.0
+        sigma = jnp.array([1.0, 2.0])
         sigma0 = 0.0
-        mu = 1.0
         deltat = 1.0
-        result = adx.generalized_anomaly(alpha, sigma, sigma0, mu, deltat)
-        assert jnp.allclose(result, 2.0)
+        mu = 1.0
+        expected = alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
+        result = adx.generalized_anomaly(alpha, sigma, sigma0, deltat, mu)
+        assert jnp.allclose(result, expected)
