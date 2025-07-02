@@ -63,7 +63,7 @@ The easiest way to set up your development environment is to use the provided de
 5. Wait for the container to build and start
 
 
-### Virtual Environment Setup (Optional 😐)
+### Virtual Environment Setup (Optional ：😐)
 
 1. Create a virtual environment (recommended):
 
