@@ -130,7 +130,7 @@ class TestEccentricityVector:
         v = jnp.array([0.0, 1.0, 0.0])
         mu = 2.0
         h = adx.angular_momentum(r, v)
-        expected = jnp.cross(v, h) / mu - r / jnp.linalg.norm(r)
+        expected = jnp.cross(v, h) / mu - r / jnp.linalg.vector_norm(r)
         result = adx.eccentricity_vector(r, v, mu)
         assert jnp.allclose(result, expected)
 

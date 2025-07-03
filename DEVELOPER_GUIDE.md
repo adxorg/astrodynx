@@ -56,12 +56,12 @@ from jax import Array
 
 # Good
 def compute_distance(r1: Array, r2: Array) -> Array:
-    return jnp.linalg.norm(r1 - r2)
+    return jnp.linalg.vector_norm(r1 - r2)
 
 # Avoid
 import numpy as np
 def compute_distance(r1: np.ndarray, r2: np.ndarray) -> np.ndarray:
-    return np.linalg.norm(r1 - r2)
+    return np.linalg.vector_norm(r1 - r2)
 ```
 
 ### JIT Compilation
@@ -74,7 +74,7 @@ from jax import jit
 @jit
 def orbital_energy(position: Array, velocity: Array, mu: ArrayLike = 1) -> Array:
     """Calculate specific orbital energy."""
-    r = jnp.linalg.norm(position)
+    r = jnp.linalg.vector_norm(position)
     v_squared = jnp.sum(velocity**2)
     return 0.5 * v_squared - mu / r
 ```
@@ -302,7 +302,7 @@ orbital_elements = jnp.array(data, dtype=jnp.float64)
 ```python
 # Good: In-place operations where possible
 def normalize_vector(v: Array) -> Array:
-    norm = jnp.linalg.norm(v)
+    norm = jnp.linalg.vector_norm(v)
     return v / norm
 
 # Avoid unnecessary intermediate arrays

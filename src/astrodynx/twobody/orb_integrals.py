@@ -177,7 +177,7 @@ def eccentricity_vector(
                [3., 0., 0.]], dtype=float32)
     """
     h = angular_momentum(pos_vec, vel_vec)
-    return jnp.cross(vel_vec, h) / mu - pos_vec / jnp.linalg.norm(
+    return jnp.cross(vel_vec, h) / mu - pos_vec / jnp.linalg.vector_norm(
         pos_vec, axis=-1, keepdims=True
     )
 
