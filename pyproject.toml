@@ -66,7 +66,7 @@ version_provider = "scm"
 tag_format = "v$version"
 
 [tool.pytest.ini_options]
-doctest_optionflags = "ELLIPSIS NORMALIZE_WHITESPACE"
+doctest_optionflags = "ELLIPSIS"
 testpaths = ["src/astrodynx","tests"]
 addopts = "--cov=src/astrodynx --cov-report=term-missing --doctest-modules"
 

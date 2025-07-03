@@ -1,7 +1,7 @@
 import jax.numpy as jnp
 from jax.typing import ArrayLike, DTypeLike
 from jax import Array
-from astrodynx.twobody.uniformulas import U1, U2, U3
+from astrodynx.twobody.uniformulas import ufunc1, ufunc2, ufunc3
 
 """Kepler's equations and generalized anomaly for two-body orbital mechanics."""
 
@@ -235,9 +235,9 @@ def kepler_equ_uni(
         Array([0., 1.], dtype=float32)
     """
     return (
-        r0 * U1(chi, alpha)
-        + sigma0 * U2(chi, alpha)
-        + U3(chi, alpha)
+        r0 * ufunc1(chi, alpha)
+        + sigma0 * ufunc2(chi, alpha)
+        + ufunc3(chi, alpha)
         - jnp.sqrt(mu) * deltat
     )
 

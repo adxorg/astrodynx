@@ -7,13 +7,14 @@ from jax import Array
 
 
 def radius(
-    chi: ArrayLike, alpha: DTypeLike = 1, r0: ArrayLike = 1, sigma0: ArrayLike = 0
-) -> Array:
+    U0: ArrayLike, U1: ArrayLike, U2: ArrayLike, r0: ArrayLike, sigma0: ArrayLike
+) -> ArrayLike:
     r"""The radius function
 
     Args:
-        chi: The generalized anomaly.
-        alpha: The reciprocal of the semimajor axis.
+        U0: The universal function U0.
+        U1: The universal function U1.
+        U2: The universal function U2.
         r0: The radius at the initial time.
         sigma0: The sigma function at the initial time.
 
@@ -23,35 +24,37 @@ def radius(
     Notes:
         The radius function is defined as:
         $$
-        r= r_0 U_0(\chi, \alpha) + \sigma_0 U_1(\chi, \alpha) + U_2(\chi, \alpha)
+        r = r_0 U_0 + \sigma_0 U_1 + U_2
         $$
-        where $\chi$ is the generalized anomaly, $\alpha = \frac{1}{a}$ is the reciprocal of semimajor axis, $r_0$ is the radius at the initial time, and $\sigma_0$ is the sigma function at the initial time.
+        where $U_0$ is the universal function U0, $U_1$ is the universal function U1, $U_2$ is the universal function U2, $r_0$ is the radius at the initial time, and $\sigma_0$ is the sigma function at the initial time.
 
     References:
-        Battin, 1999, pp.180.
+        Battin, 1999, pp.178.
 
     Examples:
         A simple example:
 
         >>> import jax.numpy as jnp
         >>> import astrodynx as adx
-        >>> chi = 1.0
-        >>> alpha = 1.0
+        >>> U0 = 1.0
+        >>> U1 = 1.0
+        >>> U2 = 1.0
         >>> r0 = 1.0
         >>> sigma0 = 0.0
-        >>> adx.twobody.uniformulas.radius(chi, alpha, r0, sigma0)
-        Array(1., dtype=float32, weak_type=True)
+        >>> adx.twobody.uniformulas.radius(U0, U1, U2, r0, sigma0)
+        2.0
 
         With broadcasting:
 
-        >>> chi = jnp.array([0.6, 1.2])
-        >>> alpha = 1.0
+        >>> U0 = jnp.array([1.0, 2.0])
+        >>> U1 = jnp.array([1.0, 2.0])
+        >>> U2 = jnp.array([1.0, 1.0])
         >>> r0 = jnp.array([1.0, 1.0])
         >>> sigma0 = jnp.array([0.0, 0.0])
-        >>> adx.twobody.uniformulas.radius(chi, alpha, r0, sigma0)
-        Array([1., 1.], dtype=float32)
+        >>> adx.twobody.uniformulas.radius(U0, U1, U2, r0, sigma0)
+        Array([2., 3.], dtype=float32)
     """
-    return r0 * U0(chi, alpha) + sigma0 * U1(chi, alpha) + U2(chi, alpha)
+    return r0 * U0 + sigma0 * U1 + U2
 
 
 def sigma_bvp(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike = 1) -> Array:
@@ -98,7 +101,7 @@ def sigma_bvp(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike = 1) -> Arra
     return jnp.sum(pos_vec * vel_vec, axis=-1, keepdims=True) / jnp.sqrt(mu)
 
 
-def U0(chi: ArrayLike, alpha: DTypeLike) -> Array:
+def ufunc0(chi: ArrayLike, alpha: DTypeLike) -> Array:
     r"""The universal function U0
 
     Args:
@@ -129,14 +132,14 @@ def U0(chi: ArrayLike, alpha: DTypeLike) -> Array:
         >>> import astrodynx as adx
         >>> chi = 1.0
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U0(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc0(chi, alpha)
         Array(0.5403..., dtype=float32, weak_type=True)
 
         With broadcasting:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U0(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc0(chi, alpha)
         Array([ 0.5403..., -0.4161...], dtype=float32)
     """
     return jax.lax.cond(
@@ -150,7 +153,7 @@ def U0(chi: ArrayLike, alpha: DTypeLike) -> Array:
     )
 
 
-def U1(chi: ArrayLike, alpha: DTypeLike) -> Array:
+def ufunc1(chi: ArrayLike, alpha: DTypeLike) -> Array:
     r"""The universal function U1
 
     Args:
@@ -181,14 +184,14 @@ def U1(chi: ArrayLike, alpha: DTypeLike) -> Array:
         >>> import astrodynx as adx
         >>> chi = 1.0
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U1(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc1(chi, alpha)
         Array(0.8414..., dtype=float32, weak_type=True)
 
         With broadcasting:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U1(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc1(chi, alpha)
         Array([0.8414..., 0.9092...], dtype=float32)
     """
     return jax.lax.cond(
@@ -202,7 +205,7 @@ def U1(chi: ArrayLike, alpha: DTypeLike) -> Array:
     )
 
 
-def U2(chi: ArrayLike, alpha: DTypeLike) -> Array:
+def ufunc2(chi: ArrayLike, alpha: DTypeLike) -> Array:
     r"""The universal function U2
 
     Args:
@@ -233,14 +236,14 @@ def U2(chi: ArrayLike, alpha: DTypeLike) -> Array:
         >>> import astrodynx as adx
         >>> chi = 1.0
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U2(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc2(chi, alpha)
         Array(0.4596..., dtype=float32, weak_type=True)
 
         With broadcasting:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U2(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc2(chi, alpha)
         Array([0.4596..., 1.4161...], dtype=float32)
     """
     return jax.lax.cond(
@@ -254,7 +257,7 @@ def U2(chi: ArrayLike, alpha: DTypeLike) -> Array:
     )
 
 
-def U3(chi: ArrayLike, alpha: DTypeLike) -> Array:
+def ufunc3(chi: ArrayLike, alpha: DTypeLike) -> Array:
     r"""The universal function U3
 
     Args:
@@ -285,14 +288,14 @@ def U3(chi: ArrayLike, alpha: DTypeLike) -> Array:
         >>> import astrodynx as adx
         >>> chi = 1.0
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U3(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc3(chi, alpha)
         Array(0.1585..., dtype=float32, weak_type=True)
 
         With broadcasting:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U3(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc3(chi, alpha)
         Array([0.1585..., 1.0907...], dtype=float32)
     """
     return jax.lax.cond(
@@ -310,7 +313,7 @@ def U3(chi: ArrayLike, alpha: DTypeLike) -> Array:
     )
 
 
-def U4(chi: ArrayLike, alpha: DTypeLike) -> Array:
+def ufunc4(chi: ArrayLike, alpha: DTypeLike) -> Array:
     r"""The universal function U4
 
     Args:
@@ -341,14 +344,14 @@ def U4(chi: ArrayLike, alpha: DTypeLike) -> Array:
         >>> import astrodynx as adx
         >>> chi = 1.0
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U4(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc4(chi, alpha)
         Array(0.0403..., dtype=float32, weak_type=True)
 
         With broadcasting:
 
         >>> chi = jnp.array([1.0, 2.0])
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U4(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc4(chi, alpha)
         Array([0.0403..., 0.5838...], dtype=float32)
     """
     return jax.lax.cond(
@@ -364,7 +367,7 @@ def U4(chi: ArrayLike, alpha: DTypeLike) -> Array:
     )
 
 
-def U5(chi: ArrayLike, alpha: DTypeLike) -> Array:
+def ufunc5(chi: ArrayLike, alpha: DTypeLike) -> Array:
     r"""The universal function U5
 
     Args:
@@ -395,14 +398,14 @@ def U5(chi: ArrayLike, alpha: DTypeLike) -> Array:
         >>> import astrodynx as adx
         >>> chi = 1.0
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U5(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc5(chi, alpha)
         Array(0.0081..., dtype=float32, weak_type=True)
 
         With broadcasting:
 
         >>> chi = jnp.array([2.0, 3.0])
         >>> alpha = 1.0
-        >>> adx.twobody.uniformulas.U5(chi, alpha)
+        >>> adx.twobody.uniformulas.ufunc5(chi, alpha)
         Array([0.2426..., 1.6411...], dtype=float32)
     """
     return jax.lax.cond(
