@@ -26,7 +26,9 @@ astrodynx/
 ├── twobody/              # Two-body orbital mechanics
 │   ├── kepler_equation.py    # Kepler's equation solvers
 │   ├── orb_integrals.py      # Orbital integrals and elements
-│   └── uniformulas.py        # Uniformized anomaly functions
+│   ├── uniformulas.py        # Uniformized anomaly functions
+│   ├── lagrange.py          # Lagrange coefficients
+│   └── state_trans.py       # State transition matrices
 └── utils/                # Utility functions
     └── rot_mat.py    # Coordinate transformations
 ```

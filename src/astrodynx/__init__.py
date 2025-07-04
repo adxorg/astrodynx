@@ -3,7 +3,7 @@ from astrodynx._version import version_tuple as version_tuple
 from astrodynx._version import __version__ as __version__
 from astrodynx._version import __version_tuple__ as __version_tuple__
 
-from astrodynx.twobody.kep_equ import (
+from astrodynx.twobody._kep_equ import (
     kepler_equ_elps,
     kepler_equ_hypb,
     kepler_equ_uni,
@@ -11,7 +11,7 @@ from astrodynx.twobody.kep_equ import (
     mean_anomaly_elps,
     mean_anomaly_hypb,
 )
-from astrodynx.twobody.orb_integrals import (
+from astrodynx.twobody._orb_integrals import (
     orb_period,
     angular_momentum,
     semimajor_axis,
