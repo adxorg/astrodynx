@@ -88,13 +88,13 @@ def angular_momentum(pos_vec: ArrayLike, vel_vec: ArrayLike) -> Array:
     return jnp.cross(pos_vec, vel_vec)
 
 
-def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike = 1) -> ArrayLike:
+def semimajor_axis(r_mag: ArrayLike, v_mag: ArrayLike, mu: ArrayLike = 1) -> ArrayLike:
     r"""
     Returns the semimajor axis of a two-body orbit.
 
     Args:
-        r: Norm of the object's position vector in the two-body system.
-        v: Norm of the object's velocity vector in the two-body system, which shape broadcast-compatible with `r`.
+        r_mag: Norm of the object's position vector in the two-body system.
+        v_mag: Norm of the object's velocity vector in the two-body system, which shape broadcast-compatible with `r`.
         mu: Gravitational parameter of the central body; shape broadcast-compatible with `r` and `v`.
 
     Returns:
@@ -129,7 +129,7 @@ def semimajor_axis(r: ArrayLike, v: ArrayLike, mu: ArrayLike = 1) -> ArrayLike:
         >>> adx.semimajor_axis(r, v, mu)
         Array([ 1., -1.], dtype=float32)
     """
-    return 1 / (2 / r - v**2 / mu)
+    return 1 / (2 / r_mag - v_mag**2 / mu)
 
 
 def eccentricity_vector(
@@ -182,12 +182,12 @@ def eccentricity_vector(
     )
 
 
-def semiparameter(h: ArrayLike, mu: ArrayLike = 1) -> ArrayLike:
+def semiparameter(h_mag: ArrayLike, mu: ArrayLike = 1) -> ArrayLike:
     r"""
     Returns the semiparameter of a two-body orbit.
 
     Args:
-        h: Norm of the specific angular momentum vector of the object in the two-body system.
+        h_mag: The angular momentum of the object in the two-body system.
         mu: Gravitational parameter of the central body; shape broadcast-compatible with `h`.
 
     Returns:
@@ -220,7 +220,7 @@ def semiparameter(h: ArrayLike, mu: ArrayLike = 1) -> ArrayLike:
         >>> adx.semiparameter(h, mu)
         Array([1., 2.], dtype=float32)
     """
-    return h**2 / mu
+    return h_mag**2 / mu
 
 
 def mean_motion(P: ArrayLike) -> ArrayLike:
