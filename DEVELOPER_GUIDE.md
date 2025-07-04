@@ -28,7 +28,7 @@ astrodynx/
 │   ├── orb_integrals.py      # Orbital integrals and elements
 │   └── uniformulas.py        # Uniformized anomaly functions
 └── utils/                # Utility functions
-    └── rotation_matrix.py    # Coordinate transformations
+    └── rot_mat.py    # Coordinate transformations
 ```
 
 ## Naming Conventions

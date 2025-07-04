@@ -7,7 +7,7 @@ This section provides comprehensive documentation for all public functions in th
 The API is organized into logical modules for different aspects of astrodynamics computations.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    astrodynx
    astrodynx.twobody

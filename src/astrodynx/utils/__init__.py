@@ -1,4 +1,4 @@
-from astrodynx.utils.rotation_matrix import rotmat3dx, rotmat3dy, rotmat3dz
+from astrodynx.utils.rot_mat import rotmat3dx, rotmat3dy, rotmat3dz
 
 
 __all__ = [
