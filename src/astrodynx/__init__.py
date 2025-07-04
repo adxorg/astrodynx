@@ -3,7 +3,7 @@ from astrodynx._version import version_tuple as version_tuple
 from astrodynx._version import __version__ as __version__
 from astrodynx._version import __version_tuple__ as __version_tuple__
 
-from astrodynx.twobody.kepler_equation import (
+from astrodynx.twobody.kep_equ import (
     kepler_equ_elps,
     kepler_equ_hypb,
     kepler_equ_uni,

@@ -457,7 +457,7 @@ def dxdx0(
     """
     r0_mag, r_mag = vector_norm(r0_vec), vector_norm(r_vec)
     alpha = 1.0 / adx.semimajor_axis(r0_mag, vector_norm(v0_vec), mu)
-    chi = adx.twobody.kepler_equation.generalized_anomaly(
+    chi = adx.generalized_anomaly(
         alpha, sigma_bvp(r_vec, v_vec, mu), sigma_bvp(r0_vec, v0_vec, mu), deltat, mu
     )
     C = _C_func(

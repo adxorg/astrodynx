@@ -2,7 +2,7 @@
 ======================
 
 ``twobody``
-------------
+-----------
 
 .. automodule:: astrodynx.twobody
     :members:
@@ -17,10 +17,10 @@
     :undoc-members:
     :show-inheritance:
 
-``twobody.kepler_equation``
----------------------------
+``twobody.kep_equ``
+-------------------
 
-.. automodule:: astrodynx.twobody.kepler_equation
+.. automodule:: astrodynx.twobody.kep_equ
     :members:
     :undoc-members:
     :show-inheritance:
@@ -34,7 +34,7 @@
     :show-inheritance:
 
 ``twobody.uniformulas``
----------------
+-----------------------
 
 .. automodule:: astrodynx.twobody.uniformulas
     :members:
