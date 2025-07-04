@@ -196,7 +196,7 @@ def _C_func(
     U2: ArrayLike,
     U4: ArrayLike,
     U5: ArrayLike,
-    deltat: ArrayLike,
+    deltat: ArrayLike = 3.14,
     mu: ArrayLike = 1,
 ) -> ArrayLike:
     return (3 * U5 - chi * U4 - jnp.sqrt(mu) * deltat * U2) / jnp.sqrt(mu)
@@ -214,13 +214,13 @@ def prpr0(
     r"""The State Transition Matrix for position with respect to initial position.
 
     Args:
-        r_vec: The position vector at the current time.
-        v_vec: The velocity vector at the current time.
-        r0_vec: The position vector at the initial time.
-        v0_vec: The velocity vector at the initial time.
-        F: The Lagrange F function.
-        C: The C function.
-        mu: The gravitational parameter.
+        r_vec: (3,) The position vector at the current time.
+        v_vec: (3,) The velocity vector at the current time.
+        r0_vec: (3,) The position vector at the initial time.
+        v0_vec: (3,) The velocity vector at the initial time.
+        F: (3,) The Lagrange F function.
+        C: (3,) The C function.
+        mu: (optional) The gravitational parameter.
 
     Returns:
         The State Transition Matrix for position with respect to initial position.
@@ -261,14 +261,14 @@ def prpv0(
     r"""The State Transition Matrix for position with respect to initial velocity.
 
     Args:
-        r_vec: The position vector at the current time.
-        v_vec: The velocity vector at the current time.
-        r0_vec: The position vector at the initial time.
-        v0_vec: The velocity vector at the initial time.
-        F: The Lagrange F function.
-        G: The Lagrange G function.
-        C: The C function.
-        mu: The gravitational parameter.
+        r_vec: (3,) The position vector at the current time.
+        v_vec: (3,) The velocity vector at the current time.
+        r0_vec: (3,) The position vector at the initial time.
+        v0_vec: (3,) The velocity vector at the initial time.
+        F: (3,) The Lagrange F function.
+        G: (3,) The Lagrange G function.
+        C: (3,) The C function.
+        mu: (optional) The gravitational parameter.
 
     Returns:
         The State Transition Matrix for position with respect to initial velocity.
@@ -308,13 +308,13 @@ def pvpr0(
     r"""The State Transition Matrix for velocity with respect to initial position.
 
     Args:
-        r_vec: The position vector at the current time.
-        v_vec: The velocity vector at the current time.
-        r0_vec: The position vector at the initial time.
-        v0_vec: The velocity vector at the initial time.
-        Ft: The Lagrange Ft function.
-        C: The C function.
-        mu: The gravitational parameter.
+        r_vec: (3,) The position vector at the current time.
+        v_vec: (3,) The velocity vector at the current time.
+        r0_vec: (3,) The position vector at the initial time.
+        v0_vec: (3,) The velocity vector at the initial time.
+        Ft: (3,) The Lagrange Ft function.
+        C: (3,) The C function.
+        mu: (optional) The gravitational parameter.
 
     Returns:
         The State Transition Matrix for velocity with respect to initial position.
@@ -369,14 +369,14 @@ def pvpv0(
     r"""The State Transition Matrix for velocity with respect to initial velocity.
 
     Args:
-        r_vec: The position vector at the current time.
-        v_vec: The velocity vector at the current time.
-        r0_vec: The position vector at the initial time.
-        v0_vec: The velocity vector at the initial time.
-        F: The Lagrange F function.
-        Gt: The Lagrange Gt function.
-        C: The C function.
-        mu: The gravitational parameter.
+        r_vec: (3,) The position vector at the current time.
+        v_vec: (3,) The velocity vector at the current time.
+        r0_vec: (3,) The position vector at the initial time.
+        v0_vec: (3,) The velocity vector at the initial time.
+        F: (3,) The Lagrange F function.
+        Gt: (3,) The Lagrange Gt function.
+        C: (3,) The C function.
+        mu: (optional) The gravitational parameter.
 
     Returns:
         The State Transition Matrix for velocity with respect to initial velocity.
@@ -405,18 +405,18 @@ def dxdx0(
     v_vec: ArrayLike,
     r0_vec: ArrayLike,
     v0_vec: ArrayLike,
-    deltat: ArrayLike,
+    deltat: ArrayLike = 3.14,
     mu: ArrayLike = 1,
 ) -> Array:
     r"""The State Transition Matrix.
 
     Args:
-        r_vec: The position vector at the current time.
-        v_vec: The velocity vector at the current time.
-        r0_vec: The position vector at the initial time.
-        v0_vec: The velocity vector at the initial time.
-        deltat: The time since the initial time.
-        mu: The gravitational parameter.
+        r_vec: (3,) The position vector at the current time.
+        v_vec: (3,) The velocity vector at the current time.
+        r0_vec: (3,) The position vector at the initial time.
+        v0_vec: (3,) The velocity vector at the initial time.
+        deltat: (optional) The time since the initial time.
+        mu: (optional) The gravitational parameter.
 
     Returns:
         The State Transition Matrix.
