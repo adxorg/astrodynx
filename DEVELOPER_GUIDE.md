@@ -43,6 +43,9 @@ astrodynx/
 - Use `ecc_vec` for eccentricity vectors and `eccentricity` for its magnitude.
 - Use suffix `_vec` for vector quantities and `_mag` for their magnitudes.
 
+### Mathematical Operations
+- Prefer `jnp.linalg.vector_norm` over `jnp.linalg.norm` for vector norms.
+
 
 ## JAX Development Guidelines
 
