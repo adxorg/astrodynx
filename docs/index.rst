@@ -11,6 +11,8 @@ A modern astrodynamics library powered by JAX: differentiate, vectorize, JIT to 
    :target: https://github.com/adxorg/astrodynx/actions/workflows/ci.yml
 .. image:: https://codecov.io/gh/adxorg/astrodynx/graph/badge.svg?token=azxgWzPIIU
    :target: https://codecov.io/gh/adxorg/astrodynx
+.. image:: https://app.readthedocs.org/projects/astrodynx/badge/?version=latest
+   :target: https://app.readthedocs.org/projects/astrodynx/builds/
 
 What is AstroDynX?
 ------------------

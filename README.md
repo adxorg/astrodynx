@@ -1,9 +1,8 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/astrodynx)](https://pypi.org/project/astrodynx/)
 [![GitHub License](https://img.shields.io/github/license/adxorg/astrodynx)](https://github.com/adxorg/astrodynx/blob/main/LICENSE)
 [![Github CI](https://github.com/adxorg/astrodynx/actions/workflows/ci.yml/badge.svg)](https://github.com/adxorg/astrodynx/actions/workflows/ci.yml)
-[![Deploy Docs](https://github.com/adxorg/astrodynx/actions/workflows/docs.yml/badge.svg)](https://github.com/adxorg/astrodynx/actions/workflows/docs.yml)
 [![codecov](https://codecov.io/gh/adxorg/astrodynx/graph/badge.svg?token=azxgWzPIIU)](https://codecov.io/gh/adxorg/astrodynx)
-
+[![Docs](https://app.readthedocs.org/projects/astrodynx/badge/?version=latest)](https://app.readthedocs.org/projects/astrodynx/builds/)
 
 # Welcome to AstroDynX! 🚀
 
