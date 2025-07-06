@@ -25,6 +25,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.mathjax",
     "sphinx.ext.intersphinx",
+    "sphinx.ext.imgconverter",
     "sphinx_math_dollar",
     "sphinx_autodoc_typehints",
     "sphinx_copybutton",
