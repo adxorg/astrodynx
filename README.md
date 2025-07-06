@@ -27,7 +27,7 @@ pip install astrodynx
 > AstroDynX is written in pure Python build with JAX, so it is compatible with any platform that supports JAX, including CPU, GPU, and TPU. By default, it installs the CPU version. If you want to use AstroDynX on GPU/TPU, follow the [**instructions**](https://jax.readthedocs.io/en/latest/installation.html) to install the appropriate JAX backend for your hardware.
 
 ## Documentation
-The documentation is available at [github.io](https://adxorg.github.io/astrodynx/).
+The documentation is available at [Read the Docs](https://astrodynx.readthedocs.io/)
 
 ## Contributing
 
