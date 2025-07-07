@@ -165,10 +165,9 @@ def pvpr0(
         * (
             jnp.eye(3)
             - jnp.outer(r_vec / r_mag, r_vec / r_mag)
-            + jnp.matmul(
-                (jnp.outer(r_vec, v_vec) - jnp.outer(v_vec, r_vec)) / mu,
-                jnp.outer(r_vec / r_mag, v_vec - v0_vec),
-            )
+            + (jnp.outer(r_vec, v_vec) - jnp.outer(v_vec, r_vec))
+            / mu
+            @ jnp.outer(r_vec / r_mag, v_vec - v0_vec)
         )
         - mu / r_mag**2 * C / r0_mag**2 * jnp.outer(r_vec / r_mag, r0_vec / r0_mag)
     )
