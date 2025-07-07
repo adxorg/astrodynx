@@ -16,9 +16,6 @@
 		"all",
 		"--shm-size=1g"
 	],
-	  "mounts": [
-      "source=astrodynx-bashhistory,target=/commandhistory,type=volume"
-   ],
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
