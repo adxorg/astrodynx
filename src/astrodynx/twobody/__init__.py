@@ -5,7 +5,7 @@ from astrodynx.twobody._lagrange import (
     lagrange_Gt,
 )
 from astrodynx.twobody._uniformulas import (
-    sigma_bvp,
+    sigma_fn,
     ufunc0,
     ufunc1,
     ufunc2,
@@ -37,7 +37,7 @@ __all__ = [
     "pvpr0",
     "pvpv0",
     "dxdx0",
-    "sigma_bvp",
+    "sigma_fn",
     "ufunc0",
     "ufunc1",
     "ufunc2",

@@ -3,7 +3,7 @@ from jax.typing import ArrayLike
 from jax import Array
 from jax.numpy.linalg import vector_norm
 import astrodynx as adx
-from astrodynx.twobody._uniformulas import ufunc1, ufunc2, ufunc4, ufunc5, sigma_bvp
+from astrodynx.twobody._uniformulas import ufunc1, ufunc2, ufunc4, ufunc5, sigma_fn
 from astrodynx.twobody._lagrange import lagrange_F, lagrange_G, lagrange_Ft, lagrange_Gt
 
 """State transition matrices for two-body orbital mechanics."""
@@ -275,7 +275,7 @@ def dxdx0(
     r0_mag, r_mag = vector_norm(r0_vec), vector_norm(r_vec)
     alpha = 1.0 / adx.semimajor_axis(r0_mag, vector_norm(v0_vec), mu)
     chi = adx.generalized_anomaly(
-        alpha, sigma_bvp(r_vec, v_vec, mu), sigma_bvp(r0_vec, v0_vec, mu), deltat, mu
+        alpha, sigma_fn(r_vec, v_vec, mu), sigma_fn(r0_vec, v0_vec, mu), deltat, mu
     )
     C = _C_func(
         chi, ufunc2(chi, alpha), ufunc4(chi, alpha), ufunc5(chi, alpha), deltat, mu
@@ -284,7 +284,7 @@ def dxdx0(
     G = lagrange_G(
         ufunc1(chi, alpha),
         ufunc2(chi, alpha),
-        sigma_bvp(r0_vec, v0_vec, mu),
+        sigma_fn(r0_vec, v0_vec, mu),
         r0_mag,
         mu,
     )

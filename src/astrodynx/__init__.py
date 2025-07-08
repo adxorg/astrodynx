@@ -10,6 +10,11 @@ from astrodynx.twobody._kep_equ import (
     generalized_anomaly,
     mean_anomaly_elps,
     mean_anomaly_hypb,
+    solve_kepler_elps,
+    solve_kepler_hypb,
+    solve_kepler_uni,
+    dE,
+    dH,
 )
 from astrodynx.twobody._orb_integrals import (
     orb_period,
@@ -38,6 +43,11 @@ __all__ = [
     "generalized_anomaly",
     "mean_anomaly_elps",
     "mean_anomaly_hypb",
+    "solve_kepler_elps",
+    "solve_kepler_hypb",
+    "solve_kepler_uni",
+    "dE",
+    "dH",
     "orb_period",
     "angular_momentum",
     "semimajor_axis",

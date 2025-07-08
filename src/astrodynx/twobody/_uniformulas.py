@@ -6,7 +6,7 @@ from jax import Array
 """Universal functions for two-body orbital mechanics."""
 
 
-def sigma_bvp(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike = 1) -> Array:
+def sigma_fn(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike = 1) -> Array:
     r"""The sigma function
 
     Args:
@@ -35,7 +35,7 @@ def sigma_bvp(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike = 1) -> Arra
         >>> pos_vec = jnp.array([1.0, 0.0, 0.0])
         >>> vel_vec = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
-        >>> adx.twobody.sigma_bvp(pos_vec, vel_vec, mu)
+        >>> adx.twobody.sigma_fn(pos_vec, vel_vec, mu)
         Array([0.], dtype=float32)
 
         With broadcasting, you can calculate the sigma function for multiple position and velocity vectors:
@@ -43,7 +43,7 @@ def sigma_bvp(pos_vec: ArrayLike, vel_vec: ArrayLike, mu: ArrayLike = 1) -> Arra
         >>> pos_vec = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
         >>> vel_vec = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
         >>> mu = jnp.array([[1.0], [2.0]])
-        >>> adx.twobody.sigma_bvp(pos_vec, vel_vec, mu)
+        >>> adx.twobody.sigma_fn(pos_vec, vel_vec, mu)
         Array([[0.],
                [0.]], dtype=float32)
     """

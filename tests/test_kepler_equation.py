@@ -224,3 +224,77 @@ class TestGeneralizedAnomaly:
         expected = alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
         result = adx.generalized_anomaly(alpha, sigma, sigma0, deltat, mu)
         assert jnp.allclose(result, expected)
+
+
+class TestSolveKeplerUni:
+    def test_basic_functionality(self) -> None:
+        """Test basic functionality with simple inputs."""
+        # Setup simple inputs
+        alpha = 1.0
+        r0 = 1.0
+        sigma0 = 0.0
+        deltat = jnp.pi / 2
+        mu = 1.0
+
+        chi = adx.solve_kepler_uni(alpha, r0, sigma0, deltat, mu)
+
+        # Verify the solution satisfies the universal Kepler equation
+        residual = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
+        assert jnp.abs(residual) < 1e-6
+
+    def test_elliptical_orbit(self) -> None:
+        """Test with parameters for an elliptical orbit."""
+        # Setup elliptical orbit
+        r0_vec = jnp.array([1.0, 0.0, 0.0])
+        v0_vec = jnp.array([0.0, 0.8, 0.0])  # v < sqrt(mu/r) for elliptical
+        mu = 1.0
+        deltat = jnp.pi / 2
+
+        r0 = jnp.linalg.norm(r0_vec)
+        v0 = jnp.linalg.norm(v0_vec)
+        alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
+        sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
+
+        chi = adx.solve_kepler_uni(alpha.item(), r0.item(), sigma0.item(), deltat, mu)
+
+        # Verify the solution satisfies the universal Kepler equation
+        residual = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
+        assert jnp.abs(residual) < 1e-6
+
+    def test_hyperbolic_orbit(self) -> None:
+        """Test with parameters for a hyperbolic orbit."""
+        # Setup hyperbolic orbit
+        r0_vec = jnp.array([1.0, 0.0, 0.0])
+        v0_vec = jnp.array([0.0, 1.5, 0.0])  # v > sqrt(mu/r) for hyperbolic
+        mu = 1.0
+        deltat = 1.0
+
+        r0 = jnp.linalg.norm(r0_vec)
+        v0 = jnp.linalg.norm(v0_vec)
+        alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
+        sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
+
+        chi = adx.solve_kepler_uni(alpha.item(), r0.item(), sigma0.item(), deltat, mu)
+
+        # Verify the solution satisfies the universal Kepler equation
+        residual = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
+        assert jnp.abs(residual) < 1e-6
+
+    def test_parabolic_orbit(self) -> None:
+        """Test with parameters for a parabolic orbit."""
+        # Setup parabolic orbit (alpha ≈ 0)
+        r0_vec = jnp.array([1.0, 0.0, 0.0])
+        v0_vec = jnp.array([0.0, 1.0, 0.0])  # v ≈ sqrt(mu/r) for parabolic
+        mu = 1.0
+        deltat = 1.0
+
+        r0 = jnp.linalg.norm(r0_vec)
+        v0 = jnp.linalg.norm(v0_vec)
+        alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
+        sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
+
+        chi = adx.solve_kepler_uni(alpha.item(), r0.item(), sigma0.item(), deltat, mu)
+
+        # Verify the solution satisfies the universal Kepler equation
+        residual = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
+        assert jnp.abs(residual) < 1e-6

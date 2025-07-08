@@ -1,7 +1,9 @@
 import jax.numpy as jnp
 from jax.typing import ArrayLike, DTypeLike
 from jax import Array
-from astrodynx.twobody._uniformulas import ufunc1, ufunc2, ufunc3
+from astrodynx.twobody._uniformulas import ufunc0, ufunc1, ufunc2, ufunc3
+import jax
+from astrodynx.twobody._orb_integrals import equ_of_orb_uvi
 
 """Kepler's equations and generalized anomaly for two-body orbital mechanics."""
 
@@ -49,7 +51,8 @@ def kepler_equ_elps(E: ArrayLike, e: ArrayLike, M: ArrayLike = 0) -> Array:
     return E - e * jnp.sin(E) - M
 
 
-# def dE()
+def dE(E: ArrayLike, e: ArrayLike) -> Array:
+    return 1 - e * jnp.cos(E)
 
 
 def kepler_equ_hypb(H: ArrayLike, e: ArrayLike, N: ArrayLike = 0) -> Array:
@@ -95,7 +98,8 @@ def kepler_equ_hypb(H: ArrayLike, e: ArrayLike, N: ArrayLike = 0) -> Array:
     return e * jnp.sinh(H) - H - N
 
 
-# def dH()
+def dH(H: ArrayLike, e: ArrayLike) -> Array:
+    return e * jnp.cosh(H) - 1
 
 
 def mean_anomaly_elps(a: ArrayLike, deltat: ArrayLike, mu: ArrayLike = 1) -> Array:
@@ -248,6 +252,12 @@ def kepler_equ_uni(
     )
 
 
+def dchi(chi: ArrayLike, alpha: DTypeLike, r0: ArrayLike, sigma0: ArrayLike) -> Array:
+    return equ_of_orb_uvi(
+        ufunc0(chi, alpha), ufunc1(chi, alpha), ufunc2(chi, alpha), r0, sigma0
+    )
+
+
 def generalized_anomaly(
     alpha: ArrayLike,
     sigma: ArrayLike,
@@ -301,3 +311,177 @@ def generalized_anomaly(
         Array([2., 3.], dtype=float32)
     """
     return alpha * jnp.sqrt(mu) * deltat + sigma - sigma0
+
+
+def solve_kepler_elps(
+    e: DTypeLike, M: DTypeLike, tol: DTypeLike = 1e-6, max_iter: int = 20
+) -> Array:
+    r"""Returns the eccentric anomaly for an elliptical orbit.
+
+    Args:
+        e: Eccentricity of the orbit, 0 <= e < 1.
+        M: Mean anomaly.
+        tol: (optional) Tolerance for convergence.
+        max_iter: (optional) Maximum number of iterations.
+
+    Returns:
+        The eccentric anomaly for an elliptical orbit.
+
+    Notes:
+        The eccentric anomaly is calculated by solving Kepler's equation for elliptical orbits:
+        $$
+        E - e \sin E = M
+        $$
+        where $E$ is the eccentric anomaly, $e$ is the eccentricity, and $M$ is the mean anomaly.
+
+    References:
+        Battin, 1999, pp.160.
+
+    Examples:
+        A simple example:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> e = 0.37255
+        >>> M = 3.6029
+        >>> adx.solve_kepler_elps(e, M)
+        Array(3.479..., dtype=float32, weak_type=True)
+    """
+    E0 = M + e * jnp.sin(M)
+
+    def cond_fn(val: tuple[int, Array, Array]) -> Array:
+        iter_count, E, E_prev = val
+        not_converged = jnp.abs(E - E_prev) > tol
+        under_max_iter = iter_count < max_iter
+        return not_converged & under_max_iter
+
+    def body_fn(val: tuple[int, Array, Array]) -> Array:
+        iter_count, E, _ = val
+        f = E - e * jnp.sin(E) - M
+        E_new = E - f / dE(E, e)
+        return (iter_count + 1, E_new, E)
+
+    _, E, _ = jax.lax.while_loop(cond_fn, body_fn, (0, E0, E0 + 2 * tol))
+    return E
+
+
+def solve_kepler_hypb(
+    e: DTypeLike, N: DTypeLike, tol: DTypeLike = 1e-6, max_iter: int = 50
+) -> Array:
+    r"""Returns the hyperbolic eccentric anomaly for a hyperbolic orbit.
+
+    Args:
+        e: Eccentricity of the orbit, e > 1.
+        N: Hyperbolic mean anomaly.
+        tol: (optional) Tolerance for convergence.
+        max_iter: (optional) Maximum number of iterations.
+
+    Returns:
+        The hyperbolic eccentric anomaly for a hyperbolic orbit.
+
+    Notes:
+        The hyperbolic eccentric anomaly is calculated by solving Kepler's equation for hyperbolic orbits:
+        $$
+        e \sinh H - H = N
+        $$
+        where $H$ is the hyperbolic eccentric anomaly, $e$ is the eccentricity, and $N$ is the hyperbolic mean anomaly.
+
+    References:
+        Battin, 1999, pp.168.
+
+    Examples:
+        A simple example:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> e = 2.7696
+        >>> N = 40.69
+        >>> adx.solve_kepler_hypb(e, N)
+        Array(3.463..., dtype=float32, weak_type=True)
+    """
+    H0 = jnp.log(2 * N / e + jnp.sqrt((2 * N / e) ** 2 + 1))
+
+    def cond_fn(val: tuple[int, Array, Array]) -> Array:
+        iter_count, H, _ = val
+        not_converged = jnp.abs(kepler_equ_hypb(H, e, N)) > tol
+        under_max_iter = iter_count < max_iter
+        return not_converged & under_max_iter
+
+    def body_fn(val: tuple[int, Array, Array]) -> Array:
+        iter_count, H, _ = val
+        H_new = H - kepler_equ_hypb(H, e, N) / dH(H, e)
+        return (iter_count + 1, H_new, H)
+
+    _, H, _ = jax.lax.while_loop(cond_fn, body_fn, (0, H0, H0 + 2 * tol))
+    return H
+
+
+def solve_kepler_uni(
+    alpha: DTypeLike,
+    r0: DTypeLike,
+    sigma0: DTypeLike,
+    deltat: DTypeLike = 3.14,
+    mu: DTypeLike = 1,
+    tol: DTypeLike = 1e-6,
+    max_iter: int = 50,
+) -> Array:
+    r"""Returns the generalized anomaly for a universal orbit equation.
+
+    Args:
+        alpha: The reciprocal of the semimajor axis.
+        r0: The radius at the initial time.
+        sigma0: The sigma function at the initial time.
+        deltat: (optional) The time since the initial time.
+        mu: (optional) The gravitational parameter.
+        tol: (optional) Tolerance for convergence.
+        max_iter: (optional) Maximum number of iterations.
+
+    Returns:
+        The generalized anomaly for a universal orbit equation.
+
+    Notes:
+        The generalized anomaly is calculated by solving the universal orbit equation:
+        $$
+        r_0 U_1(\chi, \alpha) + \sigma_0 U_2(\chi, \alpha) + U_3(\chi, \alpha) - \sqrt{\mu} \Delta t = 0
+        $$
+        where $\chi$ is the generalized anomaly, $\alpha = \frac{1}{a}$ is the reciprocal of semimajor axis, $\sigma_0$ is the sigma function at the initial time, $r_0$ is the norm of the position vector at the initial time, $\mu$ is the gravitational parameter, $U_1$ is the universal function U1, $U_2$ is the universal function U2, $U_3$ is the universal function U3, and $\Delta t$ is the time since the initial time.
+
+    References:
+        Battin, 1999, pp.178.
+
+    Examples:
+        A simple example:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> r0_vec = jnp.array([1.0, 0.0, 0.0])
+        >>> v0_vec = jnp.array([0.0, 1.1, 0.0])
+        >>> mu = 1.0
+        >>> deltat = jnp.pi*0.5
+        >>> r0 = jnp.linalg.norm(r0_vec)
+        >>> v0 = jnp.linalg.norm(v0_vec)
+        >>> alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
+        >>> sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
+        >>> chi = adx.solve_kepler_uni(alpha.item(), r0.item(), sigma0.item(), deltat, mu)
+        >>> assert adx.kepler_equ_uni(chi,alpha,r0, sigma0, deltat, mu) < 1e-6
+    """
+
+    chi0 = jnp.sqrt(mu) * jnp.abs(alpha) * deltat
+
+    def cond_fn(val: tuple[int, Array, Array]) -> Array:
+        iter_count, chi, _ = val
+        not_converged = (
+            jnp.abs(kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)) > tol
+        )
+        under_max_iter = iter_count < max_iter
+        return not_converged & under_max_iter
+
+    def body_fn(val: tuple[int, Array, Array]) -> Array:
+        iter_count, chi, _ = val
+        chi_new = chi - kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu) / dchi(
+            chi, alpha, r0, sigma0
+        )
+        return (iter_count + 1, chi_new, chi)
+
+    _, chi, _ = jax.lax.while_loop(cond_fn, body_fn, (0, chi0, chi0 + 2 * tol))
+    return chi
