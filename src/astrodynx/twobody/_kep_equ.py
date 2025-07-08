@@ -314,13 +314,13 @@ def generalized_anomaly(
 
 
 def solve_kepler_elps(
-    e: DTypeLike, M: DTypeLike, tol: DTypeLike = 1e-6, max_iter: int = 20
+    M: DTypeLike, e: DTypeLike, tol: DTypeLike = 1e-6, max_iter: int = 20
 ) -> Array:
     r"""Returns the eccentric anomaly for an elliptical orbit.
 
     Args:
-        e: Eccentricity of the orbit, 0 <= e < 1.
         M: Mean anomaly.
+        e: Eccentricity of the orbit, 0 <= e < 1.
         tol: (optional) Tolerance for convergence.
         max_iter: (optional) Maximum number of iterations.
 
@@ -344,7 +344,7 @@ def solve_kepler_elps(
         >>> import astrodynx as adx
         >>> e = 0.37255
         >>> M = 3.6029
-        >>> adx.solve_kepler_elps(e, M)
+        >>> adx.solve_kepler_elps(M,e)
         Array(3.479..., dtype=float32, weak_type=True)
     """
     E0 = M + e * jnp.sin(M)
@@ -366,13 +366,13 @@ def solve_kepler_elps(
 
 
 def solve_kepler_hypb(
-    e: DTypeLike, N: DTypeLike, tol: DTypeLike = 1e-6, max_iter: int = 50
+    N: DTypeLike, e: DTypeLike, tol: DTypeLike = 1e-6, max_iter: int = 50
 ) -> Array:
     r"""Returns the hyperbolic eccentric anomaly for a hyperbolic orbit.
 
     Args:
-        e: Eccentricity of the orbit, e > 1.
         N: Hyperbolic mean anomaly.
+        e: Eccentricity of the orbit, e > 1.
         tol: (optional) Tolerance for convergence.
         max_iter: (optional) Maximum number of iterations.
 
@@ -396,7 +396,7 @@ def solve_kepler_hypb(
         >>> import astrodynx as adx
         >>> e = 2.7696
         >>> N = 40.69
-        >>> adx.solve_kepler_hypb(e, N)
+        >>> adx.solve_kepler_hypb(N,e)
         Array(3.463..., dtype=float32, weak_type=True)
     """
     H0 = jnp.log(2 * N / e + jnp.sqrt((2 * N / e) ** 2 + 1))
@@ -417,10 +417,10 @@ def solve_kepler_hypb(
 
 
 def solve_kepler_uni(
+    deltat: DTypeLike,
     alpha: DTypeLike,
     r0: DTypeLike,
     sigma0: DTypeLike,
-    deltat: DTypeLike = 3.14,
     mu: DTypeLike = 1,
     tol: DTypeLike = 1e-6,
     max_iter: int = 50,
@@ -428,10 +428,10 @@ def solve_kepler_uni(
     r"""Returns the generalized anomaly for a universal orbit equation.
 
     Args:
+        deltat: The time since the initial time.
         alpha: The reciprocal of the semimajor axis.
         r0: The radius at the initial time.
         sigma0: The sigma function at the initial time.
-        deltat: (optional) The time since the initial time.
         mu: (optional) The gravitational parameter.
         tol: (optional) Tolerance for convergence.
         max_iter: (optional) Maximum number of iterations.
@@ -462,7 +462,7 @@ def solve_kepler_uni(
         >>> v0 = jnp.linalg.norm(v0_vec)
         >>> alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
         >>> sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
-        >>> chi = adx.solve_kepler_uni(alpha.item(), r0.item(), sigma0.item(), deltat, mu)
+        >>> chi = adx.solve_kepler_uni(deltat, alpha.item(), r0.item(), sigma0.item(), mu)
         >>> assert adx.kepler_equ_uni(chi,alpha,r0, sigma0, deltat, mu) < 1e-6
     """
 

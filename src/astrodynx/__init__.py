@@ -28,6 +28,7 @@ from astrodynx.twobody._orb_integrals import (
     radius_periapsis,
     radius_apoapsis,
 )
+from astrodynx.twobody._ivp import lagrange_prop, kepler_prop
 from astrodynx._sperturb import (
     cowell_method,
     spprop_steps,
@@ -59,6 +60,8 @@ __all__ = [
     "radius_periapsis",
     "radius_apoapsis",
     "cowell_method",
+    "lagrange_prop",
+    "kepler_prop",
     "spprop_steps",
     "spprop_varstep",
     "spprop_finnal",

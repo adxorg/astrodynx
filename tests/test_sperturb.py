@@ -5,23 +5,23 @@ import jax
 
 
 class TestSppropFinnal:
-    def test_basic_functionality(self) -> None:
-        """Test that spprop_finnal returns only the final state."""
-
+    def test_keplerian(self) -> None:
         def vector_field(t, x, args):
-            mu = args.get("mu", 1.0)
-            r = x[:3]
-            r_norm = jnp.linalg.norm(r)
-            acc = -mu * r / r_norm**3
+            acc = adx.gravity.point_mass_grav(t, x, args)
             return jnp.concatenate([x[3:], acc])
 
-        x0 = jnp.array([1.0, 0.0, 0.0, 0.0, 1.0, 0.0])
-        t1 = jnp.pi  # Half orbit
+        t1 = jnp.pi * 0.5
+        r0_vec = jnp.array([1.0, 0.0, 0.0])
+        v0_vec = jnp.array([0.0, 0.9, 0.0])
+        mu = 1.0
+        x0 = jnp.concatenate([r0_vec, v0_vec])
+        args = {"mu": 1.0}
         term = diffrax.ODETerm(vector_field)
-        sol = adx.spprop_finnal(term, x0, t1)
-        assert sol.ys.shape[0] == 1, "Should return only one state"
+        sol = adx.spprop_finnal(term, x0, t1, args=args)
 
-        assert jnp.allclose(sol.ys[0, :3], jnp.array([-1.0, 0.0, 0.0]), atol=1e-3)
+        r_vec, v_vec = adx.kepler_prop(t1, r0_vec, v0_vec, mu)
+        assert jnp.allclose(sol.ys[-1, :3], r_vec, atol=1e-6)
+        assert jnp.allclose(sol.ys[-1, 3:], v_vec, atol=1e-6)
 
     def test_with_event(self) -> None:
         """Test that spprop_finnal works with events."""

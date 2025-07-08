@@ -236,7 +236,7 @@ class TestSolveKeplerUni:
         deltat = jnp.pi / 2
         mu = 1.0
 
-        chi = adx.solve_kepler_uni(alpha, r0, sigma0, deltat, mu)
+        chi = adx.solve_kepler_uni(deltat, alpha, r0, sigma0, mu)
 
         # Verify the solution satisfies the universal Kepler equation
         residual = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
@@ -255,7 +255,7 @@ class TestSolveKeplerUni:
         alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
         sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
 
-        chi = adx.solve_kepler_uni(alpha.item(), r0.item(), sigma0.item(), deltat, mu)
+        chi = adx.solve_kepler_uni(deltat, alpha.item(), r0.item(), sigma0.item(), mu)
 
         # Verify the solution satisfies the universal Kepler equation
         residual = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
@@ -274,7 +274,7 @@ class TestSolveKeplerUni:
         alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
         sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
 
-        chi = adx.solve_kepler_uni(alpha.item(), r0.item(), sigma0.item(), deltat, mu)
+        chi = adx.solve_kepler_uni(deltat, alpha.item(), r0.item(), sigma0.item(), mu)
 
         # Verify the solution satisfies the universal Kepler equation
         residual = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
@@ -293,7 +293,7 @@ class TestSolveKeplerUni:
         alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
         sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
 
-        chi = adx.solve_kepler_uni(alpha.item(), r0.item(), sigma0.item(), deltat, mu)
+        chi = adx.solve_kepler_uni(deltat, alpha.item(), r0.item(), sigma0.item(), mu)
 
         # Verify the solution satisfies the universal Kepler equation
         residual = adx.kepler_equ_uni(chi, alpha, r0, sigma0, deltat, mu)
