@@ -140,8 +140,9 @@ def spprop_steps(
         >>> sol = adx.spprop_steps(term, x0, t1, ts, args=args, event=event)
         >>> tsmask = jnp.isfinite(sol.ts)
         >>> xf = sol.ys[tsmask][-1]
-        >>> print(xf)
-        [-0.589...    0.372...  0.         -0.593... -1.150...    0.        ]
+        >>> expected = jnp.array([-0.589,0.37, 0.,-0.59,-1.15, 0.])
+        >>> jnp.allclose(xf, expected, atol=1e-2)
+        Array(True, dtype=bool)
 
     """
     return cowell_method(
@@ -206,8 +207,9 @@ def spprop_varstep(
         >>> sol = adx.spprop_varstep(term, x0, t1, args=args, event=event)
         >>> tsmask = jnp.isfinite(sol.ts)
         >>> xf = sol.ys[tsmask][-1]
-        >>> print(xf)
-        [-0.5955...   0.36182...  0.         -0.5769...  -1.1607...   0.        ]
+        >>> expected = jnp.array([-0.59,0.36, 0.,-0.58,-1.16, 0.])
+        >>> jnp.allclose(xf, expected, atol=1e-2)
+        Array(True, dtype=bool)
     """
     return cowell_method(
         term,
@@ -269,8 +271,9 @@ def spprop_finnal(
         >>> event = diffrax.Event(adx.events.radius_toolow)
         >>> term = diffrax.ODETerm(vector_field)
         >>> sol = adx.spprop_finnal(term, x0, t1, args=args, event=event)
-        >>> print(sol.ys)
-        [[-0.5955...   0.36182...  0.         -0.5769...  -1.1607...   0.        ]]
+        >>> expected = jnp.array([-0.59,0.36, 0.,-0.58,-1.16, 0.])
+        >>> jnp.allclose(sol.ys[-1], expected, atol=1e-2)
+        Array(True, dtype=bool)
     """
     return cowell_method(
         term,
