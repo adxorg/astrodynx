@@ -15,6 +15,7 @@ license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = [
     "jax >= 0.6.0",
+    "diffrax >=0.7.0",
 ]
 classifiers = [
     "Intended Audience :: Science/Research",

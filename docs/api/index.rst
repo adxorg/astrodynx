@@ -11,4 +11,6 @@ The API is organized into logical modules for different aspects of astrodynamics
 
    astrodynx
    astrodynx.twobody
+   astrodynx.gravity
+   astrodynx.events
    astrodynx.utils

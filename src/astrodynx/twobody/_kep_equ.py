@@ -49,6 +49,9 @@ def kepler_equ_elps(E: ArrayLike, e: ArrayLike, M: ArrayLike = 0) -> Array:
     return E - e * jnp.sin(E) - M
 
 
+# def dE()
+
+
 def kepler_equ_hypb(H: ArrayLike, e: ArrayLike, N: ArrayLike = 0) -> Array:
     r"""Returns the Kepler's equation for hyperbolic orbits in the form f(H) = 0.
 
@@ -90,6 +93,9 @@ def kepler_equ_hypb(H: ArrayLike, e: ArrayLike, N: ArrayLike = 0) -> Array:
         Array([-0.2371...,  2.4402...], dtype=float32)
     """
     return e * jnp.sinh(H) - H - N
+
+
+# def dH()
 
 
 def mean_anomaly_elps(a: ArrayLike, deltat: ArrayLike, mu: ArrayLike = 1) -> Array:

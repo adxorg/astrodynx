@@ -23,7 +23,13 @@ from astrodynx.twobody._orb_integrals import (
     radius_periapsis,
     radius_apoapsis,
 )
-
+from astrodynx._sperturb import (
+    cowell_method,
+    spprop_steps,
+    spprop_varstep,
+    spprop_finnal,
+)
+from astrodynx import events, gravity, twobody, utils
 
 __all__ = [
     "kepler_equ_elps",
@@ -42,4 +48,12 @@ __all__ = [
     "equ_of_orb_uvi",
     "radius_periapsis",
     "radius_apoapsis",
+    "cowell_method",
+    "spprop_steps",
+    "spprop_varstep",
+    "spprop_finnal",
+    "events",
+    "gravity",
+    "twobody",
+    "utils",
 ]

@@ -37,3 +37,5 @@ We welcome contributions from the community! Please see our comprehensive contri
 - **[NEWCOMER_GUIDE.md](NEWCOMER_GUIDE.md)** - Perfect starting point for new contributors
 
 Whether you're fixing bugs, adding features, improving documentation, or helping with testing, your contributions are valued!
+
+<!-- TODO: ADD CITATION FILES -->

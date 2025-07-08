@@ -56,6 +56,8 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
     "jax": ("https://jax.readthedocs.io/en/latest/", None),
+    "jaxtyping": ("https://docs.kidger.site/jaxtyping/", None),
+    "diffrax": ("https://docs.kidger.site/diffrax/", None),
 }
 
 
