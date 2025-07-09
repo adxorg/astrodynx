@@ -70,6 +70,9 @@ myst_enable_extensions = [
     "html_image",
 ]
 
+# -- Options for nbsphinx ----------------------------------------------------
+nbsphinx_execute = "never"
+
 # -- Options for HTML output -------------------------------------------------
 html_theme = "sphinx_book_theme"
 html_theme_options = {
