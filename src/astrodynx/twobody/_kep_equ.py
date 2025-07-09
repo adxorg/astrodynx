@@ -335,7 +335,7 @@ def solve_kepler_elps(
         where $E$ is the eccentric anomaly, $e$ is the eccentricity, and $M$ is the mean anomaly.
 
     References:
-        Battin, 1999, pp.160.
+        Vallado, 2013, pp.76.
 
     Examples:
         A simple example:
@@ -347,7 +347,7 @@ def solve_kepler_elps(
         >>> adx.solve_kepler_elps(M,e)
         Array(3.479..., dtype=float32, weak_type=True)
     """
-    E0 = M + e * jnp.sin(M)
+    E0 = M + e * jnp.sin(M) + e**2 * jnp.sin(2 * M) / 2
 
     def cond_fn(val: tuple[int, Array, Array]) -> Array:
         iter_count, E, E_prev = val
