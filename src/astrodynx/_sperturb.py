@@ -30,14 +30,14 @@ def cowell_method(
         t0: The initial time.
         args: Any additional arguments to pass to the differential equation.
         dt0: The step size to use for the first step. If using fixed step sizes then this will also be the step size for all other steps. (Except the last one, which may be slightly smaller and clipped to t1.) If set as None then the initial step size will be determined automatically.
-        event: An event at which to terminate the solve early. See the `diffrax <https://docs.kidger.site/diffrax/api/events/>`_ documentation for more information.
-        solver: The solver for the differential equation. See the `diffrax <https://docs.kidger.site/diffrax/usage/how-to-choose-a-solver/>`_ guide on how to choose a solver.
+        event: An event at which to terminate the solve early. See the `diffrax events <https://docs.kidger.site/diffrax/api/events/>`_ documentation for more information.
+        solver: The solver for the differential equation. See the `diffrax solver <https://docs.kidger.site/diffrax/usage/how-to-choose-a-solver/>`_ guide on how to choose a solver.
         saveat: The times to save the solution.
         max_steps: The maximum number of steps to take before quitting the computation unconditionally.
         stepsize_controller: The stepsize controller to use.
 
     Returns:
-        The solution to the differential equation. See the `diffrax <https://docs.kidger.site/diffrax/api/solution/>`_ documentation for more information.
+        The solution to the differential equation. See the `diffrax solution <https://docs.kidger.site/diffrax/api/solution/>`_ documentation for more information.
 
     Notes:
         Cowell's method is a numerical method for propagating orbits under the influence of perturbing forces. It is based on solving the differential equation:
@@ -111,12 +111,12 @@ def spprop_steps(
         t1: The final time.
         ts: The times to save the solution.
         args: Any additional arguments to pass to the differential equation.
-        event: An event at which to terminate the solve early. See the `diffrax <https://docs.kidger.site/diffrax/api/events/>`_ documentation for more information.
-        solver: The solver for the differential equation. See the `diffrax <https://docs.kidger.site/diffrax/usage/how-to-choose-a-solver/>`_ guide on how to choose a solver.
+        event: An event at which to terminate the solve early. See the `diffrax events <https://docs.kidger.site/diffrax/api/events/>`_ documentation for more information.
+        solver: The solver for the differential equation. See the `diffrax solver <https://docs.kidger.site/diffrax/usage/how-to-choose-a-solver/>`_ guide on how to choose a solver.
         stepsize_controller: The stepsize controller to use.
 
     Returns:
-        The solution to the differential equation. See the `diffrax <https://docs.kidger.site/diffrax/api/solution/>`_ documentation for more information.
+        The solution to the differential equation. See the `diffrax solution <https://docs.kidger.site/diffrax/api/solution/>`_ documentation for more information.
 
     Notes:
         This is a wrapper around the :func:`cowell_method` function. See the :func:`cowell_method` function for more information.
@@ -178,13 +178,13 @@ def spprop_varstep(
         x0: The initial state.
         t1: The final time.
         args: Any additional arguments to pass to the differential equation.
-        event: An event at which to terminate the solve early. See the `diffrax <https://docs.kidger.site/diffrax/api/events/>`_ documentation for more information.
-        solver: The solver for the differential equation. See the `diffrax <https://docs.kidger.site/diffrax/usage/how-to-choose-a-solver/>`_ guide on how to choose a solver.
+        event: An event at which to terminate the solve early. See the `diffrax events <https://docs.kidger.site/diffrax/api/events/>`_ documentation for more information.
+        solver: The solver for the differential equation. See the `diffrax solver <https://docs.kidger.site/diffrax/usage/how-to-choose-a-solver/>`_ guide on how to choose a solver.
         max_steps: The maximum number of steps to take before quitting the computation unconditionally.
         stepsize_controller: The stepsize controller to use.
 
     Returns:
-        The solution to the differential equation. See the `diffrax <https://docs.kidger.site/diffrax/api/solution/>`_ documentation for more information.
+        The solution to the differential equation. See the `diffrax solution <https://docs.kidger.site/diffrax/api/solution/>`_ documentation for more information.
 
     Notes:
         This is a wrapper around the :func:`cowell_method` function. See the :func:`cowell_method` function for more information.
@@ -244,13 +244,13 @@ def spprop_finnal(
         x0: The initial state.
         t1: The final time.
         args: Any additional arguments to pass to the differential equation.
-        event: An event at which to terminate the solve early. See the `diffrax <https://docs.kidger.site/diffrax/api/events/>`_ documentation for more information.
-        solver: The solver for the differential equation. See the `diffrax <https://docs.kidger.site/diffrax/usage/how-to-choose-a-solver/>`_ guide on how to choose a solver.
+        event: An event at which to terminate the solve early. See the `diffrax events <https://docs.kidger.site/diffrax/api/events/>`_ documentation for more information.
+        solver: The solver for the differential equation. See the `diffrax solver <https://docs.kidger.site/diffrax/usage/how-to-choose-a-solver/>`_ guide on how to choose a solver.
         max_steps: The maximum number of steps to take before quitting the computation unconditionally.
         stepsize_controller: The stepsize controller to use.
 
     Returns:
-        The solution to the differential equation. See the `diffrax <https://docs.kidger.site/diffrax/api/solution/>`_ documentation for more information.
+        The solution to the differential equation. See the `diffrax solution <https://docs.kidger.site/diffrax/api/solution/>`_ documentation for more information.
 
     Notes:
         This is a wrapper around the :func:`cowell_method` function. See the :func:`cowell_method` function for more information.
