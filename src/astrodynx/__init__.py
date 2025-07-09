@@ -27,7 +27,10 @@ from astrodynx.twobody._orb_integrals import (
     equ_of_orb_uvi,
     radius_periapsis,
     radius_apoapsis,
+    semipara_from_ae,
+    a_from_pe,
 )
+from astrodynx.twobody._orb_elements import rv2coe, coe2rv
 from astrodynx.twobody._ivp import lagrange_prop, kepler_prop
 from astrodynx._sperturb import (
     cowell_method,
@@ -59,6 +62,10 @@ __all__ = [
     "equ_of_orb_uvi",
     "radius_periapsis",
     "radius_apoapsis",
+    "semipara_from_ae",
+    "a_from_pe",
+    "rv2coe",
+    "coe2rv",
     "cowell_method",
     "lagrange_prop",
     "kepler_prop",

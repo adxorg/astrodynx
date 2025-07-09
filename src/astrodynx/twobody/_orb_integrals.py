@@ -436,3 +436,85 @@ def radius_apoapsis(p: ArrayLike, e: ArrayLike) -> ArrayLike:
         Array([1., 2.], dtype=float32)
     """
     return p / (1 - e)
+
+
+def semipara_from_ae(a: ArrayLike, e: ArrayLike) -> ArrayLike:
+    r"""
+    Returns the semiparameter of the orbit from the semimajor axis and eccentricity.
+
+    Args:
+        a: Semimajor axis of the orbit.
+        e: Eccentricity of the orbit; shape broadcast-compatible with `a`.
+
+    Returns:
+        The semiparameter of the orbit.
+
+    Notes
+        The semiparameter is calculated using equation:
+        $$
+        p = a(1 - e^2)
+        $$
+        where $p$ is the semiparameter, $a$ is the semimajor axis, and $e$ is the eccentricity.
+
+    References
+        Battin, 1999, pp.117.
+
+    Examples
+        A simple example of calculating the semiparameter with a semimajor axis of 1.0 and eccentricity of 0.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> a = 1.0
+        >>> e = 0.0
+        >>> adx.semipara_from_ae(a, e)
+        1.0
+
+        With broadcasting, you can calculate the semiparameter for multiple semimajor axes and eccentricities:
+
+        >>> a = jnp.array([1.0, 2.0])
+        >>> e = jnp.array([0.0, 0.0])
+        >>> adx.semipara_from_ae(a, e)
+        Array([1., 2.], dtype=float32)
+    """
+    return a * (1 - e**2)
+
+
+def a_from_pe(p: ArrayLike, e: ArrayLike) -> ArrayLike:
+    r"""
+    Returns the semimajor axis of the orbit from the semiparameter and eccentricity.
+
+    Args:
+        p: Semiparameter of the orbit.
+        e: Eccentricity of the orbit; shape broadcast-compatible with `p`.
+
+    Returns:
+        The semimajor axis of the orbit.
+
+    Notes
+        The semimajor axis is calculated using equation:
+        $$
+        a = \frac{p}{1 - e^2}
+        $$
+        where $a$ is the semimajor axis, $p$ is the semiparameter, and $e$ is the eccentricity.
+
+    References
+        Battin, 1999, pp.117.
+
+    Examples
+        A simple example of calculating the semimajor axis with a semiparameter of 1.0 and eccentricity of 0.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> p = 1.0
+        >>> e = 0.0
+        >>> adx.a_from_pe(p, e)
+        1.0
+
+        With broadcasting, you can calculate the semimajor axis for multiple semiparameters and eccentricities:
+
+        >>> p = jnp.array([1.0, 2.0])
+        >>> e = jnp.array([0.0, 0.0])
+        >>> adx.a_from_pe(p, e)
+        Array([1., 2.], dtype=float32)
+    """
+    return p / (1 - e**2)
