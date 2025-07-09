@@ -1,4 +1,5 @@
 import jax.numpy as jnp
+import jax
 from jax.typing import ArrayLike, DTypeLike
 from jax import Array
 from astrodynx.twobody._kep_equ import solve_kepler_uni
@@ -73,12 +74,12 @@ def lagrange_prop(
 
 
 def kepler_prop(
-    deltat: DTypeLike, r0_vec: ArrayLike, v0_vec: ArrayLike, mu: DTypeLike = 1.0
-) -> Array:
-    r"""The Kepler propagator.
+    ts: ArrayLike, r0_vec: ArrayLike, v0_vec: ArrayLike, mu: DTypeLike = 1.0
+) -> tuple[Array, Array]:
+    r"""The Kepler propagator for a single initial state.
 
     Args:
-        deltat: The time since the initial time.
+        ts: (n,)The time steps to propagate to.
         r0_vec: (3,) The position vector at the initial time.
         v0_vec: (3,) The velocity vector at the initial time.
         mu: (optional) The gravitational parameter.
@@ -97,17 +98,29 @@ def kepler_prop(
         >>> r0_vec = jnp.array([1.0, 0.0, 0.0])
         >>> v0_vec = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
-        >>> deltat = jnp.pi
-        >>> r_vec,v_vec = adx.kepler_prop(deltat, r0_vec, v0_vec, mu)
+        >>> ts = jnp.pi
+        >>> r_vec,v_vec = adx.kepler_prop(ts, r0_vec, v0_vec, mu)
         >>> assert jnp.allclose(r_vec, jnp.array([-1.0, 0.0, 0.0]), atol=1e-6)
         >>> assert jnp.allclose(v_vec, jnp.array([0.0, -1.0, 0.0]), atol=1e-6)
+
+        With broadcasting:
+
+        >>> r0_vec = jnp.array([1.0, 0.0, 0.0])
+        >>> v0_vec = jnp.array([0.0, 1.0, 0.0])
+        >>> mu = 1.0
+        >>> ts = jnp.linspace(0, 2*jnp.pi, 12)
+        >>> r_vec,v_vec = adx.kepler_prop(ts, r0_vec, v0_vec, mu)
+        >>> assert r_vec.shape == (12, 3)
+        >>> assert v_vec.shape == (12, 3)
     """
     r0 = jnp.linalg.norm(r0_vec)
     v0 = jnp.linalg.norm(v0_vec)
     alpha = 1.0 / semimajor_axis(r0, v0, mu)
     sigma0 = sigma_fn(r0_vec, v0_vec, mu)
 
-    chi = solve_kepler_uni(deltat, alpha.item(), r0.item(), sigma0.item(), mu)
+    chi = jax.vmap(solve_kepler_uni, in_axes=(0, None, None, None, None))(
+        jnp.atleast_1d(ts), alpha.item(), r0.item(), sigma0.item(), mu
+    )
     F = lagrange_F(ufunc2(chi, alpha), r0)
     G = lagrange_G(
         ufunc1(chi, alpha),
@@ -121,4 +134,11 @@ def kepler_prop(
     )
     Ft = lagrange_Ft(ufunc1(chi, alpha), r, r0, mu)
     Gt = lagrange_Gt(ufunc2(chi, alpha), r)
-    return lagrange_prop(F, G, Ft, Gt, r0_vec, v0_vec)
+    return lagrange_prop(
+        F[:, jnp.newaxis],
+        G[:, jnp.newaxis],
+        Ft[:, jnp.newaxis],
+        Gt[:, jnp.newaxis],
+        r0_vec,
+        v0_vec,
+    )
