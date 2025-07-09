@@ -1,8 +1,12 @@
 ``astrodynx.utils``
 ===================
 
+.. currentmodule:: astrodynx.utils
 
-.. automodule:: astrodynx.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   rotmat3dx
+   rotmat3dy
+   rotmat3dz

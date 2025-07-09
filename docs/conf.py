@@ -20,6 +20,7 @@ author = "AstroDynX contributors"
 # -- General configuration ---------------------------------------------------
 
 extensions = [
+    "sphinx.ext.autosummary",
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.napoleon",
@@ -60,6 +61,8 @@ intersphinx_mapping = {
     "diffrax": ("https://docs.kidger.site/diffrax/", None),
 }
 
+# -- Options for autosummary -------------------------------------------------
+autosummary_generate = True
 
 # -- Options for MyST --------------------------------------------------------
 myst_enable_extensions = [

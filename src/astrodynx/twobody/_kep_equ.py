@@ -52,6 +52,22 @@ def kepler_equ_elps(E: ArrayLike, e: ArrayLike, M: ArrayLike = 0) -> Array:
 
 
 def dE(E: ArrayLike, e: ArrayLike) -> Array:
+    r"""Returns the derivative of Kepler's equation for elliptical orbits with respect to the eccentric anomaly.
+
+    Args:
+        E: Eccentric anomaly.
+        e: Eccentricity of the orbit, 0 <= e < 1.
+
+    Returns:
+        The derivative of Kepler's equation for elliptical orbits with respect to the eccentric anomaly.
+
+    Notes:
+        The derivative of Kepler's equation for elliptical orbits with respect to the eccentric anomaly is:
+        $$
+        dE = 1 - e \cos E
+        $$
+        where $E$ is the eccentric anomaly and $e$ is the eccentricity.
+    """
     return 1 - e * jnp.cos(E)
 
 
@@ -99,6 +115,22 @@ def kepler_equ_hypb(H: ArrayLike, e: ArrayLike, N: ArrayLike = 0) -> Array:
 
 
 def dH(H: ArrayLike, e: ArrayLike) -> Array:
+    r"""Returns the derivative of Kepler's equation for hyperbolic orbits with respect to the hyperbolic eccentric anomaly.
+
+    Args:
+        H: Hyperbolic eccentric anomaly.
+        e: Eccentricity of the orbit, e > 1.
+
+    Returns:
+        The derivative of Kepler's equation for hyperbolic orbits with respect to the hyperbolic eccentric anomaly.
+
+    Notes:
+        The derivative of Kepler's equation for hyperbolic orbits with respect to the hyperbolic eccentric anomaly is:
+        $$
+        dH = e \cosh H - 1
+        $$
+        where $H$ is the hyperbolic eccentric anomaly and $e$ is the eccentricity.
+    """
     return e * jnp.cosh(H) - 1
 
 

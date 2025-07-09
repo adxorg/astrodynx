@@ -1,7 +1,11 @@
 ``astrodynx.gravity``
 =====================
 
-.. automodule:: astrodynx.gravity
-    :members:
-    :undoc-members:
-    :show-inheritance:
+.. currentmodule:: astrodynx.gravity
+
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   point_mass_grav
+   j2_acc
