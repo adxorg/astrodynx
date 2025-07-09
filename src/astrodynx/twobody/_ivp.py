@@ -8,10 +8,10 @@ from astrodynx.twobody._lagrange import lagrange_F, lagrange_G, lagrange_Ft, lag
 
 
 def lagrange_prop(
-    F: DTypeLike,
-    G: DTypeLike,
-    Ft: DTypeLike,
-    Gt: DTypeLike,
+    F: ArrayLike,
+    G: ArrayLike,
+    Ft: ArrayLike,
+    Gt: ArrayLike,
     r0_vec: ArrayLike,
     v0_vec: ArrayLike,
 ) -> tuple[Array, Array]:
@@ -22,8 +22,8 @@ def lagrange_prop(
         G: The Lagrange G function.
         Ft: The Lagrange Ft function.
         Gt: The Lagrange Gt function.
-        r0_vec: (3,) The position vector at the initial time.
-        v0_vec: (3,) The velocity vector at the initial time.
+        r0_vec: (...,3) The position vector at the initial time.
+        v0_vec: (...,3) The velocity vector at the initial time.
 
     Returns:
         The propagated state vector.
@@ -41,6 +41,33 @@ def lagrange_prop(
 
     References:
         Battin, 1999, pp.129.
+
+    Examples:
+        A simple example:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> F = 1.0
+        >>> G = 1.0
+        >>> Ft = 1.0
+        >>> Gt = 1.0
+        >>> r0_vec = jnp.array([1.0, 0.0, 0.0])
+        >>> v0_vec = jnp.array([0.0, 1.0, 0.0])
+        >>> r_vec, v_vec = adx.lagrange_prop(F, G, Ft, Gt, r0_vec, v0_vec)
+        >>> assert jnp.allclose(r_vec, jnp.array([1.0, 1.0, 0.0]))
+        >>> assert jnp.allclose(v_vec, jnp.array([1.0, 1.0, 0.0]))
+
+        With broadcasting:
+
+        >>> F = jnp.array([[1.0], [2.0]])
+        >>> G = jnp.array([[1.0], [1.0]])
+        >>> Ft = jnp.array([[1.0], [1.0]])
+        >>> Gt = jnp.array([[1.0], [1.0]])
+        >>> r0_vec = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
+        >>> v0_vec = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
+        >>> r_vec, v_vec = adx.lagrange_prop(F, G, Ft, Gt, r0_vec, v0_vec)
+        >>> assert jnp.allclose(r_vec, jnp.array([[1.0, 1.0, 0.0], [4.0, 2.0, 0.0]]))
+        >>> assert jnp.allclose(v_vec, jnp.array([[1.0, 1.0, 0.0], [2.0, 2.0, 0.0]]))
     """
     return F * r0_vec + G * v0_vec, Ft * r0_vec + Gt * v0_vec
 

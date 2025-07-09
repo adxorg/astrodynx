@@ -21,15 +21,8 @@ The following examples are planned for future releases:
    Analytical orbital propagation examples using Kepler's equation. Demonstrates the use of different formulations of Kepler's equation and
    their applications in different scenarios.
 
-**Coordinate Transformations**
-   Examples of working with different coordinate systems and reference frames. Demonstrates the use of rotation matrices and coordinate
-   transformations for various applications.
-
 **Orbital Elements**
    Examples of working with orbital elements. Demonstrates the use of different orbital elements and their transformations.
-
-**Perturbation Modeling**
-   Examples of modeling perturbations in orbital mechanics. Demonstrates the use of J2 perturbations and custom force models.
 
 **Event Detection**
    Examples of using event detection in orbital simulations. Demonstrates the use of different events and their applications in various
