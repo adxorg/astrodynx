@@ -1,0 +1,263 @@
+/* Custom CSS for enhanced AstroDynX API documentation */
+
+/* Function and class containers */
+.function-header,
+.class-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-left: 4px solid #007acc;
+    padding: 1rem;
+    margin: 1.5rem 0 1rem 0;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.function-details,
+.class-details {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Navigation containers */
+.function-navigation,
+.class-navigation,
+.module-navigation {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+}
+
+.function-navigation .rubric,
+.class-navigation .rubric,
+.module-navigation .rubric {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 1.1em;
+    border-bottom: 2px solid #007acc;
+    padding-bottom: 0.25rem;
+}
+
+/* Footer containers */
+.function-footer,
+.class-footer,
+.module-footer,
+.method-footer,
+.attribute-footer {
+    background: #f1f3f4;
+    border-top: 1px solid #dee2e6;
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 0 0 8px 8px;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.function-footer .rubric,
+.class-footer .rubric,
+.module-footer .rubric,
+.method-footer .rubric,
+.attribute-footer .rubric {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1em;
+}
+
+/* Enhanced autosummary tables */
+.autosummary {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.autosummary th {
+    background: linear-gradient(135deg, #007acc 0%, #0056b3 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem;
+    text-align: left;
+    border: none;
+}
+
+.autosummary td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: top;
+}
+
+.autosummary tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.autosummary tr:hover {
+    background-color: #e3f2fd;
+    transition: background-color 0.2s ease;
+}
+
+/* Enhanced code blocks and signatures */
+.sig {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    overflow-x: auto;
+}
+
+.sig-name {
+    color: #d73a49;
+    font-weight: 600;
+}
+
+.sig-param {
+    color: #6f42c1;
+}
+
+/* Mathematical notation enhancements */
+.math {
+    background: #f8f9fa;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    margin: 0.25rem;
+    display: inline-block;
+}
+
+div.math {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Enhanced parameter and return sections */
+.field-list {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.field-list .field-name {
+    background: #007acc;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.field-list .field-body {
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Enhanced admonitions */
+.admonition {
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.admonition.note {
+    border-left: 4px solid #17a2b8;
+}
+
+.admonition.warning {
+    border-left: 4px solid #ffc107;
+}
+
+.admonition.seealso {
+    border-left: 4px solid #28a745;
+}
+
+/* Enhanced rubric styling */
+.rubric {
+    color: #007acc;
+    font-weight: 600;
+    font-size: 1.2em;
+    margin: 1.5rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #007acc;
+}
+
+/* Enhanced cross-references */
+a.reference.internal {
+    color: #007acc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a.reference.internal:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Enhanced code examples */
+.highlight {
+    border-radius: 8px;
+    margin: 1rem 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.highlight pre {
+    padding: 1rem;
+    margin: 0;
+    border-radius: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .function-header,
+    .class-header,
+    .function-details,
+    .class-details,
+    .function-navigation,
+    .class-navigation,
+    .module-navigation {
+        margin-left: -1rem;
+        margin-right: -1rem;
+        border-radius: 0;
+    }
+
+    .autosummary {
+        font-size: 0.9em;
+    }
+
+    .autosummary th,
+    .autosummary td {
+        padding: 0.5rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    .function-navigation,
+    .class-navigation,
+    .module-navigation,
+    .function-footer,
+    .class-footer,
+    .module-footer {
+        display: none;
+    }
+
+    .function-header,
+    .class-header {
+        background: none;
+        border: 1px solid #000;
+        box-shadow: none;
+    }
+}

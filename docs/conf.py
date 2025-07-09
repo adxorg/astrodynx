@@ -85,6 +85,9 @@ html_theme_options = {
     "path_to_docs": "docs",
 }
 html_static_path = ["_static"]
+html_css_files = [
+    "custom-api.css",
+]
 
 # -- Options for LaTeX output ------------------------------------------------
 latex_engine = "pdflatex"
