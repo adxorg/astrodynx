@@ -341,6 +341,7 @@ We welcome contributions in various areas:
 
 - **API Documentation**: Improve docstrings and examples
 - **Tutorials**: Step-by-step guides for common tasks
+- **Examples**: Practical use cases and best practices
 - **Theory**: Mathematical background and references
 
 ### Testing

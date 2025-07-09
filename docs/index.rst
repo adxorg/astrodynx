@@ -145,41 +145,6 @@ Quick Start Examples
    dP_da = jax.grad(period_func)(1.0)  # derivative of period w.r.t. semimajor axis
    print(f"dP/da = {dP_da:.4f}")
 
-
-Core Modules Overview
----------------------
-
-**astrodynx.twobody**
-   Two-body orbital mechanics including Kepler's equation solvers, orbital elements,
-   and analytical propagation methods.
-
-**astrodynx.gravity**
-   Gravitational force models including point mass and J2 perturbations for
-   numerical orbit propagation.
-
-**astrodynx.events**
-   Event detection functions for orbital simulations, such as collision detection
-   and ground station passes.
-
-**astrodynx.utils**
-   Utility functions including coordinate transformations and rotation matrices.
-
-Examples
---------
-
-Explore practical examples demonstrating AstroDynX capabilities:
-
-**Cowell Propagation** (:doc:`examples/prop_cowell`)
-   Numerical orbital propagation examples with automatic differentiation. Demonstrates event detection, J2 perturbations, and JAX's automatic
-   differentiation capabilities for computing state transition matrices.
-
-.. toctree::
-   :maxdepth: 1
-   :hidden:
-   :caption: Examples
-
-   examples/prop_cowell
-
 Citation
 --------
 If you use AstroDynX in your work, please cite our project:
@@ -195,17 +160,13 @@ If you use AstroDynX in your work, please cite our project:
 
 .. toctree::
    :maxdepth: 2
-   :caption: Documentation
    :hidden:
 
+   basics
    tutorials/index
-   tests
+   examples/index
    api/index
    changelog
-
-.. toctree::
-   :caption: Indices and tables
-   :hidden:
 
    Index <genindex>
    Module Index <modindex>
