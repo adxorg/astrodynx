@@ -10,7 +10,7 @@
 
 .. container:: module-content
 
-   .. rubric:: Kepler's Equation Solvers
+   .. rubric:: Kepler Equations
 
    .. autosummary::
       :toctree: generated/
@@ -29,7 +29,7 @@
       dE
       dH
 
-   .. rubric:: Orbital Elements and Integrals
+   .. rubric:: Orbit Integrals
 
    .. autosummary::
       :toctree: generated/
@@ -49,7 +49,7 @@
       semipara_from_ae
       a_from_pe
 
-   .. rubric:: State Vector Conversions
+   .. rubric:: Orbit State Conversions
 
    .. autosummary::
       :toctree: generated/
@@ -59,7 +59,7 @@
       rv2coe
       coe2rv
 
-   .. rubric:: Orbital Propagation
+   .. rubric:: Orbit Propagation
 
    .. autosummary::
       :toctree: generated/

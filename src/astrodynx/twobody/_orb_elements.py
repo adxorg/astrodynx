@@ -18,17 +18,19 @@ def true_anomaly(pos_vec: ArrayLike, e_vec: ArrayLike) -> Array:
     return jnp.where(true_anom < 0, 2 * jnp.pi + true_anom, true_anom)
 
 
-def right_ascension(h_vec: ArrayLike) -> Array:
-    N = jnp.cross(jnp.array([0, 0, 1]), h_vec)
-    raan = jnp.arctan2(N[..., 1:2], N[..., 0:1])
+def node_vec(h_vec: ArrayLike) -> Array:
+    return jnp.cross(jnp.array([0, 0, 1]), h_vec)
+
+
+def right_ascension(node_vec: ArrayLike) -> Array:
+    raan = jnp.arctan2(node_vec[..., 1:2], node_vec[..., 0:1])
     return jnp.where(raan < 0, 2 * jnp.pi + raan, raan)
 
 
-def argument_of_periapsis(h_vec: ArrayLike, e_vec: ArrayLike) -> Array:
-    N = jnp.cross(jnp.array([0, 0, 1]), h_vec)
+def argument_of_periapsis(node_vec: ArrayLike, e_vec: ArrayLike) -> Array:
     argp = jnp.arctan2(
-        vector_norm(jnp.cross(N, e_vec), axis=-1, keepdims=True),
-        jnp.sum(N * e_vec, axis=-1, keepdims=True),
+        vector_norm(jnp.cross(node_vec, e_vec), axis=-1, keepdims=True),
+        jnp.sum(node_vec * e_vec, axis=-1, keepdims=True),
     )
     return jnp.where(argp < 0, 2 * jnp.pi + argp, argp)
 
@@ -96,8 +98,9 @@ def rv2coe(
     e_mag = vector_norm(e_vec, axis=-1, keepdims=True)
     p = semiparameter(h_mag, mu)
     incl = jnp.arccos(h_vec[..., 2:3] / h_mag)
-    raan = right_ascension(h_vec)
-    argp = argument_of_periapsis(h_vec, e_vec)
+    N = node_vec(h_vec)
+    raan = right_ascension(N)
+    argp = argument_of_periapsis(N, e_vec)
     true_anom = true_anomaly(pos_vec, e_vec)
     return (
         jnp.squeeze(p, axis=-1),
