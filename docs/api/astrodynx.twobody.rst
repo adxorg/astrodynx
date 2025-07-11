@@ -34,6 +34,7 @@
       pvpr0
       pvpv0
       dxdx0
+      C_func
 
    .. rubric:: Universal Anomaly Functions
 
