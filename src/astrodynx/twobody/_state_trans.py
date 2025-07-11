@@ -9,14 +9,37 @@ from astrodynx.twobody._lagrange import lagrange_F, lagrange_G, lagrange_Ft, lag
 """State transition matrices for two-body orbital mechanics."""
 
 
-def _C_func(
+def C_func(
     chi: ArrayLike,
     U2: ArrayLike,
     U4: ArrayLike,
     U5: ArrayLike,
     deltat: ArrayLike = 3.14,
     mu: ArrayLike = 1,
-) -> ArrayLike:
+) -> Array:
+    r"""The C function
+
+    Args:
+        chi: The generalized anomaly.
+        U2: The universal function U2.
+        U4: The universal function U4.
+        U5: The universal function U5.
+        deltat: The time difference.
+        mu: The gravitational parameter.
+
+    Returns:
+        The value of the C function.
+
+    Notes:
+        The C function is defined as:
+        $$
+        C = \frac{3 U_5 - \chi U_4 - \sqrt{\mu} \Delta t U_2}{\sqrt{\mu}}
+        $$
+        where $\chi$ is the generalized anomaly, $\Delta t$ is the time difference, $\mu$ is the gravitational parameter, and $U_2$, $U_4$, and $U_5$ are the universal functions.
+
+    References:
+        Battin, 1999, pp.466.
+    """
     return (3 * U5 - chi * U4 - jnp.sqrt(mu) * deltat * U2) / jnp.sqrt(mu)
 
 
@@ -277,7 +300,7 @@ def dxdx0(
     chi = adx.generalized_anomaly(
         alpha, sigma_fn(r_vec, v_vec, mu), sigma_fn(r0_vec, v0_vec, mu), deltat, mu
     )
-    C = _C_func(
+    C = C_func(
         chi, ufunc2(chi, alpha), ufunc4(chi, alpha), ufunc5(chi, alpha), deltat, mu
     )
     F = lagrange_F(ufunc2(chi, alpha), r0_mag)

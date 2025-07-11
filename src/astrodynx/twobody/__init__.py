@@ -19,6 +19,7 @@ from astrodynx.twobody._state_trans import (
     pvpr0,
     pvpv0,
     dxdx0,
+    C_func,
 )
 from astrodynx.twobody._path_check import (
     nmax_by_periapsis,
@@ -37,6 +38,7 @@ __all__ = [
     "pvpr0",
     "pvpv0",
     "dxdx0",
+    "C_func",
     "sigma_fn",
     "ufunc0",
     "ufunc1",
