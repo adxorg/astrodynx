@@ -101,7 +101,7 @@ For unperturbed two-body motion, use Kepler propagation:
    dt = 1800.0                          # 30 minutes
 
    # Propagate using Kepler's method
-   r_new, v_new = adx.kepler_prop(dt, r0, v0, mu)
+   r_new, v_new = adx.prop.kepler(dt, r0, v0, mu)
 
    print(f"New position: {r_new}")
    print(f"New velocity: {v_new}")
@@ -155,7 +155,7 @@ Process multiple orbits simultaneously:
                         [0.0, 6.5, 0.0]])
 
    # Vectorized propagation
-   r_new_array, v_new_array = jax.vmap(adx.kepler_prop, in_axes=(None, 0, 0, None))(
+   r_new_array, v_new_array = jax.vmap(adx.prop.kepler, in_axes=(None, 0, 0, None))(
        dt, r_array, v_array, mu)
 
 Automatic Differentiation
@@ -175,7 +175,7 @@ Compute gradients for optimization and sensitivity analysis:
 
    # Sensitivity of final position to initial velocity
    def propagation_func(v0):
-       r_final, _ = adx.kepler_prop(dt, r0, v0, mu)
+       r_final, _ = adx.prop.kepler(dt, r0, v0, mu)
        return r_final
 
    # Compute Jacobian dr_final/dv0
@@ -192,7 +192,7 @@ Accelerate computations with just-in-time compilation:
    # JIT compile a function for better performance
    @jax.jit
    def fast_propagation(dt, r0, v0, mu):
-       return adx.kepler_prop(dt, r0, v0, mu)
+       return adx.prop.kepler(dt, r0, v0, mu)
 
    # First call compiles the function
    r_new, v_new = fast_propagation(dt, r0, v0, mu)
@@ -285,7 +285,7 @@ AstroDynX functions are designed to work with JAX's functional programming parad
        v_mag = jnp.linalg.vector_norm(v0)
        v0 = jnp.where(v_mag > 1e-12, v0, jnp.array([0.0, 1e-6, 0.0]))
 
-       return adx.kepler_prop(dt, r0, v0, mu)
+       return adx.prop.kepler(dt, r0, v0, mu)
 
 Performance Optimization
 ~~~~~~~~~~~~~~~~~~~~~~~~

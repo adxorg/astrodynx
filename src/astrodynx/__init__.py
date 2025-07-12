@@ -3,6 +3,7 @@ from astrodynx._version import version_tuple as version_tuple
 from astrodynx._version import __version__ as __version__
 from astrodynx._version import __version_tuple__ as __version_tuple__
 
+from astrodynx import twobody
 from astrodynx.twobody._kep_equ import (
     kepler_equ_elps,
     kepler_equ_hypb,
@@ -31,14 +32,9 @@ from astrodynx.twobody._orb_integrals import (
     a_from_pe,
 )
 from astrodynx.twobody._orb_elements import rv2coe, coe2rv
-from astrodynx.twobody._ivp import lagrange_prop, kepler_prop
-from astrodynx._sperturb import (
-    cowell_method,
-    spprop_steps,
-    spprop_varstep,
-    spprop_finnal,
-)
-from astrodynx import events, gravity, twobody, utils
+
+
+from astrodynx import events, gravity, utils, prop
 
 __all__ = [
     "kepler_equ_elps",
@@ -66,14 +62,9 @@ __all__ = [
     "a_from_pe",
     "rv2coe",
     "coe2rv",
-    "cowell_method",
-    "lagrange_prop",
-    "kepler_prop",
-    "spprop_steps",
-    "spprop_varstep",
-    "spprop_finnal",
     "events",
     "gravity",
     "twobody",
     "utils",
+    "prop",
 ]

@@ -1,5 +1,7 @@
+.. _astrodynx.twobody:
+
 ``astrodynx.twobody``
-======================
+=====================
 
 .. currentmodule:: astrodynx.twobody
 
@@ -63,13 +65,6 @@
       pass_perigee
       rp_islower_rmin
 
-.. container:: module-navigation
-
-   .. rubric:: Related Modules
-
-   * :mod:`astrodynx` - Main module functions
-   * :mod:`astrodynx.gravity` - Gravitational perturbations
-   * :mod:`astrodynx.utils` - Utility functions
 
 .. container:: module-footer
 

@@ -1,5 +1,7 @@
+.. _astrodynx.events:
+
 ``astrodynx.events``
-======================
+====================
 
 .. currentmodule:: astrodynx.events
 
@@ -19,13 +21,6 @@
 
       radius_toolow
 
-.. container:: module-navigation
-
-   .. rubric:: Related Modules
-
-   * :mod:`astrodynx` - Main module functions
-   * :mod:`astrodynx.gravity` - Gravitational perturbations
-   * :mod:`astrodynx.twobody` - Two-body orbital mechanics
 
 .. container:: module-footer
 

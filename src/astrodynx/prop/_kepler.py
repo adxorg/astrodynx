@@ -8,7 +8,7 @@ from astrodynx.twobody._orb_integrals import semimajor_axis, equ_of_orb_uvi
 from astrodynx.twobody._lagrange import lagrange_F, lagrange_G, lagrange_Ft, lagrange_Gt
 
 
-def lagrange_prop(
+def _lagrange_prop(
     F: ArrayLike,
     G: ArrayLike,
     Ft: ArrayLike,
@@ -42,41 +42,14 @@ def lagrange_prop(
 
     References:
         Battin, 1999, pp.129.
-
-    Examples:
-        A simple example:
-
-        >>> import jax.numpy as jnp
-        >>> import astrodynx as adx
-        >>> F = 1.0
-        >>> G = 1.0
-        >>> Ft = 1.0
-        >>> Gt = 1.0
-        >>> r0_vec = jnp.array([1.0, 0.0, 0.0])
-        >>> v0_vec = jnp.array([0.0, 1.0, 0.0])
-        >>> r_vec, v_vec = adx.lagrange_prop(F, G, Ft, Gt, r0_vec, v0_vec)
-        >>> assert jnp.allclose(r_vec, jnp.array([1.0, 1.0, 0.0]))
-        >>> assert jnp.allclose(v_vec, jnp.array([1.0, 1.0, 0.0]))
-
-        With broadcasting:
-
-        >>> F = jnp.array([[1.0], [2.0]])
-        >>> G = jnp.array([[1.0], [1.0]])
-        >>> Ft = jnp.array([[1.0], [1.0]])
-        >>> Gt = jnp.array([[1.0], [1.0]])
-        >>> r0_vec = jnp.array([[1.0, 0.0, 0.0], [2.0, 0.0, 0.0]])
-        >>> v0_vec = jnp.array([[0.0, 1.0, 0.0], [0.0, 2.0, 0.0]])
-        >>> r_vec, v_vec = adx.lagrange_prop(F, G, Ft, Gt, r0_vec, v0_vec)
-        >>> assert jnp.allclose(r_vec, jnp.array([[1.0, 1.0, 0.0], [4.0, 2.0, 0.0]]))
-        >>> assert jnp.allclose(v_vec, jnp.array([[1.0, 1.0, 0.0], [2.0, 2.0, 0.0]]))
     """
     return F * r0_vec + G * v0_vec, Ft * r0_vec + Gt * v0_vec
 
 
-def kepler_prop(
+def kepler(
     ts: ArrayLike, r0_vec: ArrayLike, v0_vec: ArrayLike, mu: DTypeLike = 1.0
 ) -> tuple[Array, Array]:
-    r"""The Kepler propagator for a single initial state.
+    r"""Kepler propagator for all conic orbits, based on generalized anomaly.
 
     Args:
         ts: (n,)The time steps to propagate to.
@@ -88,7 +61,10 @@ def kepler_prop(
         The propagated state vector.
 
     Notes:
-        The Kepler propagator is a wrapper function for the :func:`lagrange_prop` function.
+        The Kepler propagator solves the universal Kepler's equation :func:`kepler_equ_uni` for each time step and then uses the Lagrange coefficients to propagate the state vector.
+
+    References:
+        Battin, 1999, pp.179.
 
     Examples:
         A simple example:
@@ -99,7 +75,7 @@ def kepler_prop(
         >>> v0_vec = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
         >>> ts = jnp.pi
-        >>> r_vec,v_vec = adx.kepler_prop(ts, r0_vec, v0_vec, mu)
+        >>> r_vec,v_vec = adx.prop.kepler(ts, r0_vec, v0_vec, mu)
         >>> assert jnp.allclose(r_vec, jnp.array([-1.0, 0.0, 0.0]), atol=1e-6)
         >>> assert jnp.allclose(v_vec, jnp.array([0.0, -1.0, 0.0]), atol=1e-6)
 
@@ -109,7 +85,7 @@ def kepler_prop(
         >>> v0_vec = jnp.array([0.0, 1.0, 0.0])
         >>> mu = 1.0
         >>> ts = jnp.linspace(0, 2*jnp.pi, 12)
-        >>> r_vec,v_vec = adx.kepler_prop(ts, r0_vec, v0_vec, mu)
+        >>> r_vec,v_vec = adx.prop.kepler(ts, r0_vec, v0_vec, mu)
         >>> assert r_vec.shape == (12, 3)
         >>> assert v_vec.shape == (12, 3)
     """
@@ -134,7 +110,7 @@ def kepler_prop(
     )
     Ft = lagrange_Ft(ufunc1(chi, alpha), r, r0, mu)
     Gt = lagrange_Gt(ufunc2(chi, alpha), r)
-    return lagrange_prop(
+    return _lagrange_prop(
         F[:, jnp.newaxis],
         G[:, jnp.newaxis],
         Ft[:, jnp.newaxis],

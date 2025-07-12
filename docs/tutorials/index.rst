@@ -6,7 +6,7 @@ Tutorials
 Welcome to the AstroDynX tutorials! These guides will help you get started with orbital mechanics calculations using AstroDynX.
 
 .. note::
-   Tutorials are coming soon! In the meantime, check out the :ref:`api-reference` for detailed function documentation and examples.
+   Tutorials are coming soon! In the meantime, check out :ref:`examples` and :ref:`api-reference` for detailed function documentation and examples.
 
 Planned Tutorials
 -----------------

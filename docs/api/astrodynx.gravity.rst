@@ -1,3 +1,5 @@
+.. _astrodynx.gravity:
+
 ``astrodynx.gravity``
 =====================
 
@@ -20,13 +22,6 @@
       point_mass_grav
       j2_acc
 
-.. container:: module-navigation
-
-   .. rubric:: Related Modules
-
-   * :mod:`astrodynx` - Main module functions
-   * :mod:`astrodynx.twobody` - Two-body orbital mechanics
-   * :mod:`astrodynx.events` - Event detection functions
 
 .. container:: module-footer
 

@@ -20,7 +20,6 @@
    * :func:`astrodynx.rv2coe` - Convert position/velocity to orbital elements
    * :func:`astrodynx.coe2rv` - Convert orbital elements to position/velocity
    * :func:`astrodynx.kepler_prop` - Kepler orbital propagation
-   * :func:`astrodynx.lagrange_prop` - Lagrange orbital propagation
    {% elif module == "astrodynx.twobody" %}
    * :func:`astrodynx.twobody.lagrange_F` - Lagrange F coefficient
    * :func:`astrodynx.twobody.lagrange_G` - Lagrange G coefficient

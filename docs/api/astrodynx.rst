@@ -1,3 +1,5 @@
+.. _astrodynx:
+
 ``astrodynx``
 =============
 
@@ -58,29 +60,6 @@
 
       rv2coe
       coe2rv
-
-   .. rubric:: Orbit Propagation
-
-   .. autosummary::
-      :toctree: generated/
-      :template: function.rst
-      :nosignatures:
-
-      lagrange_prop
-      kepler_prop
-      cowell_method
-      spprop_steps
-      spprop_varstep
-      spprop_finnal
-
-.. container:: module-navigation
-
-   .. rubric:: Related Modules
-
-   * :mod:`astrodynx.twobody` - Two-body orbital mechanics
-   * :mod:`astrodynx.gravity` - Gravitational perturbations
-   * :mod:`astrodynx.events` - Event detection functions
-   * :mod:`astrodynx.utils` - Utility functions
 
 .. container:: module-footer
 

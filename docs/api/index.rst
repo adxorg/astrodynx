@@ -10,6 +10,7 @@ The API is organized into logical modules for different aspects of astrodynamics
    :maxdepth: 2
 
    astrodynx
+   astrodynx.prop
    astrodynx.twobody
    astrodynx.gravity
    astrodynx.events

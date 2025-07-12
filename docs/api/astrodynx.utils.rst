@@ -1,5 +1,7 @@
+.. _astrodynx.utils:
+
 ``astrodynx.utils``
-===================
+====================
 
 .. currentmodule:: astrodynx.utils
 
@@ -21,13 +23,6 @@
       rotmat3dy
       rotmat3dz
 
-.. container:: module-navigation
-
-   .. rubric:: Related Modules
-
-   * :mod:`astrodynx` - Main module functions
-   * :mod:`astrodynx.twobody` - Two-body orbital mechanics
-   * :mod:`astrodynx.gravity` - Gravitational perturbations
 
 .. container:: module-footer
 

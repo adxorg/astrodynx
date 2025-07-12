@@ -123,7 +123,7 @@ Quick Start Examples
    dt = jnp.pi  # time step (half orbit)
    mu = 1.0  # gravitational parameter
 
-   r_new, v_new = adx.kepler_prop(dt, r0, v0, mu)
+   r_new, v_new = adx.prop.kepler(dt, r0, v0, mu)
    print(f"New position: {r_new}")
    print(f"New velocity: {v_new}")
 
