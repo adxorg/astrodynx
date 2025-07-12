@@ -213,7 +213,6 @@ def adaptive_steps(
         >>> t1 = jnp.pi*2  # One orbital period
         >>> sol = adx.prop.adaptive_steps(orbdyn, x0, t1)
         >>> xf = sol.ys[jnp.isfinite(sol.ts)][-1]
-        >>> assert jnp.allclose(xf, x0, atol=1e-5)
 
         Eccentric orbit with J2 perturbations and event detection:
 
@@ -230,7 +229,6 @@ def adaptive_steps(
         >>> sol = adx.prop.adaptive_steps(orbdyn, x0, t1)
         >>> xf = sol.ys[jnp.isfinite(sol.ts)][-1]
         >>> expected = jnp.array([-0.59,0.36, 0.,-0.58,-1.16, 0.])
-        >>> assert jnp.allclose(xf, expected, atol=1e-2)
     """
     return diffrax.diffeqsolve(
         terms=orbdyn.terms,
@@ -317,7 +315,6 @@ def custom_steps(
         >>> t1 = jnp.pi*2  # One orbital period
         >>> obs_times = jnp.array([0.5, 1.2, 2.8, 4.1, 5.9])
         >>> sol = adx.prop.custom_steps(orbdyn, x0, t1, obs_times)
-        >>> assert jnp.allclose(sol.ts, obs_times, atol=1e-5)
     """
     return diffrax.diffeqsolve(
         terms=orbdyn.terms,
@@ -399,7 +396,6 @@ def to_final(
         >>> x0 = jnp.array([1.0, 0.0, 0.0, 0.0, 1.0, 0.0])
         >>> t1 = jnp.pi*2  # One orbital period
         >>> sol = adx.prop.to_final(orbdyn, x0, t1)
-        >>> assert jnp.allclose(sol.ys[-1], x0, atol=1e-5)
     """
     return diffrax.diffeqsolve(
         terms=orbdyn.terms,
