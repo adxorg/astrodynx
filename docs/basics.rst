@@ -113,18 +113,26 @@ For perturbed motion or when high precision is needed:
 
 .. code-block:: python
 
-   # Define acceleration function (two-body + perturbations)
-   def acceleration(t, state, mu):
-       r = state[:3]
-       r_mag = jnp.linalg.vector_norm(r)
-       return -mu * r / r_mag**3  # Two-body acceleration
+   import diffrax
+
+   # Define vector field function (two-body dynamics)
+   def vector_field(t, x, args):
+       acc = adx.gravity.point_mass_grav(t, x, args)
+       return jnp.concatenate([x[3:], acc])
 
    # Initial state vector [x, y, z, vx, vy, vz]
    state0 = jnp.concatenate([r0, v0])
 
+   # Set up orbital dynamics configuration
+   orbdyn = adx.prop.OrbDynx(
+       terms=diffrax.ODETerm(vector_field),
+       args={"mu": mu}
+   )
+
    # Propagate using Cowell's method
-   t_span = jnp.array([0.0, dt])
-   result = adx.cowell_method(acceleration, state0, t_span, mu)
+   t1 = dt  # final time
+   sol = adx.prop.to_final(orbdyn, state0, t1)
+   final_state = sol.ys[-1]  # final position and velocity
 
 Working with JAX Features
 -------------------------
@@ -210,20 +218,23 @@ AstroDynX supports various perturbation models for more realistic orbital dynami
 
 .. code-block:: python
 
-   # J2 gravitational perturbation
-   from astrodynx.gravity import j2_acceleration
+   import diffrax
 
-   def perturbed_acceleration(t, state, mu, J2, R_body):
-       r = state[:3]
-
+   # Define vector field with J2 gravitational perturbation
+   def perturbed_vector_field(t, x, args):
        # Two-body acceleration
-       r_mag = jnp.linalg.vector_norm(r)
-       a_twobody = -mu * r / r_mag**3
+       acc = adx.gravity.point_mass_grav(t, x, args)
 
-       # J2 perturbation
-       a_j2 = j2_acceleration(r, mu, J2, R_body)
+       # Add J2 perturbation
+       acc += adx.gravity.j2_acc(t, x, args)
 
-       return a_twobody + a_j2
+       return jnp.concatenate([x[3:], acc])
+
+   # Set up orbital dynamics with perturbations
+   orbdyn = adx.prop.OrbDynx(
+       terms=diffrax.ODETerm(perturbed_vector_field),
+       args={"mu": mu, "J2": 1e-3, "R_eq": 6378.0}  # Earth-like parameters
+   )
 
 Event Detection
 ~~~~~~~~~~~~~~~
@@ -232,17 +243,23 @@ Detect specific events during orbital propagation:
 
 .. code-block:: python
 
-   from astrodynx import events
+   import diffrax
 
-   # Define an event (e.g., ground station pass)
-   def ground_station_event(t, state, gs_position):
-       r = state[:3]
-       # Check if satellite is above ground station
-       elevation = events.elevation_angle(r, gs_position)
-       return elevation - jnp.deg2rad(10.0)  # 10-degree elevation threshold
+   # Use built-in radius event detection
+   def vector_field_with_event(t, x, args):
+       acc = adx.gravity.point_mass_grav(t, x, args)
+       return jnp.concatenate([x[3:], acc])
 
-   # Use event detection during propagation
-   # (Implementation depends on specific event detection framework)
+   # Set up orbital dynamics with event detection
+   orbdyn = adx.prop.OrbDynx(
+       terms=diffrax.ODETerm(vector_field_with_event),
+       args={"mu": mu, "rmin": 6400.0},  # Stop at 6400 km radius
+       event=diffrax.Event(adx.events.radius_islow)
+   )
+
+   # Propagate until event occurs
+   sol = adx.prop.adaptive_steps(orbdyn, state0, t1)
+   # Integration stops when satellite reaches minimum radius
 
 Coordinate Transformations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -251,17 +268,19 @@ Transform between different reference frames:
 
 .. code-block:: python
 
-   from astrodynx.utils import rotation_matrix
-
    # Rotation about z-axis
    angle = jnp.pi / 4  # 45 degrees
-   R_z = rotation_matrix(angle, axis='z')
+   R_z = adx.utils.rotmat3dz(angle)
 
    # Transform position vector
    r_rotated = R_z @ r
 
    # Transform velocity vector
    v_rotated = R_z @ v
+
+   # Other rotation matrices available:
+   R_x = adx.utils.rotmat3dx(angle)  # Rotation about x-axis
+   R_y = adx.utils.rotmat3dy(angle)  # Rotation about y-axis
 
 Common Patterns and Best Practices
 ----------------------------------

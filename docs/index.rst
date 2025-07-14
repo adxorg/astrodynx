@@ -135,7 +135,7 @@ Quick Start Examples
 
    # Vectorize over multiple orbits
    multiple_a = jnp.array([1.0, 2.0, 3.0])  # multiple semimajor axes
-   periods = jax.vmap(adx.orb_period)(multiple_a, mu)
+   periods = jax.vmap(adx.orb_period, in_axes=(0, None))(multiple_a, mu)
    print(f"Multiple periods: {periods}")
 
    # Automatic differentiation for sensitivity analysis
