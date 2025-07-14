@@ -19,7 +19,7 @@
       :template: function.rst
       :nosignatures:
 
-      radius_toolow
+      radius_islow
 
 
 .. container:: module-footer

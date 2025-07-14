@@ -39,7 +39,7 @@ class TestPropToFinal:
         orbdyn = adx.prop.OrbDynx(
             terms=diffrax.ODETerm(vector_field),
             args={"mu": 1.0, "rmin": 0.7, "J2": 1e-6, "R_eq": 1.0},
-            event=diffrax.Event(adx.events.radius_toolow),
+            event=diffrax.Event(adx.events.radius_islow),
         )
         t1 = 3.14
         x0 = jnp.array([1.0, 0.0, 0.0, 0.0, 0.9, 0.0])

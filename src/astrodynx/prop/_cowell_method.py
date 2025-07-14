@@ -54,7 +54,7 @@ class OrbDynx(NamedTuple):
         >>> orbdyn = adx.prop.OrbDynx(
         ...     terms=diffrax.ODETerm(perturbed_field),
         ...     args={"mu": 1.0, "J2": 1e-3, "R_eq": 1.0, "rmin": 0.1},
-        ...     event=diffrax.Event(adx.events.radius_toolow)
+        ...     event=diffrax.Event(adx.events.radius_islow)
         ... )
     """
 
@@ -223,7 +223,7 @@ def adaptive_steps(
         >>> orbdyn = adx.prop.OrbDynx(
         ...     terms=diffrax.ODETerm(perturbed_field),
         ...     args = {"mu": 1.0, "rmin": 0.7, "J2": 1e-6, "R_eq": 1.0},
-        ...     event = diffrax.Event(adx.events.radius_toolow)
+        ...     event = diffrax.Event(adx.events.radius_islow)
         ... )
         >>> x0 = jnp.array([1.0, 0.0, 0.0, 0.0, 0.9, 0.0])
         >>> sol = adx.prop.adaptive_steps(orbdyn, x0, t1)
