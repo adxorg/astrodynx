@@ -42,15 +42,6 @@
       custom_steps
       to_final
 
-.. container:: module-navigation
-
-   .. rubric:: Related Modules
-
-   * :mod:`astrodynx` - Main module functions
-   * :mod:`astrodynx.gravity` - Gravitational perturbations
-   * :mod:`astrodynx.events` - Event detection functions
-   * :mod:`astrodynx.twobody` - Two-body orbital mechanics
-
 .. container:: module-footer
 
    .. rubric:: Module Information
