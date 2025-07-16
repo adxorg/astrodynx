@@ -154,7 +154,7 @@ def eccentricity_vector(
         where $\boldsymbol{e}$ is the eccentricity vector, $\boldsymbol{v}$ is the velocity vector, $\boldsymbol{h}$ is the specific angular momentum vector, $\mu$ is the gravitational parameter, and $\boldsymbol{r}$ is the position vector.
 
     References
-        Battin, 1999, pp.116.
+        Battin, 1999, pp.115.
 
     Examples
         A simple example of calculating the eccentricity vector for a position vector [1, 0, 0] and velocity vector [0, 1, 0]:
