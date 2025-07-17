@@ -51,6 +51,8 @@ def kepler(
 ) -> tuple[Array, Array]:
     r"""Kepler propagator for all conic orbits, based on generalized anomaly.
 
+    The propagator supports broadcasting for the time steps but not for the initial state vectors. It is possible to propagate a single orbit to multiple time steps, but it is not possible to propagate multiple orbits.
+
     Args:
         ts: (n,)The time steps to propagate to.
         r0_vec: (3,) The position vector at the initial time.
@@ -89,8 +91,8 @@ def kepler(
         >>> assert r_vec.shape == (12, 3)
         >>> assert v_vec.shape == (12, 3)
     """
-    r0 = jnp.linalg.norm(r0_vec)
-    v0 = jnp.linalg.norm(v0_vec)
+    r0 = jnp.linalg.vector_norm(r0_vec)
+    v0 = jnp.linalg.vector_norm(v0_vec)
     alpha = 1.0 / semimajor_axis(r0, v0, mu)
     sigma0 = sigma_fn(r0_vec, v0_vec, mu)
 

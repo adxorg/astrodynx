@@ -12,7 +12,7 @@ def point_mass_grav(
 
     Args:
         t: The time.
-        x: The state vector.
+        x: (N,) The state vector, where the first 3 elements are the position vector.
         args: Static arguments.
 
     Returns:
@@ -49,7 +49,7 @@ def j2_acc(
 
     Args:
         t: The time.
-        x: The state vector.
+        x: (N,) The state vector, where the first 3 elements are the position vector.
         args: Static arguments.
 
     Returns:

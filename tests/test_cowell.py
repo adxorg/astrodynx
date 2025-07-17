@@ -51,7 +51,7 @@ class TestPropToFinal:
         assert sol.ys.shape[0] == 1, "Should return only one state"
 
         # Check that the event was triggered (radius ≈ rmin)
-        radius = jnp.linalg.norm(sol.ys[0, :3])
+        radius = jnp.linalg.vector_norm(sol.ys[0, :3])
         assert jnp.isclose(radius, orbdyn.args["rmin"], atol=1e-2)
 
     def test_gradient(self) -> None:

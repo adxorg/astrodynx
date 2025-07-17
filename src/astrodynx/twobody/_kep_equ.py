@@ -490,8 +490,8 @@ def solve_kepler_uni(
         >>> v0_vec = jnp.array([0.0, 1.1, 0.0])
         >>> mu = 1.0
         >>> deltat = jnp.pi*0.5
-        >>> r0 = jnp.linalg.norm(r0_vec)
-        >>> v0 = jnp.linalg.norm(v0_vec)
+        >>> r0 = jnp.linalg.vector_norm(r0_vec)
+        >>> v0 = jnp.linalg.vector_norm(v0_vec)
         >>> alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
         >>> sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
         >>> chi = adx.solve_kepler_uni(deltat, alpha.item(), r0.item(), sigma0.item(), mu)

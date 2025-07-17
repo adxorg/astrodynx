@@ -250,8 +250,8 @@ class TestSolveKeplerUni:
         mu = 1.0
         deltat = jnp.pi / 2
 
-        r0 = jnp.linalg.norm(r0_vec)
-        v0 = jnp.linalg.norm(v0_vec)
+        r0 = jnp.linalg.vector_norm(r0_vec)
+        v0 = jnp.linalg.vector_norm(v0_vec)
         alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
         sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
 
@@ -269,8 +269,8 @@ class TestSolveKeplerUni:
         mu = 1.0
         deltat = 1.0
 
-        r0 = jnp.linalg.norm(r0_vec)
-        v0 = jnp.linalg.norm(v0_vec)
+        r0 = jnp.linalg.vector_norm(r0_vec)
+        v0 = jnp.linalg.vector_norm(v0_vec)
         alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
         sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
 
@@ -288,8 +288,8 @@ class TestSolveKeplerUni:
         mu = 1.0
         deltat = 1.0
 
-        r0 = jnp.linalg.norm(r0_vec)
-        v0 = jnp.linalg.norm(v0_vec)
+        r0 = jnp.linalg.vector_norm(r0_vec)
+        v0 = jnp.linalg.vector_norm(v0_vec)
         alpha = 1.0 / adx.semimajor_axis(r0, v0, mu)
         sigma0 = adx.twobody.sigma_fn(r0_vec, v0_vec, mu)
 
