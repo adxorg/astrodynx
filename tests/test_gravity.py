@@ -330,3 +330,169 @@ class TestJ2Acceleration:
 
         # The Jacobian should be symmetric (for conservative force)
         assert jnp.allclose(jacobian, jacobian.T)
+
+
+class TestJ3Acceleration:
+    """Tests for the j3_acc function."""
+
+    def test_scalar_inputs(self) -> None:
+        """Test with scalar inputs."""
+        t = 0.0
+        x = jnp.array([1.0, -1.0, 1.0, 0.0, 0.0, 0.0])
+        args = {"mu": 1.0, "J3": 1e-6, "R_eq": 1.0}
+
+        r = jnp.sqrt(3.0)
+        z3_over_rsq = x[2] ** 3 / r**2
+        factor = -2.5 * 1.0 * 1e-6 * 1.0**3 / r**7
+
+        expected_ax = factor * x[0] * (3 * x[2] - 7 * z3_over_rsq)
+        expected_ay = factor * x[1] * (3 * x[2] - 7 * z3_over_rsq)
+        expected_az = factor * (6 * x[2] ** 2 - 7 * z3_over_rsq * x[2] - 0.6 * r**2)
+        expected = jnp.array([expected_ax, expected_ay, expected_az])
+
+        result = adx.gravity.j3_acc(t, x, args)
+        assert jnp.allclose(result, expected)
+
+    def test_earth_j3(self) -> None:
+        """Test with Earth's J3 value."""
+        t = 0.0
+        x = jnp.array([6378.137e3, 0.0, 0.0, 0.0, 0.0, 0.0])
+
+        mu_earth = 3.986004418e14
+        j3_earth = -2.5327e-6
+        r_eq_earth = 6378.137e3
+
+        args = {"mu": mu_earth, "J3": j3_earth, "R_eq": r_eq_earth}
+
+        result = adx.gravity.j3_acc(t, x, args)
+
+        r = jnp.linalg.norm(x[:3])
+        z3_over_rsq = x[2] ** 3 / r**2
+        factor = -2.5 * mu_earth * j3_earth * r_eq_earth**3 / r**7
+
+        expected_ax = factor * x[0] * (3 * x[2] - 7 * z3_over_rsq)
+        expected_ay = factor * x[1] * (3 * x[2] - 7 * z3_over_rsq)
+        expected_az = factor * (6 * x[2] ** 2 - 7 * z3_over_rsq * x[2] - 0.6 * r**2)
+        expected = jnp.array([expected_ax, expected_ay, expected_az])
+
+        assert jnp.allclose(result, expected)
+
+    def test_polar_point(self) -> None:
+        """Test with a point at the pole."""
+        t = 0.0
+        x = jnp.array([0.0, 0.0, 1.0, 0.0, 0.0, 0.0])
+        args = {"mu": 1.0, "J3": 1e-6, "R_eq": 1.0}
+
+        result = adx.gravity.j3_acc(t, x, args)
+
+        r = 1.0
+        z3_over_rsq = x[2] ** 3 / r**2
+        factor = -2.5 * 1.0 * 1e-6 * 1.0**3 / r**7
+
+        expected_az = factor * (6 * x[2] ** 2 - 7 * z3_over_rsq * x[2] - 0.6 * r**2)
+        expected = jnp.array([0.0, 0.0, expected_az])
+
+        assert jnp.allclose(result, expected)
+
+    def test_equatorial_point(self) -> None:
+        """Test with a point on the equator."""
+        t = 0.0
+        x = jnp.array([1.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+        args = {"mu": 1.0, "J3": 1e-6, "R_eq": 1.0}
+
+        result = adx.gravity.j3_acc(t, x, args)
+
+        r = jnp.linalg.norm(x[:3])
+        z3_over_rsq = x[2] ** 3 / r**2
+        factor = -2.5 * 1.0 * 1e-6 * 1.0**3 / r**7
+
+        expected_ax = factor * x[0] * (3 * x[2] - 7 * z3_over_rsq)
+        expected_ay = factor * x[1] * (3 * x[2] - 7 * z3_over_rsq)
+        expected_az = factor * (6 * x[2] ** 2 - 7 * z3_over_rsq * x[2] - 0.6 * r**2)
+        expected = jnp.array([expected_ax, expected_ay, expected_az])
+
+        assert jnp.allclose(result, expected)
+
+    def test_j3_zero(self) -> None:
+        """Test with J3 = 0 (should give zero acceleration)."""
+        t = 0.0
+        x = jnp.array([1.0, -1.0, 1.0, 0.0, 0.0, 0.0])
+        args = {"mu": 1.0, "J3": 0.0, "R_eq": 1.0}
+
+        result = adx.gravity.j3_acc(t, x, args)
+        expected = jnp.zeros(3)
+
+        assert jnp.allclose(result, expected)
+
+    def test_time_independence(self) -> None:
+        """Test that the function is time-independent."""
+        x = jnp.array([1.0, -1.0, 1.0, 0.0, 0.0, 0.0])
+        args = {"mu": 1.0, "J3": 1e-6, "R_eq": 1.0}
+
+        result1 = adx.gravity.j3_acc(0.0, x, args)
+        result2 = adx.gravity.j3_acc(100.0, x, args)
+        result3 = adx.gravity.j3_acc(-50.0, x, args)
+
+        assert jnp.allclose(result1, result2)
+        assert jnp.allclose(result1, result3)
+
+    def test_velocity_independence(self) -> None:
+        """Test that the function is independent of velocity components."""
+        t = 0.0
+        args = {"mu": 1.0, "J3": 1e-6, "R_eq": 1.0}
+
+        x1 = jnp.array([1.0, -1.0, 1.0, 0.0, 0.0, 0.0])
+        x2 = jnp.array([1.0, -1.0, 1.0, 10.0, -5.0, 2.0])
+
+        result1 = adx.gravity.j3_acc(t, x1, args)
+        result2 = adx.gravity.j3_acc(t, x2, args)
+
+        assert jnp.allclose(result1, result2)
+
+    def test_jit_compatibility(self) -> None:
+        """Test that the function is compatible with JAX JIT compilation."""
+        t = 0.0
+        x = jnp.array([1.0, -1.0, 1.0, 0.0, 0.0, 0.0])
+        args = {"mu": 1.0, "J3": 1e-6, "R_eq": 1.0}
+
+        jitted_func = jax.jit(adx.gravity.j3_acc)
+        result = jitted_func(t, x, args)
+
+        r = jnp.linalg.norm(x[:3])
+        z3_over_rsq = x[2] ** 3 / r**2
+        factor = -2.5 * 1.0 * 1e-6 * 1.0**3 / r**7
+
+        expected_ax = factor * x[0] * (3 * x[2] - 7 * z3_over_rsq)
+        expected_ay = factor * x[1] * (3 * x[2] - 7 * z3_over_rsq)
+        expected_az = factor * (6 * x[2] ** 2 - 7 * z3_over_rsq * x[2] - 0.6 * r**2)
+        expected = jnp.array([expected_ax, expected_ay, expected_az])
+
+        assert jnp.allclose(result, expected)
+
+    def test_symmetry(self) -> None:
+        """Test symmetry properties of J3 acceleration."""
+        t = 0.0
+        args = {"mu": 1.0, "J3": 1e-6, "R_eq": 1.0}
+
+        x1 = jnp.array([1.0, 1.0, 0.5, 0.0, 0.0, 0.0])
+        x2 = jnp.array([-1.0, -1.0, 0.5, 0.0, 0.0, 0.0])
+
+        result1 = adx.gravity.j3_acc(t, x1, args)
+        result2 = adx.gravity.j3_acc(t, x2, args)
+
+        expected_result2 = jnp.array([-result1[0], -result1[1], result1[2]])
+        assert jnp.allclose(result2, expected_result2)
+
+    def test_gradient(self) -> None:
+        """Test the gradient of the J3 acceleration function."""
+        t = 0.0
+        args = {"mu": 1.0, "J3": 1e-6, "R_eq": 1.0}
+
+        def j3_acc_wrt_pos(pos):
+            x = jnp.concatenate([pos, jnp.zeros(3)])
+            return adx.gravity.j3_acc(t, x, args)
+
+        pos = jnp.array([1.0, 0.0, 0.5])
+        jacobian = jax.jacfwd(j3_acc_wrt_pos)(pos)
+
+        assert jnp.allclose(jacobian, jacobian.T)
