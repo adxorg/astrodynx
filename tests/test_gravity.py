@@ -366,7 +366,7 @@ class TestJ3Acceleration:
 
         result = adx.gravity.j3_acc(t, x, args)
 
-        r = jnp.linalg.norm(x[:3])
+        r = jnp.linalg.vector_norm(x[:3])
         z3_over_rsq = x[2] ** 3 / r**2
         factor = -2.5 * mu_earth * j3_earth * r_eq_earth**3 / r**7
 
