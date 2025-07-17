@@ -190,7 +190,7 @@ class TestJ2Acceleration:
 
         # For a point on the equator, the J2 acceleration should be radially inward
         # and have a specific magnitude
-        r = jnp.linalg.norm(x[:3])
+        r = jnp.linalg.vector_norm(x[:3])
         factor = -1.5 * mu_earth * j2_earth * r_eq_earth**2 / r**5
         expected_ax = factor * x[0] * (1 - 0)  # z=0, so zsq_over_rsq = 0
         expected = jnp.array([expected_ax, 0.0, 0.0])

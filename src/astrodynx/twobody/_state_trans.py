@@ -1,5 +1,5 @@
 import jax.numpy as jnp
-from jax.typing import ArrayLike
+from jax.typing import ArrayLike, DTypeLike
 from jax import Array
 from jax.numpy.linalg import vector_norm
 import astrodynx as adx
@@ -48,9 +48,9 @@ def prpr0(
     v_vec: ArrayLike,
     r0_vec: ArrayLike,
     v0_vec: ArrayLike,
-    F: ArrayLike,
-    C: ArrayLike,
-    mu: ArrayLike = 1,
+    F: DTypeLike,
+    C: DTypeLike,
+    mu: DTypeLike = 1,
 ) -> Array:
     r"""The State Transition Matrix for position with respect to initial position.
 
@@ -59,9 +59,9 @@ def prpr0(
         v_vec: (3,) The velocity vector at the current time.
         r0_vec: (3,) The position vector at the initial time.
         v0_vec: (3,) The velocity vector at the initial time.
-        F: (3,) The Lagrange F function.
-        C: (3,) The C function.
-        mu: (optional) The gravitational parameter.
+        F:  The Lagrange F function.
+        C:  The C function.
+        mu: The gravitational parameter.
 
     Returns:
         The State Transition Matrix for position with respect to initial position.
@@ -94,10 +94,10 @@ def prpv0(
     v_vec: ArrayLike,
     r0_vec: ArrayLike,
     v0_vec: ArrayLike,
-    F: ArrayLike,
-    G: ArrayLike,
-    C: ArrayLike,
-    mu: ArrayLike = 1,
+    F: DTypeLike,
+    G: DTypeLike,
+    C: DTypeLike,
+    mu: DTypeLike = 1,
 ) -> Array:
     r"""The State Transition Matrix for position with respect to initial velocity.
 
@@ -106,10 +106,10 @@ def prpv0(
         v_vec: (3,) The velocity vector at the current time.
         r0_vec: (3,) The position vector at the initial time.
         v0_vec: (3,) The velocity vector at the initial time.
-        F: (3,) The Lagrange F function.
-        G: (3,) The Lagrange G function.
-        C: (3,) The C function.
-        mu: (optional) The gravitational parameter.
+        F:  The Lagrange F function.
+        G:  The Lagrange G function.
+        C:  The C function.
+        mu: The gravitational parameter.
 
     Returns:
         The State Transition Matrix for position with respect to initial velocity.
@@ -142,9 +142,9 @@ def pvpr0(
     v_vec: ArrayLike,
     r0_vec: ArrayLike,
     v0_vec: ArrayLike,
-    Ft: ArrayLike,
-    C: ArrayLike,
-    mu: ArrayLike = 1,
+    Ft: DTypeLike,
+    C: DTypeLike,
+    mu: DTypeLike = 1,
 ) -> Array:
     r"""The State Transition Matrix for velocity with respect to initial position.
 
@@ -153,9 +153,9 @@ def pvpr0(
         v_vec: (3,) The velocity vector at the current time.
         r0_vec: (3,) The position vector at the initial time.
         v0_vec: (3,) The velocity vector at the initial time.
-        Ft: (3,) The Lagrange Ft function.
-        C: (3,) The C function.
-        mu: (optional) The gravitational parameter.
+        Ft:  The Lagrange Ft function.
+        C:  The C function.
+        mu: The gravitational parameter.
 
     Returns:
         The State Transition Matrix for velocity with respect to initial position.
@@ -201,10 +201,10 @@ def pvpv0(
     v_vec: ArrayLike,
     r0_vec: ArrayLike,
     v0_vec: ArrayLike,
-    F: ArrayLike,
-    Gt: ArrayLike,
-    C: ArrayLike,
-    mu: ArrayLike = 1,
+    F: DTypeLike,
+    Gt: DTypeLike,
+    C: DTypeLike,
+    mu: DTypeLike = 1,
 ) -> Array:
     r"""The State Transition Matrix for velocity with respect to initial velocity.
 
@@ -213,10 +213,10 @@ def pvpv0(
         v_vec: (3,) The velocity vector at the current time.
         r0_vec: (3,) The position vector at the initial time.
         v0_vec: (3,) The velocity vector at the initial time.
-        F: (3,) The Lagrange F function.
-        Gt: (3,) The Lagrange Gt function.
-        C: (3,) The C function.
-        mu: (optional) The gravitational parameter.
+        F:  The Lagrange F function.
+        Gt:  The Lagrange Gt function.
+        C:  The C function.
+        mu: The gravitational parameter.
 
     Returns:
         The State Transition Matrix for velocity with respect to initial velocity.
@@ -245,8 +245,8 @@ def dxdx0(
     v_vec: ArrayLike,
     r0_vec: ArrayLike,
     v0_vec: ArrayLike,
-    deltat: ArrayLike = 3.14,
-    mu: ArrayLike = 1,
+    deltat: DTypeLike = 3.14,
+    mu: DTypeLike = 1,
 ) -> Array:
     r"""The State Transition Matrix.
 

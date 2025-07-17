@@ -12,7 +12,7 @@ def radius_islow(
 
     Args:
         t: The time.
-        x: The state vector.
+        x: (N,) The state vector, where the first 3 elements are the position vector.
         args: Static arguments, which must contain a key "rmin" with the minimum radius.
         kwargs: Any additional arguments.
 
@@ -30,4 +30,4 @@ def radius_islow(
         This event can be used to terminate the propagation of an orbit when the radius falls below a certain threshold.
     """
     rmin = args["rmin"]
-    return jnp.linalg.norm(x[:3]) - rmin
+    return jnp.linalg.vector_norm(x[:3]) - rmin
