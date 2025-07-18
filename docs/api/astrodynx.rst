@@ -60,6 +60,10 @@
 
       rv2coe
       coe2rv
+      inclination
+      true_anomaly
+      right_ascension
+      argument_of_periapsis
 
 .. container:: module-footer
 
