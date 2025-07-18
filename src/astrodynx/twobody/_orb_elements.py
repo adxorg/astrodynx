@@ -10,7 +10,45 @@ from jax.numpy.linalg import vector_norm
 from astrodynx.utils import rotmat3dx, rotmat3dz
 
 
+def inclination(h_vec: ArrayLike) -> Array:
+    r"""Returns the inclination of a two-body orbit.
+
+    Args:
+        h_vec: (..., 3) specific angular momentum vector of the object in the two-body system.
+
+    Returns:
+        The inclination of the orbit.
+
+    Notes
+        The inclination is calculated using equation:
+        $$
+        i = \arccos(h_z / h)
+        $$
+        where $i$ is the inclination, $h_z$ is the z-component of the specific angular momentum vector, and $h$ is the norm of the specific angular momentum vector.
+    """
+    return jnp.arccos(h_vec[..., 2:3] / vector_norm(h_vec, axis=-1, keepdims=True))
+
+
 def true_anomaly(pos_vec: ArrayLike, e_vec: ArrayLike) -> Array:
+    r"""Returns the true anomaly of a two-body orbit.
+
+    Args:
+        pos_vec: (..., 3) position vector of the object in the two-body system.
+        e_vec: (..., 3) eccentricity vector of the object in the two-body system, which shape broadcast-compatible with `pos_vec`.
+
+    Returns:
+        The true anomaly of the orbit.
+
+    Notes
+        The true anomaly is calculated using equation:
+        $$
+        f = \arctan2(\|\boldsymbol{e}\times \boldsymbol{r}\|, \boldsymbol{e} \cdot \boldsymbol{r})
+        $$
+        where $f$ is the true anomaly, $\boldsymbol{e}$ is the eccentricity vector, and $\boldsymbol{r}$ is the position vector.
+
+    References
+        Vallado, 2013, pp.118.
+    """
     true_anom = jnp.arctan2(
         vector_norm(jnp.cross(e_vec, pos_vec), axis=-1, keepdims=True),
         jnp.sum(e_vec * pos_vec, axis=-1, keepdims=True),
@@ -23,11 +61,42 @@ def node_vec(h_vec: ArrayLike) -> Array:
 
 
 def right_ascension(node_vec: ArrayLike) -> Array:
+    r"""Returns the right ascension of the ascending node of a two-body orbit.
+
+    Args:
+        node_vec: (..., 3) node vector of the object in the two-body system.
+
+    Returns:
+        The right ascension of the ascending node of the orbit.
+
+    Notes
+        The right ascension is calculated using equation:
+        $$
+        \Omega = \arctan2(N_y, N_x)
+        $$
+        where $\Omega$ is the right ascension of the ascending node, $N_y$ is the y-component of the node vector, and $N_x$ is the x-component of the node vector.
+    """
     raan = jnp.arctan2(node_vec[..., 1:2], node_vec[..., 0:1])
     return jnp.where(raan < 0, 2 * jnp.pi + raan, raan)
 
 
 def argument_of_periapsis(node_vec: ArrayLike, e_vec: ArrayLike) -> Array:
+    r"""Returns the argument of periapsis of a two-body orbit.
+
+    Args:
+        node_vec: (..., 3) node vector of the object in the two-body system.
+        e_vec: (..., 3) eccentricity vector of the object in the two-body system, which shape broadcast-compatible with `node_vec`.
+
+    Returns:
+        The argument of periapsis of the orbit.
+
+    Notes
+        The argument of periapsis is calculated using equation:
+        $$
+        \omega = \arctan2(\|\boldsymbol{N}\times \boldsymbol{e}\|, \boldsymbol{N} \cdot \boldsymbol{e})
+        $$
+        where $\omega$ is the argument of periapsis, $\boldsymbol{N}$ is the node vector, and $\boldsymbol{e}$ is the eccentricity vector.
+    """
     argp = jnp.arctan2(
         vector_norm(jnp.cross(node_vec, e_vec), axis=-1, keepdims=True),
         jnp.sum(node_vec * e_vec, axis=-1, keepdims=True),
@@ -97,7 +166,7 @@ def rv2coe(
     e_vec = eccentricity_vector(pos_vec, vel_vec, mu)
     e_mag = vector_norm(e_vec, axis=-1, keepdims=True)
     p = semiparameter(h_mag, mu)
-    incl = jnp.arccos(h_vec[..., 2:3] / h_mag)
+    incl = inclination(h_vec)
     N = node_vec(h_vec)
     raan = right_ascension(N)
     argp = argument_of_periapsis(N, e_vec)

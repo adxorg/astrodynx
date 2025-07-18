@@ -31,7 +31,14 @@ from astrodynx.twobody._orb_integrals import (
     semipara_from_ae,
     a_from_pe,
 )
-from astrodynx.twobody._orb_elements import rv2coe, coe2rv
+from astrodynx.twobody._orb_elements import (
+    rv2coe,
+    coe2rv,
+    inclination,
+    true_anomaly,
+    right_ascension,
+    argument_of_periapsis,
+)
 
 
 from astrodynx import events, gravity, utils, prop
@@ -62,6 +69,10 @@ __all__ = [
     "a_from_pe",
     "rv2coe",
     "coe2rv",
+    "inclination",
+    "true_anomaly",
+    "right_ascension",
+    "argument_of_periapsis",
     "events",
     "gravity",
     "twobody",
