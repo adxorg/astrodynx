@@ -21,6 +21,8 @@
 
       point_mass_grav
       j2_acc
+      j3_acc
+      j4_acc
 
 
 .. container:: module-footer
