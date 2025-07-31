@@ -1,6 +1,6 @@
+from astrodynx import diffeq
 import astrodynx as adx
 import jax.numpy as jnp
-import diffrax
 import jax
 
 
@@ -11,7 +11,7 @@ class TestPropToFinal:
             return jnp.concatenate([x[3:], acc])
 
         orbdyn = adx.prop.OrbDynx(
-            terms=diffrax.ODETerm(vector_field),
+            terms=diffeq.ODETerm(vector_field),
             args={"mu": 1.0},
         )
 
@@ -37,9 +37,9 @@ class TestPropToFinal:
 
         # Setup parameters
         orbdyn = adx.prop.OrbDynx(
-            terms=diffrax.ODETerm(vector_field),
+            terms=diffeq.ODETerm(vector_field),
             args={"mu": 1.0, "rmin": 0.7, "J2": 1e-6, "R_eq": 1.0},
-            event=diffrax.Event(adx.events.radius_islow),
+            event=diffeq.Event(adx.events.radius_islow),
         )
         t1 = 3.14
         x0 = jnp.array([1.0, 0.0, 0.0, 0.0, 0.9, 0.0])
@@ -76,7 +76,7 @@ class TestPropToFinal:
             return jnp.concatenate([x[3:], acc])
 
         orbdyn = adx.prop.OrbDynx(
-            terms=diffrax.ODETerm(vector_field),
+            terms=diffeq.ODETerm(vector_field),
             args={"mu": mu},
         )
         x0 = jnp.concatenate([r0_vec, v0_vec])

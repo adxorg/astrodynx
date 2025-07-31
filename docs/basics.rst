@@ -113,7 +113,7 @@ For perturbed motion or when high precision is needed:
 
 .. code-block:: python
 
-   import diffrax
+   from astrodynx import diffeq
 
    # Define vector field function (two-body dynamics)
    def vector_field(t, x, args):
@@ -125,7 +125,7 @@ For perturbed motion or when high precision is needed:
 
    # Set up orbital dynamics configuration
    orbdyn = adx.prop.OrbDynx(
-       terms=diffrax.ODETerm(vector_field),
+       terms=diffeq.ODETerm(vector_field),
        args={"mu": mu}
    )
 
@@ -218,7 +218,7 @@ AstroDynX supports various perturbation models for more realistic orbital dynami
 
 .. code-block:: python
 
-   import diffrax
+   from astrodynx import diffeq
 
    # Define vector field with J2 gravitational perturbation
    def perturbed_vector_field(t, x, args):
@@ -232,7 +232,7 @@ AstroDynX supports various perturbation models for more realistic orbital dynami
 
    # Set up orbital dynamics with perturbations
    orbdyn = adx.prop.OrbDynx(
-       terms=diffrax.ODETerm(perturbed_vector_field),
+       terms=diffeq.ODETerm(perturbed_vector_field),
        args={"mu": mu, "J2": 1e-3, "R_eq": 6378.0}  # Earth-like parameters
    )
 
@@ -243,7 +243,7 @@ Detect specific events during orbital propagation:
 
 .. code-block:: python
 
-   import diffrax
+   from astrodynx import diffeq
 
    # Use built-in radius event detection
    def vector_field_with_event(t, x, args):
@@ -252,9 +252,9 @@ Detect specific events during orbital propagation:
 
    # Set up orbital dynamics with event detection
    orbdyn = adx.prop.OrbDynx(
-       terms=diffrax.ODETerm(vector_field_with_event),
+       terms=diffeq.ODETerm(vector_field_with_event),
        args={"mu": mu, "rmin": 6400.0},  # Stop at 6400 km radius
-       event=diffrax.Event(adx.events.radius_islow)
+       event=diffeq.Event(adx.events.radius_islow)
    )
 
    # Propagate until event occurs
