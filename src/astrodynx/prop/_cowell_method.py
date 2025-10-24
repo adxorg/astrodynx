@@ -62,6 +62,89 @@ class OrbDynx(NamedTuple):
     event: diffeq.Event = None
 
 
+def cowell_method(
+    orbdyn: OrbDynx,
+    x0: ArrayLike,
+    t1: DTypeLike,
+    saveat: diffeq.SaveAt,
+    dt0: DTypeLike = None,
+    max_steps: int = 4096,
+    solver: diffeq.AbstractSolver = diffeq.Tsit5(),
+    stepsize_controller: diffeq.AbstractStepSizeController = diffeq.PIDController(
+        rtol=1e-8, atol=1e-8
+    ),
+) -> diffeq.Solution:
+    """General Cowell's method orbital propagation function.
+
+    This function provides a flexible interface for propagating orbital states
+    using Cowell's method with customizable step size control and output times.
+
+    Args:
+        orbdyn: Orbital dynamics configuration containing the differential equation terms, static arguments, and optional events.
+        x0: (6,)Initial state vector [x, y, z, vx, vy, vz] in
+            canonical units. Position components are in distance units,
+            velocity components are in distance/time units.
+        t1: Final integration time in canonical time units.
+            Must be positive for forward propagation.
+        saveat: Configuration specifying when to save the solution during integration.
+        dt0: Initial time step size for integration in canonical time units.
+            If None, the solver will choose an appropriate initial step size.
+        max_steps: Maximum number of integration steps before
+            terminating unconditionally. Prevents infinite loops in case of
+            integration issues. Defaults to 4096.
+        solver: Numerical integration method. Defaults to diffeq.Tsit5() (5th-order Runge-Kutta method).
+        stepsize_controller: Step size controller for adaptive or fixed stepping.
+    Returns:
+        Integration solution containing
+            - ts: Array of time points where solution was saved
+            - ys: Array of state vectors at each time point
+            - stats: Integration statistics and diagnostics
+            - result: Integration termination status
+    Notes:
+        This function serves as a general interface for Cowell's method orbital
+        propagation. Users can specify custom step size controllers and output
+        times to suit their specific needs. It is recommended to use the
+        specialized functions (fixed_steps, adaptive_steps, custom_steps, to_final)
+        for common use cases for better clarity and ease of use.
+    Examples:
+        Basic orbital propagation with dense output:
+        >>> import jax.numpy as jnp
+        >>> from astrodynx import diffeq
+        >>> import astrodynx as adx
+        >>> def vector_field(t, x, args):
+        ...     acc = adx.gravity.point_mass_grav(t, x, args)
+        ...     return jnp.concatenate([x[3:], acc])
+        >>> orbdyn = adx.prop.OrbDynx(
+        ...     terms=diffeq.ODETerm(vector_field),
+        ...     args={"mu": 1.0}
+        ... )
+        >>> x0 = jnp.array([1.0, 0.0, 0.0, 0.0, 1.0, 0.0])
+        >>> t1 = jnp.pi*2  # One orbital period
+        >>> saveat=diffeq.SaveAt(dense=True,subs=diffeq.SubSaveAt(t1=True))
+        >>> sol = adx.prop.cowell_method(
+        ...     orbdyn, x0, t1,
+        ...     saveat=saveat
+        ... )
+        >>> tf = sol.ts[-1]
+        >>> yf = sol.ys[-1]
+        >>> yf_dense = sol.evaluate(tf)
+        >>> assert jnp.allclose(yf, yf_dense, atol=1e-7)
+    """
+    return diffeq.diffeqsolve(
+        terms=orbdyn.terms,
+        solver=solver,
+        t0=0,
+        t1=t1,
+        dt0=dt0,
+        y0=x0,
+        args=orbdyn.args,
+        max_steps=max_steps,
+        stepsize_controller=stepsize_controller,
+        saveat=saveat,
+        event=orbdyn.event,
+    )
+
+
 def fixed_steps(
     orbdyn: OrbDynx,
     x0: ArrayLike,

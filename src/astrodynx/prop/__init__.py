@@ -1,6 +1,7 @@
 from astrodynx.prop._kepler import kepler
 from astrodynx.prop._cowell_method import (
     OrbDynx,
+    cowell_method,
     custom_steps,
     fixed_steps,
     adaptive_steps,
@@ -8,8 +9,9 @@ from astrodynx.prop._cowell_method import (
 )
 
 __all__ = [
-    "OrbDynx",
     "kepler",
+    "OrbDynx",
+    "cowell_method",
     "custom_steps",
     "fixed_steps",
     "adaptive_steps",
