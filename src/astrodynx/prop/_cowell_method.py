@@ -104,7 +104,7 @@ def cowell_method(
         This function serves as a general interface for Cowell's method orbital
         propagation. Users can specify custom step size controllers and output
         times to suit their specific needs. It is recommended to use the
-        specialized functions (fixed_steps, adaptive_steps, custom_steps, to_final)
+        specialized functions (:meth:`fixed_steps`, :meth:`adaptive_steps`, :meth:`custom_steps`, :meth:`to_final`)
         for common use cases for better clarity and ease of use.
     Examples:
         Basic orbital propagation with dense output:

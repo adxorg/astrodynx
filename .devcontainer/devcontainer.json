@@ -1,7 +1,10 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
 	"name": "JAX NVIDIA",
-	"image": "ccr.ccs.tencentyun.com/ynao-aa/jax",
+		"build": {
+		"dockerfile": "./Dockerfile",
+		"context": "."
+	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -22,7 +25,8 @@
 				"ms-python.python",
 				"ms-python.vscode-pylance",
 				"ms-toolsai.jupyter",
-				"ms-toolsai.jupyter-renderers"
+				"ms-toolsai.jupyter-renderers",
+				"marscode.marscode-extension"
 			]
 		}
 	},

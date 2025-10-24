@@ -41,6 +41,7 @@
       adaptive_steps
       custom_steps
       to_final
+      cowell_method
 
 .. container:: module-footer
 
