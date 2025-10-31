@@ -39,6 +39,7 @@
       :nosignatures:
 
       orb_period
+      a_from_period
       angular_momentum
       semimajor_axis
       eccentricity_vector
