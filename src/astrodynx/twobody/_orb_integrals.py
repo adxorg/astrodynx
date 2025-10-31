@@ -78,8 +78,7 @@ def a_from_period(orbperiod: ArrayLike, mu: ArrayLike = 1) -> Array:
 
         >>> orbperiod = jnp.array([1.0, 2.0])*2*jnp.pi
         >>> mu = jnp.array([1.0, 2.0])
-        >>> adx.a_from_period(orbperiod, mu)
-        Array([1., 2.], dtype=float32)
+        >>> assert jnp.allclose(adx.a_from_period(orbperiod, mu), jnp.array([1.0, 2.0]))
     """
     return jnp.cbrt(orbperiod**2 * mu / 4 / jnp.pi**2)
 
