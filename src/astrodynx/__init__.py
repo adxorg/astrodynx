@@ -19,6 +19,7 @@ from astrodynx.twobody._kep_equ import (
 )
 from astrodynx.twobody._orb_integrals import (
     orb_period,
+    a_from_period,
     angular_momentum,
     semimajor_axis,
     eccentricity_vector,
@@ -56,6 +57,7 @@ __all__ = [
     "dE",
     "dH",
     "orb_period",
+    "a_from_period",
     "angular_momentum",
     "semimajor_axis",
     "eccentricity_vector",

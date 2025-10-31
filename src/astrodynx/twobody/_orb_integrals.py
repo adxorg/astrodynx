@@ -46,6 +46,44 @@ def orb_period(a: ArrayLike, mu: ArrayLike = 1) -> Array:
     return 2 * jnp.pi * jnp.sqrt(a**3 / mu)
 
 
+def a_from_period(orbperiod: ArrayLike, mu: ArrayLike = 1) -> Array:
+    r"""
+    Returns the semimajor axis of a two-body system from its orbital period.
+
+    Args:
+        orbperiod: Orbital period of the object in the two-body system.
+        mu: Gravitational parameter of the central body; shape broadcast-compatible with `orbperiod`.
+
+    Returns:
+        The semimajor axis of the object in the two-body system.
+
+    Notes:
+        The semimajor axis is calculated using Kepler's third law:
+        $$
+        a = \sqrt{\frac{P^2 \mu}{4 \pi^2}}
+        $$
+        where $a$ is the semimajor axis, $P$ is the orbital period, and $\mu$ is the gravitational parameter.
+
+    Examples:
+        A simple example of calculating the semimajor axis for a circular orbit with an orbital period of 1.0 and a gravitational parameter of 1.0:
+
+        >>> import jax.numpy as jnp
+        >>> import astrodynx as adx
+        >>> orbperiod = 2.0 * jnp.pi
+        >>> mu = 1.0
+        >>> adx.a_from_period(orbperiod, mu)
+        Array(1., dtype=float32, weak_type=True)
+
+        With broadcasting, you can calculate the semimajor axis for multiple orbital periods and gravitational parameters:
+
+        >>> orbperiod = jnp.array([1.0, 2.0])*2*jnp.pi
+        >>> mu = jnp.array([1.0, 2.0])
+        >>> adx.a_from_period(orbperiod, mu)
+        Array([1., 2.], dtype=float32)
+    """
+    return jnp.cbrt(orbperiod**2 * mu / 4 / jnp.pi**2)
+
+
 def angular_momentum(pos_vec: ArrayLike, vel_vec: ArrayLike) -> Array:
     r"""
     Returns the specific angular momentum of a two-body system.
