@@ -3,6 +3,8 @@ Welcome to AstroDynX!
 
 A modern astrodynamics library powered by JAX: differentiate, vectorize, JIT to GPU/TPU, and more.
 
+.. image:: https://deepwiki.com/badge.svg
+   :target: https://deepwiki.com/adxorg/astrodynx
 .. image:: https://img.shields.io/pypi/v/astrodynx
    :target: https://pypi.org/project/astrodynx/
 .. image:: https://img.shields.io/github/license/adxorg/astrodynx

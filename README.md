@@ -1,3 +1,4 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/adxorg/astrodynx)
 [![PyPI - Version](https://img.shields.io/pypi/v/astrodynx)](https://pypi.org/project/astrodynx/)
 [![GitHub License](https://img.shields.io/github/license/adxorg/astrodynx)](https://github.com/adxorg/astrodynx/blob/main/LICENSE)
 [![Github CI](https://github.com/adxorg/astrodynx/actions/workflows/ci.yml/badge.svg)](https://github.com/adxorg/astrodynx/actions/workflows/ci.yml)
